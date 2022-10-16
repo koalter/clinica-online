@@ -1,0 +1,18 @@
+<main class="container col-sm-8 col-md-6 col-lg-4 col-xxl-3 p-4 h-100">
+    <h2 class="text-center my-5">Clínica Online</h2>
+    <form class="border-bottom mb-3">
+        <div class="form-floating input my-3">
+            <input class="form-control" type="email" id="correo" [(ngModel)]="correo" name="correo" placeholder="Correo electrónico">
+            <label class="text-muted" for="correo">Correo electrónico</label>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="password" id="clave" [(ngModel)]="clave" name="clave" placeholder="Contraseña">
+            <label class="text-muted" for="clave">Contraseña</label>
+        </div>
+        <button routerLink="" class="btn btn-primary w-100 p-3 mb-4" (click)="enviarCredenciales()">Iniciar sesión</button>
+    </form>
+    <button (click)="usarDatosDePrueba('test_paciente@lnck.com', 'paciente')" class="btn btn-secondary w-100 p-2 my-1">Ingresar como Paciente de prueba</button>
+    <button (click)="usarDatosDePrueba('test_especialista@lnck.com', 'especialista')" class="btn btn-warning w-100 p-2 my-1">Ingresar como Especialista de prueba</button>
+    <button (click)="usarDatosDePrueba('admin@lnck.com', 'administrador')" class="btn btn-outline-danger w-100 p-2 my-1">Ingresar como Administrador</button>
+    <p class="text-center mt-3">¿No tenés cuenta? <a routerLink="../registro">Registrate</a></p>
+</main>
