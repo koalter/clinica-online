@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -10,7 +12,8 @@ export class RegistroEspecialistaComponent implements OnInit {
 
   formulario: FormGroup;
 
-  constructor() { 
+  constructor(private usuarioService: UsuarioService,
+    private router: Router) { 
     this.formulario = new FormGroup({
       correo: new FormControl('', Validators.required),
       clave: new FormControl('', Validators.required),
@@ -27,7 +30,18 @@ export class RegistroEspecialistaComponent implements OnInit {
   }
 
   enviarCredenciales(): void {
-    console.log('enviarCredenciales()');
+    if (this.formulario.valid) {
+      const correo = this.formulario.get('correo')?.value;
+      const clave = this.formulario.get('clave')?.value;
+  
+      if (correo && clave) {
+        this.usuarioService.registrarUsuario(correo, clave)
+        .then(res => {
+          this.router.navigate(['bienvenido']);
+        })
+        .catch(err => console.error(err));
+      }
+    }
   }
   
 }

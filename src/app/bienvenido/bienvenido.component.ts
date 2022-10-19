@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-bienvenido',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BienvenidoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usuarioService: UsuarioService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  cerrarSesion() {
+    this.usuarioService.cerrarSesion()
+    .then(() => {
+      this.router.navigate(['bienvenido', 'login']);
+    })
+  }
 }

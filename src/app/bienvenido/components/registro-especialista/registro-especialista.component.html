@@ -1,6 +1,6 @@
 <div class="container col-sm-8 col-md-6 col-lg-4 col-xxl-3 border-primary p-4">
     <h3>Registro de especialista nuevo</h3>
-    <form class="border-bottom mb-3" [formGroup]="formulario">
+    <form class="border-bottom mb-3" [formGroup]="formulario" (ngSubmit)="enviarCredenciales()">
         <div class="form-floating input my-3">
             <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Nombre">
             <label class="text-muted" for="nombre">Nombre</label>
@@ -33,7 +33,7 @@
             <input class="form-control" type="password" id="claveVerificacion" formControlName="claveVerificacion" placeholder="Repetí tu contraseña">
             <label class="text-muted" for="claveVerificacion">Repetí tu contraseña</label>
         </div>
-        <button routerLink="" class="btn btn-success w-100 p-3 mb-4" (click)="enviarCredenciales()">Registrarse</button>
+        <input type="submit" routerLink="" class="btn btn-success w-100 p-3 mb-4" value="Registrarse" />
     </form>
     <p class="text-center">¿Ya tenés un usuario? <a routerLink="../../login">Iniciá sesión</a></p>
     <p class="text-center">¿Necesitás atenderte? <a routerLink="../paciente">Llená este formulario</a></p>

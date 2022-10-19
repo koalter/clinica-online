@@ -6,10 +6,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroPacienteComponent } from './components/registro-paciente/registro-paciente.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistroEspecialistaComponent } from './components/registro-especialista/registro-especialista.component';
+import { BienvenidoComponent } from './bienvenido.component';
 
 
 @NgModule({
   declarations: [
+    BienvenidoComponent,
     LoginComponent,
     RegistroPacienteComponent,
     RegistroEspecialistaComponent
