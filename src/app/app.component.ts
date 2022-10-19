@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(private auth: Auth,
     private usuarioService: UsuarioService) {
-    // this.auth.onAuthStateChanged(user => this.usuarioService.usuario = user);
+//     this.auth.onAuthStateChanged(user => this.usuarioService.usuario = user);
   }
 
 }

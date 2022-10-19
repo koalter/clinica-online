@@ -7,6 +7,7 @@ import { RegistroPacienteComponent } from './components/registro-paciente/regist
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistroEspecialistaComponent } from './components/registro-especialista/registro-especialista.component';
 import { BienvenidoComponent } from './bienvenido.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BienvenidoComponent } from './bienvenido.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BienvenidoRoutingModule
+    BienvenidoRoutingModule,
+    SharedModule
   ]
 })
 export class BienvenidoModule { }

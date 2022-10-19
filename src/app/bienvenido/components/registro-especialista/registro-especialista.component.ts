@@ -11,6 +11,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class RegistroEspecialistaComponent implements OnInit {
 
   formulario: FormGroup;
+  spinner: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) { 
@@ -31,6 +32,7 @@ export class RegistroEspecialistaComponent implements OnInit {
 
   enviarCredenciales(): void {
     if (this.formulario.valid) {
+      this.spinner = true;
       const correo = this.formulario.get('correo')?.value;
       const clave = this.formulario.get('clave')?.value;
   
@@ -39,7 +41,8 @@ export class RegistroEspecialistaComponent implements OnInit {
         .then(res => {
           this.router.navigate(['bienvenido']);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => this.spinner = false);
       }
     }
   }

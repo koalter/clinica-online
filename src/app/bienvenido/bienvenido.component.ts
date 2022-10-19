@@ -9,6 +9,8 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class BienvenidoComponent implements OnInit {
 
+  spinner: boolean = false;
+
   constructor(private usuarioService: UsuarioService,
     private router: Router) { }
 
@@ -16,9 +18,11 @@ export class BienvenidoComponent implements OnInit {
   }
 
   cerrarSesion() {
+    this.spinner = true;
     this.usuarioService.cerrarSesion()
     .then(() => {
       this.router.navigate(['bienvenido', 'login']);
     })
+    .finally(() => this.spinner = false);
   }
 }

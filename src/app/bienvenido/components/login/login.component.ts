@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   correo!: string;
   clave!: string;
+  spinner: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) { }
@@ -19,11 +20,13 @@ export class LoginComponent implements OnInit {
   }
 
   enviarCredenciales(): void {
+    this.spinner = true;
     this.usuarioService.iniciarSesion(this.correo, this.clave)
     .then(res => {
       this.router.navigate(['bienvenido']);
     })
-    .catch(err => console.error(err));
+    .catch(err => console.error(err))
+    .finally(() => this.spinner = false);
   }
 
   usarDatosDePrueba(correo: string, clave: string): void {
