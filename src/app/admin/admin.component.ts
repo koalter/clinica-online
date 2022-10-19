@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { UsuarioService } from "../../services/usuario.service";
+import { Router } from '@angular/router';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
-  selector: 'seccion-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
-export class UsuariosComponent implements OnInit {
-
+export class AdminComponent implements OnInit {
   spinner: boolean = false;
   email: string
 
