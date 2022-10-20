@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -13,21 +12,23 @@ export class RegistroEspecialistaComponent implements OnInit {
 
   formulario: FormGroup;
   spinner: boolean = false;
-  rutaImagen!: string;
+  rutaImagen: string;
 
   constructor(private usuarioService: UsuarioService,
-    private router: Router,
-    private sanitizer: DomSanitizer) { 
+    private router: Router) {
+    this.rutaImagen = '../../../../assets/default.jpg'; 
+    const imagen = new Image();
+    imagen.src = this.rutaImagen;
     this.formulario = new FormGroup({
-      correo: new FormControl('', Validators.required),
+      correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
       clave: new FormControl('', Validators.required),
       clave_verificacion: new FormControl('', [Validators.required]),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
       edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
-      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
+      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
       especialidad: new FormControl('', Validators.required),
-      imagen: new FormControl('', Validators.required)
+      imagen: new FormControl(imagen, Validators.required)
     });
   }
 
@@ -66,4 +67,9 @@ export class RegistroEspecialistaComponent implements OnInit {
     }
   }
   
+  validarNumero(event: KeyboardEvent): void {
+    if (isNaN(parseInt(event.key)) && event.key !== 'Tab' && event.key !== 'Escape' && !event.key.includes('Arrow')) {
+      event.preventDefault();
+    }
+  }
 }

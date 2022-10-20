@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'registro-paciente',
@@ -12,11 +12,18 @@ export class RegistroPacienteComponent implements OnInit {
 
   formulario: FormGroup;
   spinner: boolean = false;
-  rutaImagenA!: string;
-  rutaImagenB!: string;
+  rutaImagenA: string;
+  rutaImagenB: string;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) { 
+    this.rutaImagenA = '../../../../assets/default.jpg'; 
+    this.rutaImagenB = '../../../../assets/default.jpg'; 
+    const imagen_a = new Image();
+    imagen_a.src = this.rutaImagenA;
+    const imagen_b = new Image();
+    imagen_b.src = this.rutaImagenB;
+
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
       clave: new FormControl('', Validators.required),
