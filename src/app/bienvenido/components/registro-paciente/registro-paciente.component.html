@@ -18,20 +18,38 @@
             <label class="text-muted" for="dni">DNI (sólo números)</label>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="text" id="obraSocial" formControlName="obraSocial" placeholder="Obra Social" required>
-            <label class="text-muted" for="obraSocial">Obra Social</label>
+            <input class="form-control" type="text" id="obra_social" formControlName="obra_social" placeholder="Obra Social" required>
+            <label class="text-muted" for="obra_social">Obra Social</label>
         </div>
         <div class="form-floating input my-3">
             <input class="form-control" type="email" id="correo" formControlName="correo" placeholder="Correo electrónico" required>
             <label class="text-muted" for="correo">Correo electrónico</label>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="password" id="clave" formControlName="clave" placeholder="Contraseña" required [pattern]="this.formulario.get('claveVerificacion')?.value">
+            <input class="form-control" type="password" id="clave" formControlName="clave" placeholder="Contraseña" required [pattern]="this.formulario.get('clave_verificacion')?.value">
             <label class="text-muted" for="clave">Contraseña</label>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="password" id="claveVerificacion" formControlName="claveVerificacion" placeholder="Repetí tu contraseña" required [pattern]="this.formulario.get('clave')?.value">
-            <label class="text-muted" for="claveVerificacion">Repetí tu contraseña</label>
+            <input class="form-control" type="password" id="clave_verificacion" formControlName="clave_verificacion" placeholder="Repetí tu contraseña" required [pattern]="this.formulario.get('clave')?.value">
+            <label class="text-muted" for="clave_verificacion">Repetí tu contraseña</label>
+        </div>
+        <div class="row my-3">
+            <div class="input col-8">
+                <label class="form-label" for="imagen_a">Imágen de perfil 1</label>
+                <input type="file" class="form-control" id="imagen_a" (change)="imagenA_change($event)" />
+            </div>
+            <div class="col-3">
+                <img *ngIf="rutaImagenA" [src]="rutaImagenA" alt="Foto de perfil" style="height: 100px;">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="input col-8">
+                <label class="form-label" for="imagen_b">Imágen de perfil 2</label>
+                <input type="file" class="form-control" id="imagen_b" (change)="imagenB_change($event)" />
+            </div>
+            <div class="col-3">
+                <img *ngIf="rutaImagenB" [src]="rutaImagenB" alt="Foto de perfil" style="height: 100px;">
+            </div>
         </div>
         <button type="submit" routerLink="" class="btn btn-success w-100 p-3 mb-4">Registrarse</button>
     </form>

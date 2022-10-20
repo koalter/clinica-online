@@ -12,18 +12,22 @@ export class RegistroPacienteComponent implements OnInit {
 
   formulario: FormGroup;
   spinner: boolean = false;
+  rutaImagenA!: string;
+  rutaImagenB!: string;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) { 
     this.formulario = new FormGroup({
-      'correo': new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
-      'clave': new FormControl('', Validators.required),
-      'claveVerificacion': new FormControl('', [Validators.required]),
-      'nombre': new FormControl('', Validators.required),
-      'apellido': new FormControl('', Validators.required),
-      'edad': new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
-      'dni': new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
-      'obraSocial': new FormControl('', Validators.required)
+      correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
+      clave: new FormControl('', Validators.required),
+      clave_verificacion: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', Validators.required),
+      apellido: new FormControl('', Validators.required),
+      edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
+      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
+      obra_social: new FormControl('', Validators.required),
+      imagen_a: new FormControl('', Validators.required),
+      imagen_b: new FormControl('', Validators.required)
     });
   }
 
@@ -47,6 +51,36 @@ export class RegistroPacienteComponent implements OnInit {
     }
     else {
       console.log(this.formulario);
+    }
+  }
+
+  imagenA_change(event: any) {
+    if (event.target.files && event.target.files.length) {
+      // Chequeamos que el tamaño del archivo sea menor que 25KB
+      if (event.target.files[0].size < 25600) {
+        const reader = new FileReader();
+        this.formulario.get(event.target.id)?.setValue(event.target.files[0]);
+        reader.readAsDataURL(this.formulario.get(event.target.id)?.value);
+      
+        reader.onload = () => {
+          this.rutaImagenA = reader.result as string;
+        };
+      }
+    }
+  }
+
+  imagenB_change(event: any) {
+    if (event.target.files && event.target.files.length) {
+      // Chequeamos que el tamaño del archivo sea menor que 25KB
+      if (event.target.files[0].size < 25600) {
+        const reader = new FileReader();
+        this.formulario.get(event.target.id)?.setValue(event.target.files[0]);
+        reader.readAsDataURL(this.formulario.get(event.target.id)?.value);
+      
+        reader.onload = () => {
+          this.rutaImagenB = reader.result as string;
+        };
+      }
     }
   }
 

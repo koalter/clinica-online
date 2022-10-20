@@ -9,6 +9,7 @@ import { TablaPacientesComponent } from './tabla-pacientes/tabla-pacientes.compo
 import { TablaEspecialistasComponent } from './tabla-especialistas/tabla-especialistas.component';
 import { RegistroAdministradorComponent } from './registro-administrador/registro-administrador.component';
 import { AdminComponent } from './admin.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AdminComponent } from './admin.component';
   imports: [
     CommonModule,
     MdbCollapseModule,
+    AgGridModule,
     ReactiveFormsModule,
     AdminRoutingModule,
     SharedModule
