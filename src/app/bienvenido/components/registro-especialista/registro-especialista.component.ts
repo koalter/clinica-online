@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Especialista } from '../../../models/Especialista';
 import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
@@ -16,9 +17,8 @@ export class RegistroEspecialistaComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) {
-    this.rutaImagen = '../../../../assets/default.jpg'; 
-    const imagen = new Image();
-    imagen.src = this.rutaImagen;
+    this.rutaImagen = '../../../../assets/default.jpg';
+
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
       clave: new FormControl('', Validators.required),
@@ -28,7 +28,7 @@ export class RegistroEspecialistaComponent implements OnInit {
       edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
       dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
       especialidad: new FormControl('', Validators.required),
-      imagen: new FormControl(imagen, Validators.required)
+      imagen: new FormControl(undefined, Validators.required)
     });
   }
 
@@ -38,38 +38,46 @@ export class RegistroEspecialistaComponent implements OnInit {
   enviarCredenciales(): void {
     if (this.formulario.valid) {
       this.spinner = true;
-      const correo = this.formulario.get('correo')?.value;
-      const clave = this.formulario.get('clave')?.value;
+      const usuario = new Especialista(this.formulario.get('correo')?.value, this.formulario.get('nombre')?.value,
+      this.formulario.get('apellido')?.value, this.formulario.get('edad')?.value, this.formulario.get('dni')?.value,
+      this.formulario.get('imagen')?.value, this.formulario.get('especialidad')?.value);
   
-      if (correo && clave) {
-        this.usuarioService.registrarUsuario(correo, clave)
-        .then(res => {
-          this.router.navigate(['bienvenido']);
-        })
-        .catch(err => console.error(err))
-        .finally(() => this.spinner = false);
-      }
+      this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
+      .then(res => {
+        this.router.navigate(['bienvenido']);
+      })
+      .catch(err => console.error(err))
+      .finally(() => this.spinner = false);
+      
+    }
+    else {
+      console.log(this.formulario);
     }
   }
 
   imagen_change(event: any) {
-    if (event.target.files && event.target.files.length) {
-      // Chequeamos que el tamaño del archivo sea menor que 25KB
-      if (event.target.files[0].size < 25600) {
-        const reader = new FileReader();
-        this.formulario.get(event.target.id)?.setValue(event.target.files[0]);
-        reader.readAsDataURL(this.formulario.get(event.target.id)?.value);
-      
-        reader.onload = () => {
-          this.rutaImagen = reader.result as string;
-        };
-      }
+    const archivo = event.target.files[0];
+    const elementoId = event.target.id;
+    
+    if (event.target.files && event.target.files.length
+      && archivo.size < 25 * 1024) {
+      const reader = new FileReader();
+      this.formulario.get(elementoId)?.setValue(archivo);
+      reader.readAsDataURL(this.formulario.get(elementoId)?.value);
+    
+      reader.onload = () => {
+        this.rutaImagen = reader.result as string;
+      };
+    } else {
+      event.target.value = '';
     }
   }
   
   validarNumero(event: KeyboardEvent): void {
-    if (isNaN(parseInt(event.key)) && event.key !== 'Tab' && event.key !== 'Escape' && !event.key.includes('Arrow')) {
+    if (isNaN(parseInt(event.key)) && event.key !== 'Tab' && event.key !== 'Escape' 
+      && event.key !== 'Backspace' && event.key !== 'Delete' && !event.key.includes('Arrow')) {
       event.preventDefault();
     }
   }
+
 }

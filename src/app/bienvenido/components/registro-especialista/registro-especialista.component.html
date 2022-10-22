@@ -22,7 +22,8 @@
             </div>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="text" id="edad" formControlName="edad" placeholder="Edad" (keydown)="validarNumero($event)" required>
+            <input class="form-control" type="text" id="edad" formControlName="edad" placeholder="Edad" 
+                required (keydown)="validarNumero($event)">
             <label class="text-muted" for="edad">Edad</label>
             <div *ngIf="formulario.get('edad')?.invalid && (formulario.get('edad')?.touched || formulario.get('edad')?.dirty)"
                 class="text-danger">
@@ -32,7 +33,8 @@
             </div>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="text" id="dni" formControlName="dni" placeholder="DNI (sólo números)" (keydown)="validarNumero($event)" required>
+            <input class="form-control" type="text" id="dni" formControlName="dni" placeholder="DNI (sólo números)" 
+                required minlength="7" maxlength="8" (keydown)="validarNumero($event)">
             <label class="text-muted" for="dni">DNI (sólo números)</label>
             <div *ngIf="formulario.get('dni')?.invalid && (formulario.get('dni')?.touched || formulario.get('dni')?.dirty)"
                 class="text-danger">
@@ -93,7 +95,7 @@
                 <img *ngIf="rutaImagen" [src]="rutaImagen" alt="Foto de perfil" style="height: 100px;">
             </div>
         </div>
-        <input [disabled]="formulario.invalid" type="submit" routerLink="" class="btn btn-success w-100 p-3 mb-4" value="Registrarse" />
+        <input [disabled]="formulario.invalid" type="submit" class="btn btn-success w-100 p-3 mb-4" value="Registrarse" />
     </form>
     <p class="text-center">¿Ya tenés un usuario? <a routerLink="../../login">Iniciá sesión</a></p>
     <p class="text-center">¿Necesitás atenderte? <a routerLink="../paciente">Llená este formulario</a></p>

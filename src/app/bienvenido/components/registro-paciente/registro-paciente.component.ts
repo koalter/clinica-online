@@ -19,7 +19,7 @@ export class RegistroPacienteComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
     private router: Router) { 
     this.rutaImagenA = '../../../../assets/default.jpg'; 
-    this.rutaImagenB = '../../../../assets/default.jpg';
+    this.rutaImagenB = this.rutaImagenA;
 
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
@@ -60,32 +60,45 @@ export class RegistroPacienteComponent implements OnInit {
   }
 
   imagenA_change(event: any) {
-    if (event.target.files && event.target.files.length) {
-      // Chequeamos que el tamaño del archivo sea menor que 25KB
-      if (event.target.files[0].size < 25600) {
-        const reader = new FileReader();
-        this.formulario.get(event.target.id)?.setValue(event.target.files[0]);
-        reader.readAsDataURL(this.formulario.get(event.target.id)?.value);
-      
-        reader.onload = () => {
-          this.rutaImagenA = reader.result as string;
-        };
-      }
+    const archivo = event.target.files[0];
+    const elementoId = event.target.id;
+    
+    if (event.target.files && event.target.files.length
+      && archivo.size < 25 * 1024) {
+      const reader = new FileReader();
+      this.formulario.get(elementoId)?.setValue(archivo);
+      reader.readAsDataURL(this.formulario.get(elementoId)?.value);
+    
+      reader.onload = () => {
+        this.rutaImagenA = reader.result as string;
+      };
+    } else {
+      event.target.value = '';
     }
   }
 
   imagenB_change(event: any) {
-    if (event.target.files && event.target.files.length) {
-      // Chequeamos que el tamaño del archivo sea menor que 25KB
-      if (event.target.files[0].size < 25600) {
-        const reader = new FileReader();
-        this.formulario.get(event.target.id)?.setValue(event.target.files[0]);
-        reader.readAsDataURL(this.formulario.get(event.target.id)?.value);
-      
-        reader.onload = () => {
-          this.rutaImagenB = reader.result as string;
-        };
-      }
+    const archivo = event.target.files[0];
+    const elementoId = event.target.id;
+    
+    if (event.target.files && event.target.files.length
+      && archivo.size < 25 * 1024) {
+      const reader = new FileReader();
+      this.formulario.get(elementoId)?.setValue(archivo);
+      reader.readAsDataURL(this.formulario.get(elementoId)?.value);
+    
+      reader.onload = () => {
+        this.rutaImagenB = reader.result as string;
+      };
+    } else {
+      event.target.value = '';
+    }
+  }
+
+  validarNumero(event: KeyboardEvent): void {
+    if (isNaN(parseInt(event.key)) && event.key !== 'Tab' && event.key !== 'Escape' 
+      && event.key !== 'Backspace' && event.key !== 'Delete' && !event.key.includes('Arrow')) {
+      event.preventDefault();
     }
   }
 

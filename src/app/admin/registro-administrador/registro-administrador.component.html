@@ -22,7 +22,8 @@
             </div>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="text" id="edad" formControlName="edad" placeholder="Edad" required>
+            <input class="form-control" type="text" id="edad" formControlName="edad" placeholder="Edad" 
+                required>
             <label class="text-muted" for="edad">Edad</label>
             <div *ngIf="formulario.get('edad')?.invalid && (formulario.get('edad')?.touched || formulario.get('edad')?.dirty)"
                 class="text-danger">
@@ -32,7 +33,8 @@
             </div>
         </div>
         <div class="form-floating input my-3">
-            <input class="form-control" type="text" id="dni" formControlName="dni" placeholder="DNI (sólo números)" required minlength="7" maxlength="8">
+            <input class="form-control" type="text" id="dni" formControlName="dni" placeholder="DNI (sólo números)" 
+                required minlength="7" maxlength="8">
             <label class="text-muted" for="dni">DNI (sólo números)</label>
             <div *ngIf="formulario.get('dni')?.invalid && (formulario.get('dni')?.touched || formulario.get('dni')?.dirty)"
                 class="text-danger">
@@ -85,7 +87,7 @@
                 <img *ngIf="rutaImagen" [src]="rutaImagen" alt="Foto de perfil" style="height: 100px;">
             </div>
         </div>
-        <button [disabled]="formulario.invalid" type="submit" routerLink="" class="btn btn-success w-100 p-3 mb-4">Registrarse</button>
+        <button [disabled]="formulario.invalid" type="submit" class="btn btn-success w-100 p-3 mb-4">Registrarse</button>
     </form>
 </div>
 
