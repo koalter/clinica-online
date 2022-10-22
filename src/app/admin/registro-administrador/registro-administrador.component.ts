@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/shared/helpers/custom-validators';
 import { Administrador } from '../../models/Administrador';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -14,19 +16,23 @@ export class RegistroAdministradorComponent implements OnInit {
   spinner: boolean = false;
   rutaImagen: string;
 
-  constructor(private usuarioService: UsuarioService) { 
+  constructor(private usuarioService: UsuarioService,
+    private router: Router) { 
     this.rutaImagen = '../../../assets/default.jpg';
 
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
       clave: new FormControl('', Validators.required),
-      clave_verificacion: new FormControl('', [Validators.required]),
+      clave_verificacion: new FormControl(''),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
       edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
       dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
       imagen: new FormControl(undefined, Validators.required)
     });
+
+    this.formulario.controls['clave_verificacion'].addValidators(
+      CustomValidators.confirmFormControl(this.formulario.controls['clave']));
   }
 
   ngOnInit(): void {
@@ -40,6 +46,9 @@ export class RegistroAdministradorComponent implements OnInit {
       this.formulario.get('imagen')?.value);
   
       this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
+      .then(res => {
+        this.router.navigate(['..']);
+      })
       .catch(err => console.error(err))
       .finally(() => this.spinner = false);
       

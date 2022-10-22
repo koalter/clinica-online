@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidators } from 'src/app/shared/helpers/custom-validators';
 import { Paciente } from '../../../models/Paciente';
 import { UsuarioService } from '../../../services/usuario.service';
 
@@ -24,7 +25,7 @@ export class RegistroPacienteComponent implements OnInit {
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
       clave: new FormControl('', Validators.required),
-      clave_verificacion: new FormControl('', [Validators.required]),
+      clave_verificacion: new FormControl(''),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
       edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
@@ -34,6 +35,8 @@ export class RegistroPacienteComponent implements OnInit {
       imagen_b: new FormControl(undefined, Validators.required)
     });
     
+    this.formulario.controls['clave_verificacion'].addValidators(
+      CustomValidators.confirmFormControl(this.formulario.controls['clave']));
   }
 
   ngOnInit(): void {

@@ -27,8 +27,8 @@
             <label class="text-muted" for="edad">Edad</label>
             <div *ngIf="formulario.get('edad')?.invalid && (formulario.get('edad')?.touched || formulario.get('edad')?.dirty)"
                 class="text-danger">
-                <small *ngIf="formulario.get('edad')?.errors?.['required']">
-                    La edad es requerida
+                <small *ngIf="formulario.get('clave_verificacion')?.errors?.['confirmFormControl']">
+                    La contraseña no coincide
                 </small>
             </div>
         </div>

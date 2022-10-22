@@ -81,8 +81,8 @@
             <label class="text-muted" for="clave_verificacion">Repetí tu contraseña</label>
             <div *ngIf="formulario.get('clave_verificacion')?.invalid && (formulario.get('clave_verificacion')?.touched || formulario.get('clave_verificacion')?.dirty)"
                 class="text-danger">
-                <small *ngIf="formulario.get('clave_verificacion')?.errors?.['required']">
-                    Debe verificar su contraseña
+                <small *ngIf="formulario.get('clave_verificacion')?.errors?.['confirmFormControl']">
+                    La contraseña no coincide
                 </small>
             </div>
         </div>
