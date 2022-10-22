@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Paciente } from '../../../models/Paciente';
 import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
@@ -18,11 +19,7 @@ export class RegistroPacienteComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
     private router: Router) { 
     this.rutaImagenA = '../../../../assets/default.jpg'; 
-    this.rutaImagenB = '../../../../assets/default.jpg'; 
-    const imagen_a = new Image();
-    imagen_a.src = this.rutaImagenA;
-    const imagen_b = new Image();
-    imagen_b.src = this.rutaImagenB;
+    this.rutaImagenB = '../../../../assets/default.jpg';
 
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.required, Validators.pattern('(^$|^.*@.*\..*$)')]),
@@ -30,12 +27,13 @@ export class RegistroPacienteComponent implements OnInit {
       clave_verificacion: new FormControl('', [Validators.required]),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
-      edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
-      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
+      edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
+      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(7), Validators.maxLength(8)]),
       obra_social: new FormControl('', Validators.required),
-      imagen_a: new FormControl('', Validators.required),
-      imagen_b: new FormControl('', Validators.required)
+      imagen_a: new FormControl(undefined, Validators.required),
+      imagen_b: new FormControl(undefined, Validators.required)
     });
+    
   }
 
   ngOnInit(): void {
@@ -44,17 +42,17 @@ export class RegistroPacienteComponent implements OnInit {
   enviarCredenciales(): void {
     if (this.formulario.valid) {
       this.spinner = true;
-      const correo = this.formulario.get('correo')?.value;
-      const clave = this.formulario.get('clave')?.value;
+      const usuario = new Paciente(this.formulario.get('correo')?.value, this.formulario.get('nombre')?.value,
+      this.formulario.get('apellido')?.value, this.formulario.get('edad')?.value, this.formulario.get('dni')?.value,
+      this.formulario.get('imagen_a')?.value, this.formulario.get('imagen_b')?.value, this.formulario.get('obra_social')?.value);
   
-      if (correo && clave) {
-        this.usuarioService.registrarUsuario(correo, clave)
-        .then(res => {
-          this.router.navigate(['bienvenido']);
-        })
-        .catch(err => console.error(err))
-        .finally(() => this.spinner = false);
-      }
+      this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
+      .then(res => {
+        this.router.navigate(['bienvenido']);
+      })
+      .catch(err => console.error(err))
+      .finally(() => this.spinner = false);
+      
     }
     else {
       console.log(this.formulario);
