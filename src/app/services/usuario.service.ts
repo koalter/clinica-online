@@ -18,7 +18,6 @@ export class UsuarioService {
   constructor(private auth: Auth,
     private firestore: Firestore,
     private storage: Storage) {
-    this.auth.onAuthStateChanged(user => this.usuario = user);
   }
 
   async iniciarSesion(correo: string, clave: string) {
