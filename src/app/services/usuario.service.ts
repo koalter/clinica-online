@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, deleteUser, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
 import { addDoc, collection, doc, DocumentData, Firestore, getDoc, setDoc, Timestamp } from "@angular/fire/firestore";
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
-import { Administrador } from '../models/Administrador';
-import { Especialista } from '../models/Especialista';
-import { Paciente } from '../models/Paciente';
 import { Usuario } from '../models/Usuario';
+import { UsuarioFactory } from '../models/UsuarioFactory';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +73,6 @@ export class UsuarioService {
       docData['imagenB'] = photoURL_b;
     }
     
-    
     await setDoc(doc(this.firestore, 'usuarios', data.correo), docData);
   }
 
@@ -89,26 +86,7 @@ export class UsuarioService {
       let usuario: Usuario | null = null;
       if (snapshot.exists()) {
         const datosDeUsuario = snapshot.data();
-        
-        switch (datosDeUsuario['rol']) {
-          case 'paciente':
-            let photoB: string = await getDownloadURL(ref(this.storage, `avatar/${this.usuario?.email}_b`))
-            usuario = new Paciente(this.usuario?.email as string, datosDeUsuario['nombre'], datosDeUsuario['apellido'],
-              datosDeUsuario['edad'], datosDeUsuario['dni'], this.usuario?.photoURL as string, photoB, datosDeUsuario['obraSocial']);
-            break;
-          case 'especialista':
-            usuario = new Especialista(this.usuario?.email as string, datosDeUsuario['nombre'], datosDeUsuario['apellido'], 
-              datosDeUsuario['edad'], datosDeUsuario['dni'], this.usuario?.photoURL as string, datosDeUsuario['especialidad']);
-            break;
-          case 'administrador':
-            usuario = new Administrador(this.usuario?.email as string, datosDeUsuario['nombre'], datosDeUsuario['apellido'],
-              datosDeUsuario['edad'], datosDeUsuario['dni'], this.usuario?.photoURL as string);
-            break;
-          default:
-            const mensaje = `El rol del usuario: ${this.usuario?.email} es inválido`;
-            addDoc(collection(this.firestore, 'errores'), { error: mensaje, fecha: Timestamp.now() });
-            throw new Error(mensaje);
-        }
+        usuario = UsuarioFactory.CrearUsuario(datosDeUsuario, this.usuario?.email as string, datosDeUsuario['rol']);
       }
   
       this.detallesUsuario = usuario;
