@@ -1,6 +1,15 @@
 <nav *ngIf="usuario" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink=".">LNCK</a>
+        <a class="navbar-brand" routerLink=".">
+          <img
+            src="../../assets/logo.svg"
+            class="me-2"
+            height="40"
+            alt=""
+            loading="lazy"
+          />
+          <small>LNCK</small>
+        </a>
         <ul class="navbar-nav ms-auto">
             <span class="navbar-text">{{ usuario.correo }}</span>
             <!-- Avatar -->
