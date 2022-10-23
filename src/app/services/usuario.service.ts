@@ -42,7 +42,7 @@ export class UsuarioService {
         await this.guardarDatosDeUsuario(usuario, usuario.constructor.name.toLowerCase());
         await addDoc(collection(this.firestore, 'logUsuarios'), { usuario: usuario.correo, fechaInicio: Timestamp.now() });
         await this.obtenerDatosDeUsuario();
-        // await sendEmailVerification(result.user);
+        await sendEmailVerification(result.user);
       } catch (err: any) {
         await deleteUser(result.user);
         throw err;
