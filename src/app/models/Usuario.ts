@@ -10,7 +10,6 @@ export class Usuario {
         return this.constructor.name.toLowerCase();
     }
     
-
     constructor(correo: string, nombre: string, apellido: string, edad: number, dni: number, imagen: string) {
         this.correo = correo;
         this.nombre = nombre;
