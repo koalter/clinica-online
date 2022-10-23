@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard'
 import { BienvenidoComponent } from './bienvenido.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroEspecialistaComponent } from './components/registro-especialista/registro-especialista.component';
@@ -14,8 +13,7 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'registro/paciente', component: RegistroPacienteComponent },
       { path: 'registro/especialista', component: RegistroEspecialistaComponent },
-      { path: 'registro', redirectTo: 'registro/paciente', pathMatch: 'full' },
-      { path: 'admin', loadChildren: () => import('../admin/admin.module').then(m => m.AdminModule), canActivate: [AuthGuard] }
+      { path: 'registro', redirectTo: 'registro/paciente', pathMatch: 'full' }
     ]
   }
 ];
