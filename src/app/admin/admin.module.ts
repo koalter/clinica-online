@@ -18,8 +18,7 @@ import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
     AdminComponent,
     TablaPacientesComponent,
     TablaEspecialistasComponent,
-    RegistroAdministradorComponent,
-    AdminComponent
+    RegistroAdministradorComponent
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
   
   spinner: boolean = true;
   usuario!: Usuario | null;
-  dropdownItems!: any[];
+  links!: any[];
 
   constructor(private usuarioService: UsuarioService,
               private router: Router) { 
@@ -21,13 +21,11 @@ export class AdminComponent implements OnInit {
       this.usuario = u;
       
       if (this.usuario) {
-        if (this.usuario.rol === 'administrador') {
-          this.dropdownItems = [
-            { clave: 'Pacientes', valor: '/admin/pacientes' },
-            { clave: 'Especialista', valor: '/admin/especialistas' },
-            { clave: 'Nuevo administrador', valor: '/admin/registro' }
-          ];
-        }
+        this.links = [
+          { clave: 'Pacientes', valor: '/admin/pacientes' },
+          { clave: 'Especialista', valor: '/admin/especialistas' },
+          { clave: 'Nuevo administrador', valor: '/admin/registro' }
+        ];
       }
       
       this.spinner = false;

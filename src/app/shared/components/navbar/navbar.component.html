@@ -1,0 +1,43 @@
+<nav *ngIf="usuario" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink=".">
+          <img
+            src="../../assets/logo.svg"
+            class="me-2"
+            height="40"
+            alt=""
+            loading="lazy"
+          />
+          <small>LNCK</small>
+        </a>
+        <ul class="navbar-nav ms-auto">
+            <span class="navbar-text">{{ usuario.correo }}</span>
+            <!-- Avatar -->
+            <li mdbDropdown class="nav-item dropdown">
+              <span
+                class="nav-link dropdown-toggle d-flex align-items-center"
+                id="navbarDropdownMenuLink"
+                role="button"
+                mdbDropdownToggle
+                aria-expanded="false"
+              >
+                <img
+                  [src]="usuario.imagen"
+                  class="rounded-circle"
+                  height="22"
+                  alt=""
+                  loading="lazy"
+                />
+              </span>
+              <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li *ngFor="let item of links">
+                    <a class="dropdown-item" [routerLink]="item.valor">{{ item.clave }}</a>
+                </li>
+                <li>
+                  <p type="button" class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</p>
+                </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
