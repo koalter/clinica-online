@@ -23,7 +23,7 @@ export class TablaEspecialistasComponent implements OnInit {
       { field: 'dni', headerName: 'DNI' },
       { field: 'especialidad' },
       { field: 'correo', headerName: 'Correo Electrónico' },
-      { field: 'imagen' }
+      { field: 'imagen', headerName: 'Foto de Perfil' }
     ];
   }
 

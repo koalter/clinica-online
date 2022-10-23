@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, deleteUser, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
 import { addDoc, collection, doc, DocumentData, Firestore, getDoc, setDoc, Timestamp } from "@angular/fire/firestore";
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { Administrador } from '../models/Administrador';
@@ -42,6 +42,7 @@ export class UsuarioService {
         await this.guardarDatosDeUsuario(usuario, usuario.constructor.name.toLowerCase());
         await addDoc(collection(this.firestore, 'logUsuarios'), { usuario: usuario.correo, fechaInicio: Timestamp.now() });
         await this.obtenerDatosDeUsuario();
+        // await sendEmailVerification(result.user);
       } catch (err: any) {
         await deleteUser(result.user);
         throw err;
@@ -64,12 +65,17 @@ export class UsuarioService {
 
     const imgRef = ref(this.storage, `avatar/${data.correo}`);
     await uploadBytes(imgRef, data.imagen);
-    if (data.imagenB) {
-      await uploadBytes(ref(this.storage, `avatar/${data.correo}_b`), data.imagenB);
-    }
-    
     const photoURL = await getDownloadURL(imgRef);
     await updateProfile(this.auth.currentUser as User, { photoURL: photoURL });
+    docData['imagen'] = photoURL;
+
+    if (data.imagenB) {
+      const imgRef_b = ref(this.storage, `avatar/${data.correo}_b`);
+      await uploadBytes(imgRef_b, data.imagenB);
+      const photoURL_b = await getDownloadURL(imgRef_b);
+      docData['imagenB'] = photoURL_b;
+    }
+    
     
     await setDoc(doc(this.firestore, 'usuarios', data.correo), docData);
   }

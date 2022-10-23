@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Usuario } from '../models/Usuario';
-import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-bienvenido',
@@ -10,39 +7,10 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class BienvenidoComponent implements OnInit {
 
-  spinner: boolean = true;
-  usuario!: Usuario | null;
-  dropdownItems!: any[];
-
-  constructor(private usuarioService: UsuarioService,
-              private router: Router) { 
-    this.usuarioService.obtenerDatosDeUsuario()
-    .then(u => {
-      this.usuario = u;
-      
-      if (this.usuario) {
-        if (this.usuario.rol === 'administrador') {
-          this.dropdownItems = [
-            { clave: 'Pacientes', valor: '/bienvenido/admin/pacientes' },
-            { clave: 'Especialista', valor: '/bienvenido/admin/especialistas' },
-            { clave: 'Nuevo administrador', valor: '/bienvenido/admin/registro' }
-          ];
-        }
-      }
-      
-      this.spinner = false;
-    });
+  constructor() { 
   }
 
   ngOnInit(): void {
   }
 
-  cerrarSesion() {
-    this.spinner = true;
-    this.usuarioService.cerrarSesion()
-    .then(() => {
-      this.router.navigate(['bienvenido', 'login']);
-    })
-    .finally(() => this.spinner = false);
-  }
 }

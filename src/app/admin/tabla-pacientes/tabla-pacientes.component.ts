@@ -22,8 +22,8 @@ export class TablaPacientesComponent implements OnInit {
       { field: 'dni', headerName: 'DNI' },
       { field: 'obraSocial', headerName: 'Obra Social' },
       { field: 'correo', headerName: 'Correo Electrónico' },
-      { field: 'imagen' },
-      { field: 'imagen_b' }
+      { field: 'imagen', headerName: 'Foto de Perfil' },
+      { field: 'imagenB', headerName: 'Foto de Perfil 2' }
     ];
   }
 
