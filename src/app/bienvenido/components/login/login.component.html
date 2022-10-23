@@ -9,7 +9,7 @@
             <input class="form-control" type="password" id="clave" [(ngModel)]="clave" name="clave" placeholder="Contraseña">
             <label class="text-muted" for="clave">Contraseña</label>
         </div>
-        <button routerLink="" class="btn btn-primary w-100 p-3 mb-4" (click)="enviarCredenciales()">Iniciar sesión</button>
+        <button class="btn btn-primary w-100 p-3 mb-4" (click)="enviarCredenciales()">Iniciar sesión</button>
     </form>
     <button (click)="usarDatosDePrueba('test_paciente@lnck-clinica-online.web.app', 'paciente')" class="btn btn-secondary w-100 p-2 my-1">Ingresar como Paciente de prueba</button>
     <button (click)="usarDatosDePrueba('test_especialista@lnck-clinica-online.web.app', 'especialista')" class="btn btn-warning w-100 p-2 my-1">Ingresar como Especialista de prueba</button>

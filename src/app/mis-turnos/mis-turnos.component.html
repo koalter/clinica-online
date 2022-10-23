@@ -21,9 +21,6 @@
                 />
               </span>
               <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                <li *ngFor="let item of dropdownItems">
-                    <a class="dropdown-item" [routerLink]="item.valor">{{ item.clave }}</a>
-                </li>
                 <li>
                   <p type="button" class="dropdown-item" (click)="cerrarSesion()">Cerrar sesión</p>
                 </li>
@@ -32,6 +29,7 @@
         </ul>
     </div>
 </nav>
-<router-outlet></router-outlet>
+
+<p>mis-turnos works!</p>
 
 <app-spinner [condicion]="this.spinner"></app-spinner>

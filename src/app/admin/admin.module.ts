@@ -10,6 +10,7 @@ import { TablaEspecialistasComponent } from './tabla-especialistas/tabla-especia
 import { RegistroAdministradorComponent } from './registro-administrador/registro-administrador.component';
 import { AdminComponent } from './admin.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AgGridModule } from 'ag-grid-angular';
   imports: [
     CommonModule,
     MdbCollapseModule,
+    MdbDropdownModule,
     AgGridModule,
     ReactiveFormsModule,
     AdminRoutingModule,

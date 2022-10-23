@@ -26,8 +26,8 @@ export class RegistroAdministradorComponent implements OnInit {
       clave_verificacion: new FormControl(''),
       nombre: new FormControl('', Validators.required),
       apellido: new FormControl('', Validators.required),
-      edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
-      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]'), Validators.minLength(7), Validators.maxLength(8)]),
+      edad: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
+      dni: new FormControl('', [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(7), Validators.maxLength(8)]),
       imagen: new FormControl(undefined, Validators.required)
     });
 

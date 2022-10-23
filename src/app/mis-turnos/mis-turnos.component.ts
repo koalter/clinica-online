@@ -4,32 +4,20 @@ import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../services/usuario.service';
 
 @Component({
-  selector: 'app-bienvenido',
-  templateUrl: './bienvenido.component.html',
-  styleUrls: ['./bienvenido.component.scss']
+  selector: 'app-mis-turnos',
+  templateUrl: './mis-turnos.component.html',
+  styleUrls: ['./mis-turnos.component.scss']
 })
-export class BienvenidoComponent implements OnInit {
+export class MisTurnosComponent implements OnInit {
 
   spinner: boolean = true;
   usuario!: Usuario | null;
-  dropdownItems!: any[];
 
   constructor(private usuarioService: UsuarioService,
               private router: Router) { 
     this.usuarioService.obtenerDatosDeUsuario()
     .then(u => {
       this.usuario = u;
-      
-      if (this.usuario) {
-        if (this.usuario.rol === 'administrador') {
-          this.dropdownItems = [
-            { clave: 'Pacientes', valor: '/bienvenido/admin/pacientes' },
-            { clave: 'Especialista', valor: '/bienvenido/admin/especialistas' },
-            { clave: 'Nuevo administrador', valor: '/bienvenido/admin/registro' }
-          ];
-        }
-      }
-      
       this.spinner = false;
     });
   }

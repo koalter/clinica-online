@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/Usuario';
 import { UsuarioService } from '../services/usuario.service';
 
 @Component({
@@ -8,12 +9,29 @@ import { UsuarioService } from '../services/usuario.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  spinner: boolean = false;
-  email: string
+  
+  spinner: boolean = true;
+  usuario!: Usuario | null;
+  dropdownItems!: any[];
 
   constructor(private usuarioService: UsuarioService,
-              private router: Router) {
-    this.email = this.usuarioService.usuario.email;
+              private router: Router) { 
+    this.usuarioService.obtenerDatosDeUsuario()
+    .then(u => {
+      this.usuario = u;
+      
+      if (this.usuario) {
+        if (this.usuario.rol === 'administrador') {
+          this.dropdownItems = [
+            { clave: 'Pacientes', valor: '/admin/pacientes' },
+            { clave: 'Especialista', valor: '/admin/especialistas' },
+            { clave: 'Nuevo administrador', valor: '/admin/registro' }
+          ];
+        }
+      }
+      
+      this.spinner = false;
+    });
   }
 
   ngOnInit(): void {

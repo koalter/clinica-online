@@ -23,7 +23,16 @@ export class LoginComponent implements OnInit {
     this.spinner = true;
     this.usuarioService.iniciarSesion(this.correo, this.clave)
     .then(res => {
-      this.router.navigate(['bienvenido']);
+      this.usuarioService.obtenerDatosDeUsuario()
+      .then(usuario => {
+        if (usuario) {
+          if (usuario.rol === 'administrador') {
+            this.router.navigate(['admin']);
+          } else {
+            this.router.navigate(['mis-turnos']);
+          }
+        }
+      })
     })
     .catch(err => console.error(err))
     .finally(() => this.spinner = false);
