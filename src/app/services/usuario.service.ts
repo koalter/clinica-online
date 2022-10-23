@@ -96,6 +96,18 @@ export class UsuarioService {
     return null;
   }
 
+  async actualizarDatos(data: any) {
+    const docData: DocumentData = {};
+    for (let key in data) {
+      if (key !== 'correo')
+        docData[key] = data[key];
+    }
+
+    docData['rol'] = data['rol'];
+
+    await setDoc(doc(this.firestore, 'usuarios', data['correo']), docData);
+  }
+
   async cerrarSesion() {
     this.detallesUsuario = null;
     this.usuario = null;

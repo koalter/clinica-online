@@ -29,7 +29,7 @@ export class AppComponent {
           if (this.usuario.rol === 'administrador') {
             this.links = [
               { clave: 'Pacientes', valor: '/admin/pacientes' },
-              { clave: 'Especialista', valor: '/admin/especialistas' },
+              { clave: 'Especialistas', valor: '/admin/especialistas' },
               { clave: 'Nuevo administrador', valor: '/admin/registro' }
             ];
           }
