@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['mis-turnos']);
           }
         }
-      })
+      });
     })
     .catch(err => console.error(err))
     .finally(() => this.spinner = false);

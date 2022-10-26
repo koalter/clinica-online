@@ -51,7 +51,12 @@ export class RegistroPacienteComponent implements OnInit {
   
       this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
       .then(res => {
-        this.router.navigate(['bienvenido']);
+        this.usuarioService.obtenerDatosDeUsuario()
+        .then(usuario => {
+          if (usuario) {
+            this.router.navigate(['mis-turnos']);
+          }
+        });
       })
       .catch(err => console.error(err))
       .finally(() => this.spinner = false);
