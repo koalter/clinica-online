@@ -1,0 +1,102 @@
+<div class="container col-sm-8 col-md-6 col-lg-4 col-xxl-3 border-primary p-4">
+    <h3>Registro de especialista nuevo</h3>
+    <form class="border-bottom mb-3" [formGroup]="formulario" (ngSubmit)="enviarCredenciales()">
+        <div class="form-floating input my-3">
+            <input class="form-control" type="text" id="nombre" formControlName="nombre" placeholder="Nombre" required>
+            <label class="text-muted" for="nombre">Nombre</label>
+            <div *ngIf="formulario.get('nombre')?.invalid && (formulario.get('nombre')?.touched || formulario.get('nombre')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('nombre')?.errors?.['required']">
+                    El nombre es requerido
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="text" id="apellido" formControlName="apellido" placeholder="Apellido" required>
+            <label class="text-muted" for="apellido">Apellido</label>
+            <div *ngIf="formulario.get('apellido')?.invalid && (formulario.get('apellido')?.touched || formulario.get('apellido')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('apellido')?.errors?.['required']">
+                    El apellido es requerido
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="text" id="edad" formControlName="edad" placeholder="Edad" 
+                required (keydown)="validarNumero($event)">
+            <label class="text-muted" for="edad">Edad</label>
+            <div *ngIf="formulario.get('edad')?.invalid && (formulario.get('edad')?.touched || formulario.get('edad')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('edad')?.errors?.['required']">
+                    La edad es requerida
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="text" id="dni" formControlName="dni" placeholder="DNI (sólo números)" 
+                required minlength="7" maxlength="8" (keydown)="validarNumero($event)">
+            <label class="text-muted" for="dni">DNI (sólo números)</label>
+            <div *ngIf="formulario.get('dni')?.invalid && (formulario.get('dni')?.touched || formulario.get('dni')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('dni')?.errors?.['required']">
+                    El DNI es requerido
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="text" id="especialidad" formControlName="especialidad" placeholder="Especialidad" required>
+            <label class="text-muted" for="especialidad">Especialidad</label>
+            <div *ngIf="formulario.get('especialidad')?.invalid && (formulario.get('especialidad')?.touched || formulario.get('especialidad')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('especialidad')?.errors?.['required']">
+                    La especialidad es requerida
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="email" id="correo" formControlName="correo" placeholder="Correo electrónico" required>
+            <label class="text-muted" for="correo">Correo electrónico</label>
+            <div *ngIf="formulario.get('correo')?.invalid && (formulario.get('correo')?.touched || formulario.get('correo')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('correo')?.errors?.['required']">
+                    El correo es requerido
+                </small>
+                <small *ngIf="formulario.get('correo')?.errors?.['pattern']">
+                    El formato del correo es incorrecto
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="password" id="clave" formControlName="clave" placeholder="Contraseña" required>
+            <label class="text-muted" for="clave">Contraseña</label>
+            <div *ngIf="formulario.get('clave')?.invalid && (formulario.get('clave')?.touched || formulario.get('clave')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('clave')?.errors?.['required']">
+                    La contraseña es requerida
+                </small>
+            </div>
+        </div>
+        <div class="form-floating input my-3">
+            <input class="form-control" type="password" id="clave_verificacion" formControlName="clave_verificacion" placeholder="Repetí tu contraseña" required>
+            <label class="text-muted" for="clave_verificacion">Repetí tu contraseña</label>
+            <div *ngIf="formulario.get('clave_verificacion')?.invalid && (formulario.get('clave_verificacion')?.touched || formulario.get('clave_verificacion')?.dirty)"
+                class="text-danger">
+                <small *ngIf="formulario.get('clave_verificacion')?.errors?.['confirmFormControl']">
+                    La contraseña no coincide
+                </small>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="input col-8">
+                <label class="form-label" for="imagen">Imágen de perfil</label>
+                <input type="file" class="form-control" id="imagen" (change)="imagen_change($event)" />
+            </div>
+            <div class="col-3">
+                <img *ngIf="rutaImagen" [src]="rutaImagen" alt="Foto de perfil" style="height: 100px;">
+            </div>
+        </div>
+        <input [disabled]="formulario.invalid" type="submit" class="btn btn-success w-100 p-3 mb-4" value="Registrarse" />
+    </form>
+    <p class="text-center">¿Ya tenés un usuario? <a routerLink="../../login">Iniciá sesión</a></p>
+    <p class="text-center">¿Necesitás atenderte? <a routerLink="../paciente">Llená este formulario</a></p>
+</div>
