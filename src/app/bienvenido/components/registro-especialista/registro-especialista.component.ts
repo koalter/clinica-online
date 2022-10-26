@@ -15,6 +15,7 @@ export class RegistroEspecialistaComponent implements OnInit {
   formulario: FormGroup;
   spinner: boolean = false;
   rutaImagen: string;
+  especialidad: string = '';
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) {
@@ -84,4 +85,12 @@ export class RegistroEspecialistaComponent implements OnInit {
     }
   }
 
+  seleccionarEspecialidad(event: any) {
+    this.especialidad = event.target.innerText;
+    if (this.especialidad.toLowerCase() !== 'otro') {
+      this.formulario.controls['especialidad'].setValue(event.target.innerText);      
+    } else {
+      this.formulario.controls['especialidad'].setValue('');
+    }
+  }
 }

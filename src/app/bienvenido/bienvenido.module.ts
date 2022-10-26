@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroPacienteComponent } from './components/registro-paciente/registro-paciente.component';
 import { RegistroEspecialistaComponent } from './components/registro-especialista/registro-especialista.component';
 import { SharedModule } from "../shared/shared.module";
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SharedModule } from "../shared/shared.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AgGridModule,
     SharedModule,
     BienvenidoRoutingModule
   ]

@@ -1,0 +1,13 @@
+table, thead, tbody, td {
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+    padding: 8px;
+}
+
+tbody td {
+    cursor: pointer;
+
+    &:hover {
+        background-color: lightgrey;
+    }
+}
