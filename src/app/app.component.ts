@@ -26,7 +26,7 @@ export class AppComponent {
         this.usuario = u;
         
         if (this.usuario) {
-          if (this.usuario.rol === 'administrador') {
+          if (this.usuario['rol'] === 'administrador') {
             this.links = [
               { clave: 'Pacientes', valor: '/admin/pacientes' },
               { clave: 'Especialistas', valor: '/admin/especialistas' },

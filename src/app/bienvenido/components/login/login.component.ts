@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       this.usuarioService.obtenerDatosDeUsuario()
       .then(usuario => {
         if (usuario) {
-          if (usuario.rol === 'administrador') {
+          if (usuario['rol'] === 'administrador') {
             this.router.navigate(['admin']);
           } else {
             this.router.navigate(['mis-turnos']);
