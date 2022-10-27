@@ -38,7 +38,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -108,7 +108,7 @@
             "ssr": false,
             "browserTarget": "clinica-online:build:production",
             "firebaseProject": "clinica-online-de2f5",
-            "firebaseHostingSite": "lnck-clinica-online"
+            "firebaseHostingSite": "clinica-online-de2f5"
           }
         }
       }
