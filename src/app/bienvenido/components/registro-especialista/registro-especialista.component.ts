@@ -12,6 +12,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 })
 export class RegistroEspecialistaComponent implements OnInit {
 
+  readonly ROL: string = 'especialista';
   formulario: FormGroup;
   spinner: boolean = false;
   rutaImagen: string;
@@ -44,7 +45,7 @@ export class RegistroEspecialistaComponent implements OnInit {
       this.spinner = true;
       const usuario = new Especialista(this.formulario.get('correo')?.value, this.formulario.get('nombre')?.value,
       this.formulario.get('apellido')?.value, this.formulario.get('edad')?.value, this.formulario.get('dni')?.value,
-      this.formulario.get('imagen')?.value, this.formulario.get('especialidad')?.value);
+      this.formulario.get('imagen')?.value, this.ROL, this.formulario.get('especialidad')?.value);
   
       this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
       .then(res => {

@@ -12,6 +12,7 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class RegistroAdministradorComponent implements OnInit {
 
+  readonly ROL: string = 'administrador';
   formulario: FormGroup;
   spinner: boolean = false;
   rutaImagen: string;
@@ -43,7 +44,7 @@ export class RegistroAdministradorComponent implements OnInit {
       this.spinner = true;
       const usuario = new Administrador(this.formulario.get('correo')?.value, this.formulario.get('nombre')?.value,
       this.formulario.get('apellido')?.value, this.formulario.get('edad')?.value, this.formulario.get('dni')?.value,
-      this.formulario.get('imagen')?.value);
+      this.formulario.get('imagen')?.value, this.ROL);
   
       this.usuarioService.registrarUsuario(usuario, this.formulario.get('clave')?.value)
       .then(res => {

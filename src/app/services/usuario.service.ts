@@ -33,11 +33,11 @@ export class UsuarioService {
 
   async registrarUsuario(usuario: Usuario, clave: string) {
     try {
-      const result = await createUserWithEmailAndPassword(this.auth, usuario.correo, clave);
+      const result = await createUserWithEmailAndPassword(this.auth, usuario.Correo, clave);
       
       try {
-        await this.guardarDatosDeUsuario(usuario, usuario.constructor.name.toLowerCase());
-        await addDoc(collection(this.firestore, 'logUsuarios'), { usuario: usuario.correo, fechaInicio: Timestamp.now() });
+        await this.guardarDatosDeUsuario(usuario);
+        await addDoc(collection(this.firestore, 'logUsuarios'), { usuario: usuario.Correo, fechaInicio: Timestamp.now() });
         await this.obtenerDatosDeUsuario();
         await sendEmailVerification(result.user);
       } catch (err: any) {
@@ -51,14 +51,12 @@ export class UsuarioService {
     }
   }
 
-  private async guardarDatosDeUsuario(data: any, rol: string) {
+  private async guardarDatosDeUsuario(data: any) {
     const docData: DocumentData = {};
     for (let key in data) {
       if (key !== 'correo' && !key.includes('imagen'))
         docData[key] = data[key];
     }
-
-    docData['rol'] = rol;
 
     const imgRef = ref(this.storage, `avatar/${data.correo}`);
     await uploadBytes(imgRef, data.imagen);

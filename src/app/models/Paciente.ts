@@ -1,12 +1,20 @@
 import { Usuario } from "./Usuario";
 
 export class Paciente extends Usuario {
-    obraSocial: string;
-    imagenB: string;
+    private obraSocial: string;
+    private imagenB: string;
 
-    constructor(correo: string, nombre: string, apellido: string, edad: number, dni: number, imagen: string,
+    public get ObraSocial(): string {
+        return this.obraSocial;
+    }
+
+    public get ImagenB(): string {
+        return this.imagenB;
+    }
+
+    constructor(correo: string, nombre: string, apellido: string, edad: number, dni: number, imagen: string, rol: string,
         imagenB: string, obraSocial: string) {
-        super(correo, nombre, apellido, edad, dni, imagen);
+        super(correo, nombre, apellido, edad, dni, imagen, rol);
         this.imagenB = imagenB;
         this.obraSocial = obraSocial;
     }
