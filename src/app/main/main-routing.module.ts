@@ -3,12 +3,18 @@ import { AuthPipe, canActivate, emailVerified } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { map, pipe } from 'rxjs';
 import { MisTurnosComponent } from './mis-turnos/mis-turnos.component';
+import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { VerificarUsuarioComponent } from './verificar-usuario/verificar-usuario.component';
 
 const routes: Routes = [
   {
     path: 'mis-turnos',
     component: MisTurnosComponent,
+    ...canActivate(() => redirectUnverifiedTo('verificar-usuario'))
+  },
+  {
+    path: 'solicitar-turno',
+    component: SolicitarTurnoComponent,
     ...canActivate(() => redirectUnverifiedTo('verificar-usuario'))
   },
   {

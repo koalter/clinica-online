@@ -1,0 +1,41 @@
+<div class="container col-sm-8 col-md-6 col-lg-4 col-xxl-3 border-primary p-4">
+  <h3>Nuevo turno</h3>
+  <form class="mb-3" [formGroup]="formulario" (ngSubmit)="submit()">
+    <div class="form-floating input my-3">
+      <input class="form-control" type="text" id="especialidad" formControlName="especialidad" placeholder="Especialidad" required>
+      <label class="text-muted" for="especialidad">Especialidad</label>
+      <div *ngIf="formulario.get('especialidad')?.invalid && (formulario.get('especialidad')?.touched || formulario.get('especialidad')?.dirty)"
+        class="text-danger">
+        <small *ngIf="formulario.get('especialidad')?.errors?.['required']">
+          La especialidad es requerida
+        </small>
+      </div>
+    </div>
+  
+    <div class="form-floating input my-3">
+      <input class="form-control" type="text" id="especialista" formControlName="especialista" placeholder="Especialista" required>
+      <label class="text-muted" for="especialista">Especialista</label>
+      <div *ngIf="formulario.get('especialista')?.invalid && (formulario.get('especialista')?.touched || formulario.get('especialista')?.dirty)"
+        class="text-danger">
+        <small *ngIf="formulario.get('especialista')?.errors?.['required']">
+          El especialista es requerido
+        </small>
+      </div>
+    </div>
+  
+    <div class="form-floating input my-3">
+      <input class="form-control" type="text" id="fecha" formControlName="fecha" placeholder="Fecha" required>
+      <label class="text-muted" for="fecha">Fecha</label>
+      <div *ngIf="formulario.get('fecha')?.invalid && (formulario.get('fecha')?.touched || formulario.get('fecha')?.dirty)"
+        class="text-danger">
+        <small *ngIf="formulario.get('fecha')?.errors?.['required']">
+          La fecha es requerida
+        </small>
+      </div>
+    </div>
+
+    <button [disabled]="formulario.invalid" type="submit" class="btn btn-info w-100 p-3 mb-4">Solicitar nuevo turno</button>
+  </form>
+</div>
+
+<app-spinner [condicion]="spinner"></app-spinner>
