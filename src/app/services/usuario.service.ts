@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, deleteUser, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
-import { addDoc, collection, doc, DocumentData, Firestore, getDoc, setDoc, Timestamp } from "@angular/fire/firestore";
+import { addDoc, collection, doc, DocumentData, Firestore, getDoc, getDocs, limit, query, setDoc, Timestamp, where } from "@angular/fire/firestore";
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { Usuario } from '../models/Usuario';
 import { UsuarioFactory } from '../models/UsuarioFactory';
@@ -110,6 +110,30 @@ export class UsuarioService {
     this.detallesUsuario = null;
     this.usuario = null;
     await signOut(this.auth);
+  }
+
+  async traerUsuariosDePrueba(): Promise<Usuario[]> {
+    const q = query(collection(this.firestore, 'usuarios_test'));
+    const respuesta: Usuario[] = [];
+    
+    try {
+      const snapshot = await getDocs(q);
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const usuario = UsuarioFactory.CrearUsuario(data, doc.id, data['rol']);
+        respuesta.push(usuario);
+      });
+
+      return respuesta.sort((a, b) => {
+        if (a.Rol < b.Rol) return 1;
+        else if (b.Rol < a.Rol) return -1;
+        else return 0;
+      });
+
+    } catch (err: any) {
+      addDoc(collection(this.firestore, 'errores'), { error: err.toString(), fecha: Timestamp.now() });
+      throw err;
+    }
   }
 
 }

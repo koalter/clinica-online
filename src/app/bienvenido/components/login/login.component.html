@@ -11,8 +11,6 @@
         </div>
         <button class="btn btn-primary w-100 p-3 mb-4" (click)="enviarCredenciales()">Iniciar sesión</button>
     </form>
-    <button (click)="usarDatosDePrueba('ixvvoyshmrbplddiwc@tmmwj.com', 'paciente')" class="btn btn-secondary w-100 p-2 my-1">Ingresar como Paciente de prueba</button>
-    <button (click)="usarDatosDePrueba('pgeawpipdekmxubjmr@tmmcv.com', 'especialista')" class="btn btn-warning w-100 p-2 my-1">Ingresar como Especialista de prueba</button>
-    <button (click)="usarDatosDePrueba('wxcuipyaeaoivbflnz@tmmcv.net', 'administrador')" class="btn btn-outline-danger w-100 p-2 my-1">Ingresar como Administrador</button>
+    <lista-usuarios [listado]="usuarios" (seleccionar)="onSeleccionar($event)"></lista-usuarios>
     <p class="text-center mt-3">¿No tenés cuenta? <a routerLink="../registro">Registrate</a></p>
 </main>
