@@ -4,13 +4,13 @@ import { RouterModule } from '@angular/router';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-
-
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 
 @NgModule({
   declarations: [
     SpinnerComponent, 
-    NavbarComponent
+    NavbarComponent, 
+    ListaUsuariosComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   exports: [
     SpinnerComponent, 
-    NavbarComponent
+    NavbarComponent,
+    ListaUsuariosComponent
   ]
 })
 export class SharedModule { }

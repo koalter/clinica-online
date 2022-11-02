@@ -1,0 +1,10 @@
+<section class="d-flex justify-content-center">
+  <img
+    *ngFor="let usuario of listado"
+    [src]="usuario.Imagen"
+    [alt]="usuario.Correo"
+    role="button"
+    (click)="seleccionarUsuario(usuario)"
+    class="m-2"
+  />
+</section>
