@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="h-100 d-flex flex-column align-items-center justify-content-center">
+        <h2 class="text-primary">Alta de usuario</h2>
+        <mdb-tabs class="p-5">
+            <mdb-tab title="Paciente">
+                <ng-template mdbTabContent>
+                    Tab content 1
+                </ng-template>
+            </mdb-tab>
+            <mdb-tab title="Especialista">
+                <ng-template mdbTabContent> 
+                    Tab content 2
+                </ng-template>
+            </mdb-tab>
+        </mdb-tabs>
+        <p>¿Ya tenés usuario?</p>
+        <button class="btn btn-outline-primary" [routerLink]="['', 'login']">Iniciá sesión</button>
+    </div>
+</div>
