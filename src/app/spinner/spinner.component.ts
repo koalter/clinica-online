@@ -11,6 +11,8 @@ export class SpinnerComponent {
   isLoading!: boolean;
 
   constructor(private svc: SpinnerService) {
-    this.svc.loading.subscribe(state => this.isLoading = state);
+    this.svc.inyectar(state => {
+      this.isLoading = state;
+    });
   }
 }

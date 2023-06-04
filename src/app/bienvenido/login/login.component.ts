@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,14 @@ export class LoginComponent {
   formulario: FormGroup;
 
   get correo() {
-    return this.formulario.get('correo');
-  }
-  set correo(value) {
-    this.correo?.setValue(value);
+    return this.formulario.get('correo')!;
   }
 
   get clave() {
-    return this.formulario.get('clave');
-  }
-  set clave(value) {
-    this.clave?.setValue(value);
+    return this.formulario.get('clave')!;
   }
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.formulario = new FormGroup({
       correo: new FormControl('', [Validators.email, Validators.required]),
       clave: new FormControl('', [Validators.required])
@@ -33,7 +28,7 @@ export class LoginComponent {
 
   enviar(): void {
     if (this.formulario.valid) {
-      console.log("¡Sesión iniciada!");
+      this.authService.login(this.correo.value, this.clave.value);
     }
   }
 
