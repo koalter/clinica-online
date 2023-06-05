@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, FormBuilder } from '@angular/forms';
-import { ValueMatchValidator } from '../../../shared/validators/value-match.validator';
+import { PasswordValidator } from '../../validators/password.validator';
+import { Paciente } from '../../domains/usuario.model';
 
 @Component({
   selector: 'form-paciente',
@@ -11,6 +12,7 @@ export class FormPacienteComponent {
   formulario: FormGroup;
   rutaImagenA: string;
   rutaImagenB: string;
+  @Output() submit: EventEmitter<Paciente> = new EventEmitter<Paciente>();
 
   constructor(private fb: FormBuilder) {
     this.rutaImagenA = '../../../../assets/default.jpg'; 
@@ -29,7 +31,7 @@ export class FormPacienteComponent {
       imagen_b: [undefined, Validators.required]
     });
 
-    this.password2.addValidators(ValueMatchValidator.validate(this.password));
+    this.password2.addValidators(PasswordValidator.match(this.password));
   }
 
   get nombre(): AbstractControl {
@@ -72,8 +74,13 @@ export class FormPacienteComponent {
     return this.formulario.get('imagen_b')!;
   }
 
-  submit(): void {
-    console.info(this.formulario.status, this.formulario.value);
+  onSubmit(): void {
+    if (this.formulario.valid) {
+      const usuario = new Paciente(this.nombre.value, this.apellido.value, this.edad.value, 
+        this.dni.value, this.mail.value, this.password.value, this.imagen_a.value, this.imagen_b.value, this.obraSocial.value);
+
+      this.submit.emit(usuario);
+    }
   }
 
   imagenA_change(event: any) {

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ValueMatchValidator } from '../../../shared/validators/value-match.validator';
+import { PasswordValidator } from '../../validators/password.validator';
+import { EspecialidadValidator } from '../../validators/especialidad.validator';
+import { Especialista } from '../../domains/usuario.model';
 
 @Component({
   selector: 'form-especialista',
@@ -8,6 +10,7 @@ import { ValueMatchValidator } from '../../../shared/validators/value-match.vali
   styleUrls: ['./form-especialista.component.scss']
 })
 export class FormEspecialistaComponent {
+  @Output() submit: EventEmitter<Especialista> = new EventEmitter<Especialista>();
   formulario: FormGroup;
   rutaImagen: string;
   especialidades: string[] = [
@@ -35,7 +38,8 @@ export class FormEspecialistaComponent {
       imagen: [undefined, Validators.required]
     });
 
-    this.password2.addValidators(ValueMatchValidator.validate(this.password));
+    this.password2.addValidators(PasswordValidator.match(this.password));
+    this.otraEspecialidad.addValidators(EspecialidadValidator.otraEspecialidad(this.especialidad));
   }
 
   get nombre(): AbstractControl {
@@ -78,8 +82,14 @@ export class FormEspecialistaComponent {
     return this.formulario.get('imagen')!;
   }
 
-  submit(): void {
-    console.info(this.formulario.status, this.formulario.value);
+  onSubmit(): void {
+    if (this.formulario.valid) {
+      const usuario = new Especialista(this.nombre.value, this.apellido.value, this.edad.value, 
+        this.dni.value, this.mail.value, this.password.value, this.imagen.value, 
+        this.especialidad.value === 'Otra' ? this.otraEspecialidad.value : this.especialidad.value);
+
+      this.submit.emit(usuario);
+    }
   }
 
   imagen_change(event: any) {

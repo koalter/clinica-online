@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="h-100 d-flex flex-column align-items-center justify-content-center p-4">
+    <h2 class="text-primary">Alta de usuario</h2>
+    <mdb-tabs class="p-3" [justified]="true">
+      <mdb-tab title="Paciente">
+        <ng-template mdbTabContent>
+          <form-paciente (submit)="registrarUsuario($event)"></form-paciente>
+        </ng-template>
+      </mdb-tab>
+      <mdb-tab title="Especialista">
+        <ng-template mdbTabContent>
+          <form-especialista (submit)="registrarUsuario($event)"></form-especialista>
+        </ng-template>
+      </mdb-tab>
+      <mdb-tab title="Administrador">
+        <ng-template mdbTabContent>
+          form-admin
+        </ng-template>
+      </mdb-tab>
+    </mdb-tabs>
+  </div>
+</div>

@@ -3,31 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { BienvenidoRoutingModule } from './bienvenido-routing.module';
 import { BienvenidoComponent } from './bienvenido.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { RegistroComponent } from './registro/registro.component';
-import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { FormPacienteComponent } from './registro/form-paciente/form-paciente.component';
-import { FormEspecialistaComponent } from './registro/form-especialista/form-especialista.component';
-
+import { SharedModule } from '../shared/shared.module'; 
 
 @NgModule({
   declarations: [
-    BienvenidoComponent,
-    LoginComponent,
-    RegistroComponent,
-    FormPacienteComponent,
-    FormEspecialistaComponent
+    BienvenidoComponent
   ],
   imports: [
     CommonModule,
-    BienvenidoRoutingModule,
-    ReactiveFormsModule,
-    MdbTabsModule,
-    MdbFormsModule,
-    MdbValidationModule
+    SharedModule,
+    BienvenidoRoutingModule
   ]
 })
 export class BienvenidoModule { }
