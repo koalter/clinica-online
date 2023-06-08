@@ -1,22 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./bienvenido/bienvenido.module').then(m => m.BienvenidoModule)
+    loadChildren: () => import('./bienvenido/bienvenido.module').then(m => m.BienvenidoModule),
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectUnauthorizedTo('login') }
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/') }
   },
   {
     path: 'registro',
-    loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule)
+    loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule),
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/') }
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectUnauthorizedTo('login') }
   },
   {
     path: '**',

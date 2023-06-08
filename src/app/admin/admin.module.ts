@@ -7,19 +7,27 @@ import { SharedModule } from '../shared/shared.module';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { RegistroAdminComponent } from './usuarios/registro-admin/registro-admin.component';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { FormAdminComponent } from './form-admin/form-admin.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     UsuariosComponent,
-    RegistroAdminComponent
+    RegistroAdminComponent,
+    FormAdminComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
-    MdbTabsModule
+    MdbTabsModule,
+    MdbFormsModule,
+    MdbValidationModule
   ]
 })
 export class AdminModule { }

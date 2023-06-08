@@ -12,7 +12,7 @@ export class HeaderComponent {
   @Input() usuario?: User | null;
   @Output() cerrarSesion: EventEmitter<void> = new EventEmitter();
   
-  constructor() {}
+  constructor() { console.log(this.usuario)}
   
   cerrarSesion_click(): void {
     this.cerrarSesion.emit();

@@ -46,31 +46,6 @@
   <div class="row mb-2">
     <div class="col">
       <mdb-form-control class="mb-4">
-        <select mdbValidate mdbInput type="text" id="especialidad" class="form-control form-control-lg"
-          formControlName="especialidad" required>
-          <option *ngFor="let opt of especialidades" [value]="opt">{{ opt }}</option>
-        </select>
-        <label mdbLabel class="form-label" for="especialidad">Especialidad</label>
-        <mdb-error class="mt-2" *ngIf="especialidad?.invalid && (especialidad?.dirty || especialidad?.touched)">
-          Ingrese su especialidad
-        </mdb-error>
-      </mdb-form-control>
-    </div>
-    <div *ngIf="especialidad.value === 'Otra'" class="col-6">
-      <mdb-form-control class="mb-4">
-        <input mdbValidate mdbInput type="text" id="otraEspecialidad" class="form-control form-control-lg"
-          formControlName="otraEspecialidad" required>
-        <label mdbLabel class="form-label" for="otraEspecialidad">Especialidad (Otra)</label>
-        <mdb-error class="mt-2"
-          *ngIf="otraEspecialidad?.invalid && (otraEspecialidad?.dirty || otraEspecialidad?.touched)">
-          Ingrese su especialidad
-        </mdb-error>
-      </mdb-form-control>
-    </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col">
-      <mdb-form-control class="mb-4">
         <input mdbValidate mdbInput type="email" id="mail" class="form-control form-control-lg" formControlName="mail"
           required />
         <label mdbLabel class="form-label" for="mail">Mail</label>

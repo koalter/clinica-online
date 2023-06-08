@@ -14,7 +14,7 @@
       </mdb-tab>
       <mdb-tab title="Administrador">
         <ng-template mdbTabContent>
-          form-admin
+          <form-admin (submit)="registrarUsuario($event)"></form-admin>
         </ng-template>
       </mdb-tab>
     </mdb-tabs>
