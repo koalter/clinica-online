@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Usuario } from '../shared/domains/usuario.model';
 import { AuthService } from '../shared/services/auth.service';
+import { Usuario } from '../shared/domains/usuario.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +11,10 @@ import { Router } from '@angular/router';
 export class RegistroComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  registrarUsuario(usuario: Usuario) {
-    if (usuario != null) {
-      this.authService.registro(usuario).then(() => this.router.navigateByUrl('/'));
-    }
+  onSubmit({ usuario, password, imagenes }: { usuario: Usuario, password: string, imagenes: File[]}) {
+    this.authService.registro(usuario, password, imagenes)
+    .then(() => {
+      this.router.navigateByUrl('/');
+    });
   }
 }

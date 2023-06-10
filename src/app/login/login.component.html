@@ -29,7 +29,7 @@
           </div>
           <div class="my-3">
             <mdb-form-control>
-              <input mdbValidate mdbInput type="text" id="clave" class="form-control form-control-lg"
+              <input mdbValidate mdbInput type="password" id="clave" class="form-control form-control-lg"
                 formControlName="clave" required />
               <label mdbLabel class="form-label" for="clave">Contraseña</label>
               <mdb-error *ngIf="clave?.invalid && (clave?.dirty || clave?.touched)" class="mt-2">

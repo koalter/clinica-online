@@ -7,8 +7,10 @@ import { Routes } from '@angular/router';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
+  
   rutas: Routes = [
-    { path: 'usuarios', title: 'Usuarios' },
-    { path: 'usuarios/nuevo', title: 'Nuevo usuario' }
+    { path: 'usuarios/pacientes', title: 'Pacientes' },
+    { path: 'usuarios/especialistas', title: 'Especialistas' },
+    { path: 'alta', title: 'Nuevo usuario' }
   ];
 }

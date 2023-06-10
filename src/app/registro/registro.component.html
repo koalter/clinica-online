@@ -4,12 +4,12 @@
     <mdb-tabs class="p-3" [justified]="true">
       <mdb-tab title="Paciente">
         <ng-template mdbTabContent>
-          <form-paciente (submit)="registrarUsuario($event)"></form-paciente>
+          <form-paciente (submitir)="onSubmit($event)"></form-paciente>
         </ng-template>
       </mdb-tab>
       <mdb-tab title="Especialista">
         <ng-template mdbTabContent>
-          <form-especialista (submit)="registrarUsuario($event)"></form-especialista>
+          <form-especialista (submitir)="onSubmit($event)"></form-especialista>
         </ng-template>
       </mdb-tab>
     </mdb-tabs>

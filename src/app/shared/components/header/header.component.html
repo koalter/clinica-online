@@ -16,7 +16,7 @@
           aria-expanded="false"
         >
           <img
-            src="https://mdbootstrap.com/img/Photos/Avatars/img (31).webp"
+            [src]="usuario?.photoURL || '../../../assets/default.jpg'"
             class="rounded-circle"
             height="22"
             alt=""
@@ -29,7 +29,7 @@
             <a class="dropdown-item" [routerLink]="ruta.path">{{ ruta.title }}</a>
           </li>
           <li>
-            <a class="dropdown-item" (click)="cerrarSesion_click()" role="button">Cerrar sesión</a>
+            <a class="dropdown-item" (click)="cerrarSesion()" role="button">Cerrar sesión</a>
           </li>
         </ul>
       </li>

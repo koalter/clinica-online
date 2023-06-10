@@ -19,11 +19,6 @@ const routes: Routes = [
     canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/') }
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectUnauthorizedTo('login') }
-  },
-  {
     path: '**',
     loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule)
   }

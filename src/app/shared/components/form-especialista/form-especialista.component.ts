@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { PasswordValidator } from '../../validators/password.validator';
 import { EspecialidadValidator } from '../../validators/especialidad.validator';
 import { Especialista } from '../../domains/usuario.model';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'form-especialista',
@@ -10,7 +12,7 @@ import { Especialista } from '../../domains/usuario.model';
   styleUrls: ['./form-especialista.component.scss']
 })
 export class FormEspecialistaComponent {
-  @Output() submit: EventEmitter<Especialista> = new EventEmitter<Especialista>();
+  @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
   formulario: FormGroup;
   rutaImagen: string;
   especialidades: string[] = [
@@ -22,16 +24,18 @@ export class FormEspecialistaComponent {
   ];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router) {
     this.rutaImagen = '../../../../assets/default.jpg';
     
     this.formulario = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
-      edad: [null, [Validators.required, Validators.pattern('[0-9]+')]],
+      edad: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(18)]],
       dni: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(7), Validators.maxLength(8)]],
       especialidad: [null, Validators.required],
-      otraEspecialidad: [null],
+      otraEspecialidad: [null, Validators.required],
       mail: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
       password2: [null, Validators.required],
@@ -39,7 +43,7 @@ export class FormEspecialistaComponent {
     });
 
     this.password2.addValidators(PasswordValidator.match(this.password));
-    this.otraEspecialidad.addValidators(EspecialidadValidator.otraEspecialidad(this.especialidad));
+    this.especialidad.addValidators(EspecialidadValidator.habilitarValidaciones(this.otraEspecialidad));
   }
 
   get nombre(): AbstractControl {
@@ -85,15 +89,21 @@ export class FormEspecialistaComponent {
   onSubmit(): void {
     if (this.formulario.valid) {
       const usuario = new Especialista(this.nombre.value, this.apellido.value, this.edad.value, 
-        this.dni.value, this.mail.value, this.password.value, this.imagen.value, 
+        this.dni.value, this.mail.value, this.imagen.value.name, 
         this.especialidad.value === 'Otra' ? this.otraEspecialidad.value : this.especialidad.value);
 
-      this.submit.emit(usuario);
+      const req = {
+        usuario: usuario,
+        password: this.password.value,
+        imagenes: [this.imagen.value]
+      }
+      this.submitir.emit(req);
     }
   }
 
   imagen_change(event: any) {
     const archivo = event.target.files[0];
+
     const elementoId = event.target.id;
     
     if (event.target.files && event.target.files.length

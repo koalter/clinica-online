@@ -56,7 +56,7 @@
         </mdb-error>
       </mdb-form-control>
     </div>
-    <div *ngIf="especialidad.value === 'Otra'" class="col-6">
+    <div class="col-6" *ngIf="especialidad?.value === 'Otra'">
       <mdb-form-control class="mb-4">
         <input mdbValidate mdbInput type="text" id="otraEspecialidad" class="form-control form-control-lg"
           formControlName="otraEspecialidad" required>

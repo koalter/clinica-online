@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, FormBuilder } from '@angular/forms';
 import { PasswordValidator } from '../../validators/password.validator';
 import { Paciente } from '../../domains/usuario.model';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'form-paciente',
@@ -9,19 +11,21 @@ import { Paciente } from '../../domains/usuario.model';
   styleUrls: ['./form-paciente.component.scss']
 })
 export class FormPacienteComponent {
+  @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
   formulario: FormGroup;
   rutaImagenA: string;
   rutaImagenB: string;
-  @Output() submit: EventEmitter<Paciente> = new EventEmitter<Paciente>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router) {
     this.rutaImagenA = '../../../../assets/default.jpg'; 
     this.rutaImagenB = this.rutaImagenA;
 
     this.formulario = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
-      edad: [null, [Validators.required, Validators.pattern('[0-9]+')]],
+      edad: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(18)]],
       dni: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(7), Validators.maxLength(8)]],
       obraSocial: [null, Validators.required],
       mail: [null, [Validators.required, Validators.email]],
@@ -77,9 +81,14 @@ export class FormPacienteComponent {
   onSubmit(): void {
     if (this.formulario.valid) {
       const usuario = new Paciente(this.nombre.value, this.apellido.value, this.edad.value, 
-        this.dni.value, this.mail.value, this.password.value, this.imagen_a.value, this.imagen_b.value, this.obraSocial.value);
+        this.dni.value, this.mail.value, this.password.value, this.imagen_a.value.name, this.imagen_b.value.name, this.obraSocial.value);
 
-      this.submit.emit(usuario);
+      const req = {
+        usuario: usuario,
+        password: this.password.value,
+        imagenes: [this.imagen_a.value, this.imagen_b.value]
+      }
+      this.submitir.emit(req);
     }
   }
 

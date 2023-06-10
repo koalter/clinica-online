@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { BienvenidoRoutingModule } from './bienvenido-routing.module';
 import { BienvenidoComponent } from './bienvenido.component';
-import { SharedModule } from '../shared/shared.module'; 
+import { SharedModule } from '../shared/shared.module';
+import { DashboardComponent } from './dashboard/dashboard.component'; 
 
 @NgModule({
   declarations: [
-    BienvenidoComponent
+    BienvenidoComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

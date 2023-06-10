@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Administrador } from '../../shared/domains/usuario.model';
 import { PasswordValidator } from '../../shared/validators/password.validator';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'form-admin',
@@ -9,17 +11,19 @@ import { PasswordValidator } from '../../shared/validators/password.validator';
   styleUrls: ['./form-admin.component.scss']
 })
 export class FormAdminComponent {
-  @Output() submit: EventEmitter<Administrador> = new EventEmitter<Administrador>();
+  @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
   formulario: FormGroup;
   rutaImagen: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router) {
     this.rutaImagen = '../../../../assets/default.jpg';
     
     this.formulario = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
-      edad: [null, [Validators.required, Validators.pattern('[0-9]+')]],
+      edad: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.min(18)]],
       dni: [null, [Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(7), Validators.maxLength(8)]],
       mail: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
@@ -65,9 +69,15 @@ export class FormAdminComponent {
   onSubmit(): void {
     if (this.formulario.valid) {
       const usuario = new Administrador(this.nombre.value, this.apellido.value, this.edad.value, this.dni.value,
-        this.mail.value, this.password.value, this.imagen.value);
+        this.mail.value, this.password.value, this.imagen.value.name);
 
-      this.submit.emit(usuario);
+
+      const req = {
+        usuario: usuario,
+        password: this.password.value,
+        imagenes: [this.imagen.value]
+      }
+      this.submitir.emit(req);
     }
   }
 
@@ -80,7 +90,7 @@ export class FormAdminComponent {
       const reader = new FileReader();
       this.formulario.get(elementoId)?.setValue(archivo);
       reader.readAsDataURL(this.formulario.get(elementoId)?.value);
-    
+
       reader.onload = () => {
         this.rutaImagen = reader.result as string;
       };

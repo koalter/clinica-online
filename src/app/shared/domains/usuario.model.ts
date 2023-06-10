@@ -4,52 +4,48 @@ export abstract class Usuario {
     edad!: number;
     dni!: number;
     mail!: string;
-    clave!: string;
     imagen!: string;
     rol!: string;
+    verificado!: boolean;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, clave: string, imagen: string) {
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado: boolean = false) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.dni = dni;
         this.mail = mail;
-        this.clave = clave;
         this.imagen = imagen;
+        this.verificado = verificado;
     }
 }
 
 export class Paciente extends Usuario {
     imagenB!: string;
     obraSocial!: string;
-    verificado!: boolean;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, clave: string, imagen: string, imagenB: string, obraSocial: string) {
-        super(nombre, apellido, edad, dni, mail, clave, imagen);
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, imagenB: string, obraSocial: string, verificado: boolean = false) {
+        super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.imagenB = imagenB;
         this.obraSocial = obraSocial;
-        this.verificado = false;
-        this.rol = Paciente.name;
+        this.rol = Paciente.name.toLowerCase();
     }
 }
 
 export class Especialista extends Usuario {
     especialidad!: string;
-    verificado!: boolean;
     habilitado!: boolean;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, clave: string, imagen: string, especialidad: string) {
-        super(nombre, apellido, edad, dni, mail, clave, imagen);
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, especialidad: string, verificado: boolean = false, habilitado: boolean = false) {
+        super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.especialidad = especialidad;
-        this.verificado = false;
-        this.habilitado = false;
-        this.rol = Especialista.name;
+        this.habilitado = habilitado;
+        this.rol = Especialista.name.toLowerCase();
     }
 }
 
 export class Administrador extends Usuario {
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, clave: string, imagen: string) {
-        super(nombre, apellido, edad, dni, mail, clave, imagen);
-        this.rol = Administrador.name;
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado: boolean = false) {
+        super(nombre, apellido, edad, dni, mail, imagen, verificado);
+        this.rol = Administrador.name.toLowerCase();
     }
 }
