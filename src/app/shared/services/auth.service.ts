@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User, updateProfile, sendEmailVerification } from '@angular/fire/auth';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { FirebaseError } from '@angular/fire/app';
@@ -126,7 +126,7 @@ export class AuthService {
       localStorage.setItem('usuario', json);
       await addDoc(collection(this.firestore, 'logUsuarios'), { usuario: correo, fechaInicio: Timestamp.now() });
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       throw new AuthError(err as FirebaseError);
     } finally {
       this.spinnerService.ocultar();
@@ -152,7 +152,7 @@ export class AuthService {
 
       await this.setDatosDeUsuario(user.nombre);
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       throw new AuthError(err as FirebaseError);
     } finally {
       this.spinnerService.ocultar();
@@ -166,7 +166,7 @@ export class AuthService {
       this.spinnerService.mostrar();
       await uploadBytes(storageRef, imagen);
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       throw err;
     } finally {
       this.spinnerService.ocultar();
@@ -180,7 +180,7 @@ export class AuthService {
         const imagenURL = await getDownloadURL(storageRef);
         await updateProfile(this.auth.currentUser, { displayName: nombre, photoURL: imagenURL });
       } catch (err: any) {
-        await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+        await this.logError(err.toString());
         throw err;
       }
     }
@@ -197,7 +197,7 @@ export class AuthService {
 
       return null;
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       throw err;
     }
   }
@@ -210,7 +210,7 @@ export class AuthService {
       this.usuario = null;
       return true;
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       return false;
     } finally {
       this.spinnerService.ocultar();
@@ -234,7 +234,7 @@ export class AuthService {
   
       return res;
     } catch (err: any) {
-      await addDoc(collection(this.firestore, 'logErrores'), { error: err.toString(), fecha: Timestamp.now() });
+      await this.logError(err.toString());
       throw err;
     } finally {
       this.spinnerService.ocultar();
@@ -270,7 +270,7 @@ export class AuthService {
       await updateDoc(docRef, { habilitado: estado });
       return estado;
     } catch (err: any) {
-      await this.logError(err);
+      await this.logError(err.toString());
       throw new AuthError(err as FirebaseError);
     } finally {
       this.spinnerService.ocultar();
@@ -279,5 +279,27 @@ export class AuthService {
 
   logError(mensaje: string): Promise<any> {
     return addDoc(collection(this.firestore, 'logErrores'), { error: mensaje, fecha: Timestamp.now() });
+  }
+
+  async getTestUsers(): Promise<Usuario[]> {
+    this.spinnerService.mostrar();
+    try {
+      const q = query(collection(this.firestore, 'usuarios'), where('test', '==', true));
+      const docs = await getDocs(q);
+      const res: Usuario[] = [];
+      docs.forEach(doc => {
+        this.mapper.fromFirestore(doc)
+        .then(item => {
+          res.push(item!);
+        });
+      });
+  
+      return res;
+    } catch (err: any) {
+      await this.logError(err.toString());
+      throw err;
+    } finally {
+      this.spinnerService.ocultar();
+    }
   }
 }

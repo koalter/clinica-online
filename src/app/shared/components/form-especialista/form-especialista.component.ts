@@ -107,7 +107,7 @@ export class FormEspecialistaComponent {
     const elementoId = event.target.id;
     
     if (event.target.files && event.target.files.length
-      && archivo.size < 50 * 1024) {
+      && archivo.size < 100 * 1024) {
       const reader = new FileReader();
       this.formulario.get(elementoId)?.setValue(archivo);
       reader.readAsDataURL(this.formulario.get(elementoId)?.value);

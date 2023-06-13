@@ -16,7 +16,6 @@ export class ListaEspecialistasComponent {
     this.authService.getEspecialistas()
       .then(res => {
         this.usuarios = res;
-        console.log(this.usuarios);
       });
   }
 

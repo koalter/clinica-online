@@ -81,7 +81,7 @@ export class FormPacienteComponent {
   onSubmit(): void {
     if (this.formulario.valid) {
       const usuario = new Paciente(this.nombre.value, this.apellido.value, this.edad.value, 
-        this.dni.value, this.mail.value, this.password.value, this.imagen_a.value.name, this.imagen_b.value.name, this.obraSocial.value);
+        this.dni.value, this.mail.value, this.imagen_a.value.name, this.imagen_b.value.name, this.obraSocial.value);
 
       const req = {
         usuario: usuario,
@@ -97,7 +97,7 @@ export class FormPacienteComponent {
     const elementoId = event.target.id;
     
     if (event.target.files && event.target.files.length
-      && archivo.size < 50 * 1024) {
+      && archivo.size < 100 * 1024) {
       const reader = new FileReader();
       this.formulario.get(elementoId)?.setValue(archivo);
       reader.readAsDataURL(this.formulario.get(elementoId)?.value);
@@ -115,7 +115,7 @@ export class FormPacienteComponent {
     const elementoId = event.target.id;
     
     if (event.target.files && event.target.files.length
-      && archivo.size < 50 * 1024) {
+      && archivo.size < 100 * 1024) {
       const reader = new FileReader();
       this.formulario.get(elementoId)?.setValue(archivo);
       reader.readAsDataURL(this.formulario.get(elementoId)?.value);

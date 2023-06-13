@@ -17,7 +17,6 @@ export class BienvenidoComponent implements OnInit {
   ngOnInit(): void {
     this.usuario = this.auth.getUsuario();
     this.data = this.auth.getDetalles();
-    console.log(this.data);
   }
 
   get especialistaNoHabilitado(): boolean {

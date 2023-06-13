@@ -1,12 +1,12 @@
 <div class="container-fluid bg-dark">
   <div class="row h-100">
-    <div class="col-md-6 col-lg-7 col-xl-8 d-flex align-items-center ps-5">
-      <div class="col-xl-6">
+    <div class="col-md-6 col-lg-7 col-xl-8 d-flex align-items-center ps-5 background">
+      <div class="col-xl-6 bg-dark bg-opacity-50 p-3 rounded text-light text-opacity-75">
         <h1 class="mb-4">¡Bienvenido a Autogestión!</h1>
         <h5>
           Administrá tu información: cobertura, trámites y gestiones médicas. Todo en un mismo lugar, mucho más fácil.
         </h5>
-        <button class="btn btn-outline-primary p-3 mt-3" routerLink="/registro">Registrate</button>
+        <button class="btn btn-info p-3 mt-3" routerLink="/registro">Registrate</button>
       </div>
     </div>
     <div class="col-md-6 col-lg-5 col-xl-4 border-dark p-5 bg-light d-flex flex-column justify-content-center">
@@ -40,6 +40,13 @@
         </div>
         <button type="submit" class="btn btn-primary p-3 mt-4" [disabled]="!formulario.valid">Iniciar sesión</button>
       </form>
+      <div class="text-center mt-4 row border-top" *ngIf="testUsers">
+        <h5 class="text-primary py-3">Usuarios de prueba</h5>
+        <div *ngFor="let user of testUsers | async" class="profile col">
+          <img [src]="user.imagen" class="rounded-circle h-75 btn p-0" role="button" (click)="setDatosDeLogin(user)">
+          <p>{{ user.nombre }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

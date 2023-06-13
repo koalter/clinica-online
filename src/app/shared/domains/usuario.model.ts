@@ -27,7 +27,7 @@ export class Paciente extends Usuario {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.imagenB = imagenB;
         this.obraSocial = obraSocial;
-        this.rol = Paciente.name.toLowerCase();
+        this.rol = 'paciente';
     }
 }
 
@@ -39,13 +39,13 @@ export class Especialista extends Usuario {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.especialidad = especialidad;
         this.habilitado = habilitado;
-        this.rol = Especialista.name.toLowerCase();
+        this.rol = 'especialista';
     }
 }
 
 export class Administrador extends Usuario {
     constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado: boolean = false) {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
-        this.rol = Administrador.name.toLowerCase();
+        this.rol = 'administrador';
     }
 }
