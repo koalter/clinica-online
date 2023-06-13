@@ -1,0 +1,107 @@
+<form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="text-center">
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="text" id="nombre" class="form-control form-control-lg" formControlName="nombre" required />
+        <label mdbLabel class="form-label" for="nombre">Nombre</label>
+        <mdb-error class="mt-2" *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)">
+          Ingrese su nombre
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+    <div class="col-md-6">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="text" id="apellido" class="form-control form-control-lg" formControlName="apellido" required />
+        <label mdbLabel class="form-label" for="apellido">Apellido</label>
+        <mdb-error class="mt-2" *ngIf="apellido?.invalid && (apellido?.dirty || apellido?.touched)">
+          Ingrese su apellido
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-4">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput (keydown)="validarNumero($event)"
+          type="text" id="edad" class="form-control form-control-lg" formControlName="edad" required />
+        <label mdbLabel class="form-label" for="edad">Edad</label>
+        <mdb-error class="mt-2" *ngIf="edad?.invalid && (edad?.dirty || edad?.touched)">
+          Ingrese su edad
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+    <div class="col-md-8">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput (keydown)="validarNumero($event)"
+          type="text" id="dni" class="form-control form-control-lg" formControlName="dni" required />
+        <label mdbLabel class="form-label" for="dni">DNI (sin puntos)</label>
+        <mdb-error class="mt-2" *ngIf="dni?.invalid && (dni?.dirty || dni?.touched)">
+          Ingrese un número de DNI válido
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="text" id="obraSocial" class="form-control form-control-lg" formControlName="obraSocial" required />
+        <label mdbLabel class="form-label" for="obraSocial">Obra Social</label>
+        <mdb-error class="mt-2" *ngIf="obraSocial?.invalid && (obraSocial?.dirty || obraSocial?.touched)">
+          Ingrese su nombre de obra social
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="email" id="mail" class="form-control form-control-lg" formControlName="mail" required />
+        <label mdbLabel class="form-label" for="mail">Mail</label>
+        <mdb-error class="mt-2" *ngIf="mail?.invalid && (mail?.dirty || mail?.touched)">
+          Ingrese su dirección de mail
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="password" id="password" class="form-control form-control-lg" formControlName="password" required />
+        <label mdbLabel class="form-label" for="password">Contraseña</label>
+        <mdb-error class="mt-2" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+          Ingrese una contraseña válida
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <mdb-form-control class="mb-4">
+        <input mdbValidate mdbInput type="password" id="password2" class="form-control form-control-lg" formControlName="password2" required />
+        <label mdbLabel class="form-label" for="password2">Repetir contraseña</label>
+        <mdb-error class="mt-2" *ngIf="password2?.invalid && (password2?.dirty || password2?.touched)">
+          La contraseña no coincide
+        </mdb-error>
+      </mdb-form-control>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-8 text-start">
+      <label for="imagen_a" class="form-label">Imágen de perfil 1</label>
+      <input class="form-control form-control-sm" id="imagen_a" type="file" (change)="imagenA_change($event)" />
+    </div>
+    <div class="col-3">
+      <img *ngIf="rutaImagenA" [src]="rutaImagenA" alt="Foto de perfil">
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-8 text-start">
+      <label for="imagen_b" class="form-label">Imágen de perfil 2</label>
+      <input class="form-control form-control-sm" id="imagen_b" type="file" (change)="imagenB_change($event)" />
+    </div>
+    <div class="col-3">
+      <img *ngIf="rutaImagenB" [src]="rutaImagenB" alt="Foto de perfil">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Continuar</button>
+</form>

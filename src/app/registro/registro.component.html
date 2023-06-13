@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="h-100 d-flex flex-column align-items-center justify-content-center">
+    <h2 class="text-primary">Registrar usuario</h2>
+    <h3 class="text-secondary h5">Elija el tipo de usuario</h3>
+    <div class="row">
+      <img src="../../assets/paciente.png" alt="Registrar usuario" class="col btn rounded-circle p-0 m-4" height="100"
+        routerLink="paciente">
+      <img src="../../assets/especialista.png" alt="Registrar especialista" class="col btn rounded-circle p-0 m-4" height="100"
+        routerLink="especialista">
+    </div>
+    <router-outlet></router-outlet>
+    <span>
+      ¿Ya tenés usuario? 
+      <a routerLink="/login">Iniciá sesión</a>
+    </span>
+  </div>
+</div>
