@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc, where, QueryConstraint } from '@angular/fire/firestore';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User, updateProfile, sendEmailVerification } from '@angular/fire/auth';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { FirebaseError } from '@angular/fire/app';
@@ -217,10 +217,17 @@ export class AuthService {
     }
   }
 
-  async getUsuarios(tipo: string): Promise<Usuario[]> {
+  async getUsuarios(tipo: string, filtros?: Record<any, string>): Promise<Usuario[]> {
     this.spinnerService.mostrar();
     try {
-      const q = query(collection(this.firestore, 'usuarios'));
+      let constraints: QueryConstraint[] = [];
+      if (filtros) {
+        for (let key in filtros) {
+          constraints.push(where(key, '==', filtros[key]));
+        }
+      }
+
+      const q = query(collection(this.firestore, 'usuarios'), ...constraints);
       const docs = await getDocs(q);
       const res: Usuario[] = [];
       docs.forEach(doc => {
@@ -241,8 +248,8 @@ export class AuthService {
     }
   }
 
-  async getEspecialistas(): Promise<Especialista[]> {
-    const result = (await this.getUsuarios('especialista')) as Especialista[];
+  async getEspecialistas(filtros?: Record<any, string>): Promise<Especialista[]> {
+    const result = (await this.getUsuarios('especialista', filtros)) as Especialista[];
     return result;
   }
 
@@ -250,7 +257,7 @@ export class AuthService {
     return await this.getUsuarios('paciente') as Paciente[];
   }
 
-  async getUno(mail: string) {
+  async getUno(mail: string): Promise<Paciente | Especialista | Administrador | null> {
     const docRef = doc(this.firestore, 'usuarios', mail);
     const docSnap = await getDoc(docRef);
 

@@ -1,0 +1,45 @@
+<div class="container p-5">
+  <div *ngIf="step >= 1" class="row border border-2 border-primary rounded-pill mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Especialidad</h5>
+    <div class="col text-center m-3">
+      <span *ngFor="let especialidad of especialidades | async" class="btn btn-secondary btn-rounded m-2"
+        (click)="seleccionarEspecialidad(especialidad)">{{ especialidad }}</span>
+    </div>
+  </div>
+  <div *ngIf="step >= 2" class="row border border-2 border-primary rounded-pill mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Especialista</h5>
+    <div *ngFor="let especialista of especialistas | async" class="profile text-center m-3 col">
+      <img [src]="especialista.imagen" class="h-75" role="button"
+        (click)="seleccionarEspecialista(especialista)">
+      <p>{{ especialista.nombre }}</p>
+    </div>
+  </div>
+  <div *ngIf="step >= 3" class="row border border-2 border-primary rounded-pill mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Fecha</h5>
+    <div class="col text-center m-3">
+      <span *ngFor="let fecha of fechas" class="btn btn-secondary btn-rounded m-2" (click)="seleccionarFecha(fecha)">{{ fecha | date: 'dd/MM/yyyy hh:mm' }}</span>
+    </div>
+  </div>
+  <div *ngIf="step >= 4" class="row">
+    <h2 class="text-center text-primary py-3">Confirmar turno</h2>
+    <div class="card mx-auto my-4">
+      <ul class="list-group list-group-light list-group-small">
+        <li class="list-group-item px-3">
+          <strong>Especialidad: </strong>
+          {{ especialidad }}
+        </li>
+        <li class="list-group-item px-3">
+          <strong>Especialista: </strong>
+          {{ especialista.nombre }} {{ especialista.apellido }}
+        </li>
+        <li class="list-group-item px-3">
+          <strong>Fecha: </strong>
+          {{ fecha | date: 'dd/MM/yyyy hh:mm' }}
+        </li>
+      </ul>
+      <div class="card-footer bg-light px-3 text-center">
+        <button class="btn btn-success">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
