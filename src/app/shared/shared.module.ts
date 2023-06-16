@@ -9,12 +9,14 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { HeaderComponent } from './components/header/header.component';
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
+import { ButtonVolverComponent } from './components/button-volver/button-volver.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FormPacienteComponent,
-    FormEspecialistaComponent
+    FormEspecialistaComponent,
+    ButtonVolverComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { FormEspecialistaComponent } from './components/form-especialista/form-e
   exports: [
     HeaderComponent,
     FormPacienteComponent,
-    FormEspecialistaComponent
+    FormEspecialistaComponent,
+    ButtonVolverComponent
   ]
 })
 export class SharedModule { }

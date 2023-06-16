@@ -36,7 +36,7 @@ export class AuthService {
             apellido: user.apellido,
             edad: user.edad,
             dni: user.dni,
-            especialidad: (user as Especialista).especialidad,
+            especialidades: (user as Especialista).especialidades,
             habilitado: (user as Especialista).habilitado,
             rol: rol
           };
@@ -60,15 +60,16 @@ export class AuthService {
       }
 
       const imagen = await getDownloadURL(ref(this.storage, `${this.imageURI}${snapshot.id}_0`));
-
+      
       switch ((data['rol'] as string).toLowerCase()) {
         case 'paciente':
           const imagenB = await getDownloadURL(ref(this.storage, `${this.imageURI}${snapshot.id}_1`));
           return new Paciente(
             data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, imagenB, data['obraSocial'], false);
-        case 'especialista':
-          return new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidad'], false, data['habilitado']);
+          case 'especialista':
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidades'], false, data['habilitado']);
+            return resultado;
         case 'administrador':
           return new Administrador(
             data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, false);
@@ -87,8 +88,9 @@ export class AuthService {
           return new Paciente(
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['imagenB'], data['obraSocial'], data['verificado']);
         case 'especialista':
-          return new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidad'], data['verificado'], data['habilitado']);
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['verificado'], data['habilitado']);
+          return resultado;
         case 'administrador':
           return new Administrador(
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['verificado']);

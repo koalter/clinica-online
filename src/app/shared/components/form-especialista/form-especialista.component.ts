@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { PasswordValidator } from '../../validators/password.validator';
 import { EspecialidadValidator } from '../../validators/especialidad.validator';
 import { Especialista } from '../../domains/usuario.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { EspecialidadService } from '../../services/especialidad.service';
+import { Especialidad } from '../../domains/especialidad.model';
 
 @Component({
   selector: 'form-especialista',
@@ -12,21 +14,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./form-especialista.component.scss']
 })
 export class FormEspecialistaComponent {
-  @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
   formulario: FormGroup;
   rutaImagen: string;
-  especialidades: string[] = [
-    'Pediatría',
-    'Otorrinolaringología',
-    'Oftalmología',
-    'Urología',
-    'Otra'
-  ];
+  especialidades: Promise<string[]>
 
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private especialidadService: EspecialidadService) {
     this.rutaImagen = '../../../../assets/default.jpg';
     
     this.formulario = this.fb.group({
@@ -44,6 +40,8 @@ export class FormEspecialistaComponent {
 
     this.password2.addValidators(PasswordValidator.match(this.password));
     this.especialidad.addValidators(EspecialidadValidator.habilitarValidaciones(this.otraEspecialidad));
+
+    this.especialidades = this.especialidadService.traerTodos();
   }
 
   get nombre(): AbstractControl {
@@ -88,16 +86,19 @@ export class FormEspecialistaComponent {
 
   onSubmit(): void {
     if (this.formulario.valid) {
-      const usuario = new Especialista(this.nombre.value, this.apellido.value, this.edad.value, 
-        this.dni.value, this.mail.value, this.imagen.value.name, 
-        this.especialidad.value === 'Otra' ? this.otraEspecialidad.value : this.especialidad.value);
+      const txtEspecialidad = this.especialidad.value === 'Otra' ? this.otraEspecialidad.value : this.especialidad.value;
 
-      const req = {
-        usuario: usuario,
-        password: this.password.value,
-        imagenes: [this.imagen.value]
-      }
-      this.submitir.emit(req);
+      const usuario = new Especialista(this.nombre.value, this.apellido.value, this.edad.value, 
+        this.dni.value, this.mail.value, this.imagen.value.name, [txtEspecialidad]);
+      const especialidad = new Especialidad(usuario.mail, txtEspecialidad);
+
+      this.authService.registro(usuario, this.password.value, [this.imagen.value])
+      .then(() => {
+        this.especialidadService.anidarEspecialidad(especialidad)
+        .then(() => {
+          this.router.navigateByUrl('/');
+        });
+      })
     }
   }
 

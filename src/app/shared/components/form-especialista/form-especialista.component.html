@@ -48,7 +48,8 @@
       <mdb-form-control class="mb-4">
         <select mdbValidate mdbInput type="text" id="especialidad" class="form-control form-control-lg"
           formControlName="especialidad" required>
-          <option *ngFor="let opt of especialidades" [value]="opt">{{ opt }}</option>
+          <option *ngFor="let opt of especialidades | async" [value]="opt">{{ opt }}</option>
+          <option value="Otra">Otra</option>
         </select>
         <label mdbLabel class="form-label" for="especialidad">Especialidad</label>
         <mdb-error class="mt-2" *ngIf="especialidad?.invalid && (especialidad?.dirty || especialidad?.touched)">

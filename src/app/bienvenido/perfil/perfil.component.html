@@ -1,0 +1,72 @@
+<div class="container p-5">
+  <app-button-volver></app-button-volver>
+  <div class="row justify-content-center">
+    <img [src]="usuario.imagen" class="rounded-circle p-0 m-2">
+    <img *ngIf="usuario.rol === 'paciente'" [src]="usuario.imagenB" class="rounded-circle p-0 m-2">
+  </div>
+  <div class="row justify-content-center my-3">
+    <ul class="list-group list-group-light col-md-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">Nombre y apellido</div>
+          <div class="text-muted">{{ usuario.nombre }} {{ usuario.apellido }}</div>
+        </div>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">Edad</div>
+          <div class="text-muted">{{ usuario.edad }}</div>
+        </div>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">Correo electrónico</div>
+          <div class="text-muted">{{ usuario.mail }}</div>
+        </div>
+      </li>
+      <li *ngIf="usuario.obraSocial" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">Obra social</div>
+          <div class="text-muted">{{ usuario.obraSocial }}</div>
+        </div>
+      </li>
+      <li *ngIf="usuario.especialidades" class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">Especialidades</div>
+          <div class="btn-group">
+            <span *ngFor="let especialidad of especialidades">
+              <input mdbRadio type="radio" class="btn-check" name="especialidades" [id]="especialidad.especialidad" autocomplete="off"
+                [checked]="especialidades!.indexOf(especialidad) == 0"
+                (click)="setIndiceEspecialidad(especialidades!.indexOf(especialidad))"
+              />
+              <label class="btn btn-secondary" [for]="especialidad.especialidad">{{ especialidad.especialidad }}</label>
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="row" *ngIf="usuario.rol === 'especialista'">
+    <h2 class="text-center">Mis horarios</h2>
+    <div class="row">
+      <div *ngFor="let modulo of especialidad?.horario; index as i" class="col d-flex flex-column align-items-center">
+        <button class="btn btn-secondary" [disabled]="!especialidad?.horario![i].horas.length" 
+          (click)="seleccionarDia(modulo)">{{ modulo.dia }}</button>
+      </div>
+    </div>
+    <!-- TODO: mover a un popup -->
+    <div class="row my-4">
+      <span *ngFor="let hora of modulo?.horas" class="col">
+        <input mdbCheckbox type="checkbox" class="btn-check" [id]="hora.hora" autocomplete="off" 
+          (click)="agregarOEliminarHorario(modulo?.dia, hora.hora, hora.estado)" />
+        <label class="btn" [ngClass]="hora.estado != 'Deshabilitado' ? 'btn-primary' : 'btn-outline-primary'" [for]="hora.hora">{{ hora.hora }}</label>
+      </span>
+    </div>
+    <div class="row d-flex justify-content-center mt-4">
+      <div class="col-2">
+        <button class="btn btn-success" (click)="updateHorario()">Guardar cambios</button>
+      </div>
+    </div>
+    <!-- end TODO -->
+  </div>
+</div>

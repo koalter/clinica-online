@@ -3,7 +3,7 @@
       <tr>
         <th>Nombre</th>
         <th>Mail</th>
-        <th>Especialidad</th>
+        <th>Especialidades</th>
         <th>Habilitar</th>
       </tr>
     </thead>
@@ -21,7 +21,7 @@
         <td>
           <p class="fw-normal mb-1">{{ usuario.mail }}</p>
         </td>
-        <td>{{ usuario.especialidad | titlecase }}</td>
+        <td><span class="badge badge-primary" *ngFor="let especialidad of usuario.especialidades">{{ especialidad | titlecase }}</span></td>
         <td>
           <button (click)="updateAcceso(usuario, !usuario.habilitado)" type="button" class="btn btn-link btn-sm btn-rounded">
             <div class="form-check form-switch">
