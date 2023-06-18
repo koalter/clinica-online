@@ -6,6 +6,7 @@ import { FirebaseError } from '@angular/fire/app';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 import { AuthError } from '../domains/auth.error';
 import { Administrador, Especialista, Paciente, Usuario } from '../domains/usuario.model';
+import { Filtro } from '../domains/filtro.model';
 
 @Injectable({
   providedIn: 'root'
@@ -219,13 +220,13 @@ export class AuthService {
     }
   }
 
-  async getUsuarios(tipo: string, filtros?: Record<any, string>): Promise<Usuario[]> {
+  async getUsuarios(tipo: string, filtros?: Filtro[]): Promise<Usuario[]> {
     this.spinnerService.mostrar();
     try {
       let constraints: QueryConstraint[] = [];
       if (filtros) {
-        for (let key in filtros) {
-          constraints.push(where(key, '==', filtros[key]));
+        for (let filtro of filtros) {
+          constraints.push(where(filtro.clave, filtro.operador, filtro.valor));
         }
       }
 
@@ -250,7 +251,7 @@ export class AuthService {
     }
   }
 
-  async getEspecialistas(filtros?: Record<any, string>): Promise<Especialista[]> {
+  async getEspecialistas(filtros?: Filtro[]): Promise<Especialista[]> {
     const result = (await this.getUsuarios('especialista', filtros)) as Especialista[];
     return result;
   }

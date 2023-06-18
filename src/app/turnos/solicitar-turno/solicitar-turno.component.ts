@@ -3,6 +3,8 @@ import { EspecialidadService } from '../../shared/services/especialidad.service'
 import { Especialista, Paciente } from '../../shared/domains/usuario.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { Turno } from '../shared/turno.model';
+import { TurnosService } from '../shared/turnos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'solicitar-turno',
@@ -31,19 +33,30 @@ export class SolicitarTurnoComponent {
     return (19 - 8) * 2;
   }
 
-  constructor(private especialidadService: EspecialidadService, private authService: AuthService) {
-    if (this.esAdmin = (this.authService.getDetalles()!.rol === 'administrador')) {
+  constructor(private especialidadService: EspecialidadService,
+    private authService: AuthService,
+    private turnoService: TurnosService,
+    private router: Router) {
+    const usuarioDetalles = this.authService.getDetalles();
+    if (this.esAdmin = (usuarioDetalles!.rol === 'administrador')) {
       this.step = 0;
       this.pacientes = this.authService.getPacientes();
     } else {
-      this.seleccionarPaciente(this.authService.getDetalles() as Paciente);
+      if (usuarioDetalles!.rol === 'paciente') {
+        this.seleccionarPaciente(usuarioDetalles as Paciente);
+      } else {
+        this.router.navigateByUrl('');
+      }
     }
 
-    this.especialidades = especialidadService.traerTodos();
+    this.especialistas = this.authService.getEspecialistas();
+
     for (let i = 1; i <= this.dias; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i);
-      this.fechas.push(date);
+      if (date.toLocaleDateString('es-AR', { weekday: 'long' }) !== 'domingo') {
+        this.fechas.push(date);
+      }
     }
 
     for (let i = 0; i < this.modulos; i++) {
@@ -65,16 +78,16 @@ export class SolicitarTurnoComponent {
   
   seleccionarEspecialidad(especialidad: string): void {
     this.especialidad = especialidad;
-    this.especialistas = this.especialidadService.traerEspecialistas(especialidad);
-    this.step = 2;
+    this.step = 3;
   }
 
   seleccionarEspecialista(especialista: Especialista): void {
     this.especialista = especialista;
-    this.step = 3;
+    this.step = 2;
   }
 
   seleccionarFecha(fecha: Date): void {
+    console.log(fecha.toLocaleDateString('es-AR', { weekday: 'long' }))
     this.fecha = fecha;
     this.step = 4;
   }
@@ -87,7 +100,12 @@ export class SolicitarTurnoComponent {
   crearTurno(): void {
     const fecha = this.fecha;
     fecha.setTime(this.hora.getTime());
-    const turno = new Turno(this.paciente, this.especialista, this.fecha);
-    console.log(turno);
+    const turno = new Turno(this.paciente, this.especialista, this.especialidad, this.fecha);
+    
+    this.turnoService.alta(turno)
+    .then(() => {
+      this.router.navigateByUrl('');
+    })
   }
+
 }

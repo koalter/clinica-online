@@ -3,6 +3,7 @@ import { Firestore, Timestamp, addDoc, and, collection, doc, getDocs, query, set
 import { AuthService } from './auth.service';
 import { Especialidad, EspecialistaMapper } from '../domains/especialidad.model';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
+import { Filtro } from '../domains/filtro.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class EspecialidadService {
   }
 
   async traerEspecialistas(especialidad: string) {
-    const filtros: Record<any, string> = { especialidad: especialidad };
+    const filtros: Filtro[] = [{ clave: 'especialidades', operador: 'array-contains', valor: especialidad }];
     return await this.authService.getEspecialistas(filtros);
   }
 
