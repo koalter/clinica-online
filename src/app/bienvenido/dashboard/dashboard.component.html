@@ -1,24 +1,7 @@
-<div class="container">
-  <div class="row gx-5 mt-5">
-    <div class="col-md-6 p-5">
-      <div class="card m-5 text-center border border-2 border-primary" role="button" routerLink="perfil">
-        <div class="card-body">
-          <h5 class="card-title text-primary">
-            Perfil
-          </h5>
-          <i class="far fa-user fa-4x card-text text-primary m-4"></i>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 p-5">
-      <div class="card m-5 text-center border border-2 border-primary" role="button" routerLink="turnos">
-        <div class="card-body">
-          <h5 class="card-title text-primary">
-            Turnos
-          </h5>
-          <i class="far fa-calendar-alt fa-4x card-text text-primary m-4"></i>
-        </div>
-      </div>
-    </div>
+<div class="container mb-5">
+  <div class="row gx-5">
+    <link-button titulo="Perfil" url="perfil" faClass="far fa-user fa-4x" class="col-md-6 p-5"></link-button>
+    <link-button titulo="Solicitar turno" url="turnos/nuevo" faClass="far fa-calendar-plus fa-4x" class="col-md-6 p-5"></link-button>
+    <link-button titulo="Mis turnos" url="turnos" faClass="fas fa-calendar-alt fa-4x" class="col-md-6 p-5"></link-button>
   </div>
 </div>

@@ -1,0 +1,8 @@
+<p>turnos works!</p>
+<div class="container">
+    <div class="row">
+        <turnos-paciente *ngIf="usuario?.rol === 'paciente'" [turnos]="turnosPaciente()"></turnos-paciente>
+        <turnos-especialista *ngIf="usuario?.rol === 'especialista'" [turnos]="turnosEspecialista()"></turnos-especialista>
+        <turnos-administrador *ngIf="usuario?.rol === 'administrador'" [turnos]="turnos"></turnos-administrador>
+    </div>
+</div>

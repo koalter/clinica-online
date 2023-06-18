@@ -100,7 +100,7 @@ export class SolicitarTurnoComponent {
   crearTurno(): void {
     const fecha = this.fecha;
     fecha.setTime(this.hora.getTime());
-    const turno = new Turno(this.paciente, this.especialista, this.especialidad, this.fecha);
+    const turno = new Turno(this.paciente.mail, this.especialista.mail, this.especialidad, this.fecha);
     
     this.turnoService.alta(turno)
     .then(() => {

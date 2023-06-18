@@ -1,1 +1,44 @@
-<p>turnos-administrador works!</p>
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>Paciente</th>
+      <th>Especialista</th>
+      <th>Especialidad</th>
+      <th>Fecha y hora</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let turno of turnos">
+      <td>
+        <div class="d-flex align-items-center">
+          <img [src]="turno.pacienteDetalles?.imagen" style="width: 45px; height: 45px"
+            class="rounded-circle" />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{ turno.pacienteDetalles?.nombre }} {{ turno.pacienteDetalles?.apellido }}</p>
+            <p class="text-muted mb-0">{{ turno.paciente }}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex align-items-center">
+          <img [src]="turno.especialistaDetalles?.imagen" style="width: 45px; height: 45px"
+            class="rounded-circle" />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{ turno.especialistaDetalles?.nombre }} {{ turno.especialistaDetalles?.apellido }}</p>
+            <p class="text-muted mb-0">{{ turno.especialista }}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <span class="badge badge-success rounded-pill d-inline">{{ turno.especialidad }}</span>
+      </td>
+      <td>{{ turno.fecha | date: 'dd-MM-yyyy hh:mma' }}</td>
+      <td>
+        <button type="button" class="btn btn-link btn-sm btn-rounded">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
+import { TurnosComponent } from './turnos.component';
 
 const routes: Routes = [
   {
-    path: 'solicitar-turno',
+    path: 'nuevo',
     component: SolicitarTurnoComponent
   },
   {
     path: '',
-    redirectTo: 'solicitar-turno',
-    pathMatch: 'full'
+    component: TurnosComponent
   }
 ];
 

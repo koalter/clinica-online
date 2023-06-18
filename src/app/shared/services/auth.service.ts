@@ -78,6 +78,27 @@ export class AuthService {
           return null;
       }
     },
+    fromFirestoreSync: (snapshot: DocumentSnapshot, options?: SnapshotOptions | undefined) => {
+      const data = snapshot.data(options);
+      if (!data) {
+        return null;
+      }
+
+      switch ((data['rol'] as string).toLowerCase()) {
+        case 'paciente':
+          return new Paciente(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", "", data['obraSocial'], false);
+          case 'especialista':
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", data['especialidades'], false, data['habilitado']);
+            return resultado;
+        case 'administrador':
+          return new Administrador(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", false);
+        default:
+          return null;
+      }
+    },
     fromLocalStorage: (json: string | null) => {
       if (!json)
         return null;
@@ -233,13 +254,12 @@ export class AuthService {
       const q = query(collection(this.firestore, 'usuarios'), ...constraints);
       const docs = await getDocs(q);
       const res: Usuario[] = [];
-      docs.forEach(doc => {
-        this.mapper.fromFirestore(doc)
-        .then(item => {
-          if (item && item['rol'] === tipo) {
-            res.push(item);
-          }
-        });
+      docs.forEach(async doc => {
+        const item = this.mapper.fromFirestoreSync(doc);
+        if (item && item['rol'] === tipo) {
+          res.push(item);
+          await this.getImagenDePerfil(item);
+        }
       });
   
       return res;
@@ -311,5 +331,17 @@ export class AuthService {
     } finally {
       this.spinnerService.ocultar();
     }
+  }
+
+  async getImagenDePerfil(usuario: Usuario) {
+    const imagen = await getDownloadURL(ref(this.storage, `${this.imageURI}${usuario.mail}_0`));
+    usuario.imagen = imagen;
+
+    if (usuario.rol === 'paciente') {
+      const imagenB = await getDownloadURL(ref(this.storage, `${this.imageURI}${usuario.mail}_1`));
+      (usuario as Paciente).imagenB = imagenB;
+    }
+
+    return imagen;
   }
 }

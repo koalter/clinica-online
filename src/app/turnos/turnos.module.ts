@@ -7,6 +7,7 @@ import { TurnosEspecialistaComponent } from './turnos-especialista/turnos-especi
 import { TurnosAdministradorComponent } from './turnos-administrador/turnos-administrador.component';
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TurnosComponent } from './turnos.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TurnosPacienteComponent,
     TurnosEspecialistaComponent,
     TurnosAdministradorComponent,
-    SolicitarTurnoComponent
+    SolicitarTurnoComponent,
+    TurnosComponent
   ],
   imports: [
     CommonModule,
