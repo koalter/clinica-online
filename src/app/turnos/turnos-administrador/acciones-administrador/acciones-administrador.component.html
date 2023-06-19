@@ -1,0 +1,10 @@
+<div mdbDropdown class="dropdown">
+  <button mdbDropdownToggle type="button" class="btn btn-link btn-sm btn-rounded dropdown-toggle hidden-arrow">
+    <i class="fas fa-cog fa-2x"></i>
+  </button>
+  <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
+    <li *ngIf="!aceptado || !realizado || !rechazado">
+      <span class="dropdown-item text-danger">Cancelar turno</span>
+    </li>
+  </ul>
+</div>

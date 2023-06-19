@@ -101,7 +101,7 @@ export class TurnosComponent implements OnInit {
         return p.paciente?.toLowerCase().includes(this.filtroPaciente.valor) ||
           p.pacienteDetalles?.nombre.toLowerCase().includes(this.filtroPaciente.valor) ||
           p.pacienteDetalles?.apellido.toLowerCase().includes(this.filtroPaciente.valor) ||
-          p.pacienteDetalles?.dni.toString().includes(this.filtroPaciente.valor);
+          p.pacienteDetalles?.dni.toString() == this.filtroPaciente.valor;
       });
     }
     if (this.filtroEspecialista) {
@@ -109,7 +109,7 @@ export class TurnosComponent implements OnInit {
         return e.especialista?.toLowerCase().includes(this.filtroEspecialista.valor) ||
           e.especialistaDetalles?.nombre.toLowerCase().includes(this.filtroEspecialista.valor) ||
           e.especialistaDetalles?.apellido.toLowerCase().includes(this.filtroEspecialista.valor) ||
-          e.especialistaDetalles?.dni.toString().includes(this.filtroEspecialista.valor);
+          e.especialistaDetalles?.dni.toString() == this.filtroEspecialista.valor;
       });
     }
     if (this.filtroEspecialidad) {

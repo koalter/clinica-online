@@ -8,7 +8,10 @@ import { TurnosAdministradorComponent } from './turnos-administrador/turnos-admi
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TurnosComponent } from './turnos.component';
-import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { AccionesEspecialistaComponent } from './turnos-especialista/acciones-especialista/acciones-especialista.component';
+import { AccionesPacienteComponent } from './turnos-paciente/acciones-paciente/acciones-paciente.component';
+import { AccionesAdministradorComponent } from './turnos-administrador/acciones-administrador/acciones-administrador.component';
 
 
 @NgModule({
@@ -17,13 +20,16 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     TurnosEspecialistaComponent,
     TurnosAdministradorComponent,
     SolicitarTurnoComponent,
-    TurnosComponent
+    TurnosComponent,
+    AccionesEspecialistaComponent,
+    AccionesPacienteComponent,
+    AccionesAdministradorComponent
   ],
   imports: [
     CommonModule,
     TurnosRoutingModule,
     ReactiveFormsModule,
-    MdbValidationModule
+    MdbDropdownModule
   ]
 })
 export class TurnosModule { }

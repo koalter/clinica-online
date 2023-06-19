@@ -43,7 +43,9 @@ export class TurnosService {
           paciente: data['paciente'],
           especialista: data['especialista'],
           especialidad: data['especialidad'],
-          fecha: (data['fecha'] as Timestamp).toDate()
+          fecha: (data['fecha'] as Timestamp).toDate(),
+          estado: data['estado'],
+          comentarios: data['comentarios']
         };
         result.push(item);
       });

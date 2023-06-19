@@ -5,6 +5,7 @@
       <th>Especialista</th>
       <th>Especialidad</th>
       <th>Fecha y hora</th>
+      <th>Estado</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -31,14 +32,20 @@
       </td>
       <td>
         <h5>
-          <span class="badge badge-success rounded-pill d-inline">{{ turno.especialidad }}</span>
+          <span class="badge badge-secondary rounded-pill d-inline">{{ turno.especialidad }}</span>
         </h5>
       </td>
       <td>{{ turno.fecha | date: 'dd-MM-yyyy hh:mma' }}</td>
       <td>
-        <button type="button" class="btn btn-link btn-sm btn-rounded">
-          Edit
-        </button>
+        <h5 [ngSwitch]="turno.estado">
+          <span *ngSwitchCase="'Solicitado'" class="badge badge-secondary rounded-pill d-inline">{{ turno.estado }}</span>
+          <span *ngSwitchCase="'Aceptado'" class="badge badge-success rounded-pill d-inline">{{ turno.estado }}</span>
+          <span *ngSwitchCase="'Rechazado'" class="badge badge-danger rounded-pill d-inline">{{ turno.estado }}</span>
+          <span *ngSwitchCase="'Realizado'" class="badge badge-info rounded-pill d-inline">{{ turno.estado }}</span>
+        </h5>
+      </td>
+      <td>
+        <acciones-especialista [turno]="turno"></acciones-especialista>
       </td>
     </tr>
   </tbody>
