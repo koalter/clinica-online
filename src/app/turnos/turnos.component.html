@@ -1,8 +1,36 @@
-<p>turnos works!</p>
-<div class="container">
-    <div class="row">
-        <turnos-paciente *ngIf="usuario?.rol === 'paciente'" [turnos]="turnosPaciente()"></turnos-paciente>
-        <turnos-especialista *ngIf="usuario?.rol === 'especialista'" [turnos]="turnosEspecialista()"></turnos-especialista>
-        <turnos-administrador *ngIf="usuario?.rol === 'administrador'" [turnos]="turnos"></turnos-administrador>
+<div class="container p-5">
+  <h2 class="text-primary text-center mb-5">Mis Turnos</h2>
+
+  <form [formGroup]="form" (ngSubmit)="buscar()" class="container d-flex flex-row align-items-center mb-2">
+    <div class="input-group w-auto">
+      <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search"
+        formControlName="busqueda" />
+      <button class="btn btn-outline-primary" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
     </div>
+    <div class="input-group w-auto justify-self-center">
+      <label class="form-check ms-3">
+        <input mdbRadio type="radio" class="form-check-input" value="especialidad" formControlName="criterio">
+        Especialidad
+      </label>
+      <label *ngIf="usuario?.rol !== 'especialista'" class="form-check ms-3">
+        <input mdbRadio type="radio" class="form-check-input" value="especialista" formControlName="criterio">
+        Especialista
+      </label>
+      <label *ngIf="usuario?.rol === 'especialista'" class="form-check ms-3">
+        <input mdbRadio type="radio" class="form-check-input" value="paciente" formControlName="criterio">
+        Paciente
+      </label>
+    </div>
+    <div class="w-auto ms-3">
+      <span *ngIf="filtroEspecialista.valor" (click)="limpiar(filtroEspecialista)" class="badge rounded-pill badge-dark" role="button">{{ filtroEspecialista.criterio }}: {{ filtroEspecialista.valor }} <i class="far fa-times-circle"></i></span>
+      <span *ngIf="filtroEspecialidad.valor" (click)="limpiar(filtroEspecialidad)" class="badge rounded-pill badge-dark" role="button">{{ filtroEspecialidad.criterio }}: {{ filtroEspecialidad.valor }} <i class="far fa-times-circle"></i></span>
+      <span *ngIf="filtroPaciente.valor" (click)="limpiar(filtroPaciente)" class="badge rounded-pill badge-dark" role="button">{{ filtroPaciente.criterio }}: {{ filtroPaciente.valor }} <i class="far fa-times-circle"></i></span>
+    </div>
+  </form>
+
+  <turnos-paciente *ngIf="usuario?.rol === 'paciente'" [turnos]="turnosPaciente()"></turnos-paciente>
+  <turnos-especialista *ngIf="usuario?.rol === 'especialista'" [turnos]="turnosEspecialista()"></turnos-especialista>
+  <turnos-administrador *ngIf="usuario?.rol === 'administrador'" [turnos]="turnos"></turnos-administrador>
 </div>

@@ -8,6 +8,7 @@ import { TurnosAdministradorComponent } from './turnos-administrador/turnos-admi
 import { SolicitarTurnoComponent } from './solicitar-turno/solicitar-turno.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TurnosComponent } from './turnos.component';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TurnosComponent } from './turnos.component';
   imports: [
     CommonModule,
     TurnosRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MdbValidationModule
   ]
 })
 export class TurnosModule { }
