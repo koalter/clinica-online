@@ -88,5 +88,10 @@
       <img *ngIf="rutaImagen" [src]="rutaImagen" alt="Foto de perfil">
     </div>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="formulario.invalid">Continuar</button>
+  <div class="row mb-2">
+    <div class="col">
+      <re-captcha formControlName="captcha"></re-captcha>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="formulario.invalid">Continuar</button>
 </form>

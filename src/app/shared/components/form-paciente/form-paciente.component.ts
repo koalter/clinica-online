@@ -32,7 +32,8 @@ export class FormPacienteComponent {
       password: [null, Validators.required],
       password2: [null, Validators.required],
       imagen_a: [undefined, Validators.required],
-      imagen_b: [undefined, Validators.required]
+      imagen_b: [undefined, Validators.required],
+      captcha: [null, Validators.required]
     });
 
     this.password2.addValidators(PasswordValidator.match(this.password));
@@ -76,6 +77,10 @@ export class FormPacienteComponent {
 
   get imagen_b(): AbstractControl {
     return this.formulario.get('imagen_b')!;
+  }
+
+  get captcha(): AbstractControl {
+    return this.formulario.get('captcha')!;
   }
 
   onSubmit(): void {

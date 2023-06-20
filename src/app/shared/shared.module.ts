@@ -10,6 +10,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
 import { ButtonVolverComponent } from './components/button-volver/button-volver.component';
+import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -25,13 +26,25 @@ import { ButtonVolverComponent } from './components/button-volver/button-volver.
     MdbFormsModule,
     MdbValidationModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
   exports: [
     HeaderComponent,
     FormPacienteComponent,
     FormEspecialistaComponent,
     ButtonVolverComponent
+  ],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: "6Ld-T7EmAAAAAC13UxNAntbnBd6-w5Q6QsdyKs2X" } as RecaptchaSettings,
+    },
+    {
+      provide: RECAPTCHA_LANGUAGE,
+      useValue: 'es'
+    }
   ]
 })
 export class SharedModule { }

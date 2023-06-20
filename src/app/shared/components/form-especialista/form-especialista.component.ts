@@ -35,7 +35,8 @@ export class FormEspecialistaComponent {
       mail: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
       password2: [null, Validators.required],
-      imagen: [undefined, Validators.required]
+      imagen: [undefined, Validators.required],
+      captcha: [null, Validators.required]
     });
 
     this.password2.addValidators(PasswordValidator.match(this.password));

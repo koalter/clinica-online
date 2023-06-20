@@ -28,7 +28,8 @@ export class FormAdminComponent {
       mail: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
       password2: [null, Validators.required],
-      imagen: [undefined, Validators.required]
+      imagen: [undefined, Validators.required],
+      captcha: [null, Validators.required]
     });
 
     this.password2.addValidators(PasswordValidator.match(this.password));
@@ -64,6 +65,10 @@ export class FormAdminComponent {
 
   get imagen(): AbstractControl {
     return this.formulario.get('imagen')!;
+  }
+  
+  get captcha(): AbstractControl {
+    return this.formulario.get('captcha')!;
   }
 
   onSubmit(): void {
