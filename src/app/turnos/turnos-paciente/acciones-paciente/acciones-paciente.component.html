@@ -1,0 +1,19 @@
+<div mdbDropdown class="dropdown">
+  <button mdbDropdownToggle type="button" class="btn btn-link btn-sm btn-rounded dropdown-toggle hidden-arrow">
+    <i class="fas fa-cog fa-2x"></i>
+  </button>
+  <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
+    <li *ngIf="!realizado">
+      <span class="dropdown-item text-danger">Cancelar turno</span>
+    </li>
+    <li *ngIf="turno.comentarios">
+      <span class="dropdown-item text-primary">Ver reseña</span>
+    </li>
+    <li *ngIf="realizado && turno.comentarios">
+      <span class="dropdown-item text-success">Completar encuesta</span>
+    </li>
+    <li *ngIf="realizado">
+      <span class="dropdown-item text-success">Calificar atención</span>
+    </li>
+  </ul>
+</div>

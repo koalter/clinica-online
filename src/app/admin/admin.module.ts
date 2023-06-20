@@ -11,6 +11,7 @@ import { FormAdminComponent } from './form-admin/form-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -27,7 +28,19 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     SharedModule,
     MdbTabsModule,
     MdbFormsModule,
-    MdbValidationModule
+    MdbValidationModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
+  ],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: "6Ld-T7EmAAAAAC13UxNAntbnBd6-w5Q6QsdyKs2X" } as RecaptchaSettings,
+    },
+    {
+      provide: RECAPTCHA_LANGUAGE,
+      useValue: 'es'
+    }
   ]
 })
 export class AdminModule { }

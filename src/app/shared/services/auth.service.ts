@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, Timestamp, DocumentSnapshot, SnapshotOptions, setDoc, doc, query, getDocs, getDoc, updateDoc, where, QueryConstraint } from '@angular/fire/firestore';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User, updateProfile, sendEmailVerification } from '@angular/fire/auth';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { FirebaseError } from '@angular/fire/app';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 import { AuthError } from '../domains/auth.error';
 import { Administrador, Especialista, Paciente, Usuario } from '../domains/usuario.model';
+import { Filtro } from '../domains/filtro.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class AuthService {
             apellido: user.apellido,
             edad: user.edad,
             dni: user.dni,
-            especialidad: (user as Especialista).especialidad,
+            especialidades: (user as Especialista).especialidades,
             habilitado: (user as Especialista).habilitado,
             rol: rol
           };
@@ -60,18 +61,40 @@ export class AuthService {
       }
 
       const imagen = await getDownloadURL(ref(this.storage, `${this.imageURI}${snapshot.id}_0`));
-
+      
       switch ((data['rol'] as string).toLowerCase()) {
         case 'paciente':
           const imagenB = await getDownloadURL(ref(this.storage, `${this.imageURI}${snapshot.id}_1`));
           return new Paciente(
             data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, imagenB, data['obraSocial'], false);
-        case 'especialista':
-          return new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidad'], false, data['habilitado']);
+          case 'especialista':
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidades'], false, data['habilitado']);
+            return resultado;
         case 'administrador':
           return new Administrador(
             data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, false);
+        default:
+          return null;
+      }
+    },
+    fromFirestoreSync: (snapshot: DocumentSnapshot, options?: SnapshotOptions | undefined) => {
+      const data = snapshot.data(options);
+      if (!data) {
+        return null;
+      }
+
+      switch ((data['rol'] as string).toLowerCase()) {
+        case 'paciente':
+          return new Paciente(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", "", data['obraSocial'], false);
+          case 'especialista':
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", data['especialidades'], false, data['habilitado']);
+            return resultado;
+        case 'administrador':
+          return new Administrador(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", false);
         default:
           return null;
       }
@@ -87,8 +110,9 @@ export class AuthService {
           return new Paciente(
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['imagenB'], data['obraSocial'], data['verificado']);
         case 'especialista':
-          return new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidad'], data['verificado'], data['habilitado']);
+          const resultado = new Especialista(
+            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['verificado'], data['habilitado']);
+          return resultado;
         case 'administrador':
           return new Administrador(
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['verificado']);
@@ -217,19 +241,25 @@ export class AuthService {
     }
   }
 
-  async getUsuarios(tipo: string): Promise<Usuario[]> {
+  async getUsuarios(tipo: string, filtros?: Filtro[]): Promise<Usuario[]> {
     this.spinnerService.mostrar();
     try {
-      const q = query(collection(this.firestore, 'usuarios'));
+      let constraints: QueryConstraint[] = [];
+      if (filtros) {
+        for (let filtro of filtros) {
+          constraints.push(where(filtro.clave, filtro.operador, filtro.valor));
+        }
+      }
+
+      const q = query(collection(this.firestore, 'usuarios'), ...constraints);
       const docs = await getDocs(q);
       const res: Usuario[] = [];
-      docs.forEach(doc => {
-        this.mapper.fromFirestore(doc)
-        .then(item => {
-          if (item && item['rol'] === tipo) {
-            res.push(item);
-          }
-        });
+      docs.forEach(async doc => {
+        const item = this.mapper.fromFirestoreSync(doc);
+        if (item && item['rol'] === tipo) {
+          res.push(item);
+          await this.getImagenDePerfil(item);
+        }
       });
   
       return res;
@@ -241,8 +271,8 @@ export class AuthService {
     }
   }
 
-  async getEspecialistas(): Promise<Especialista[]> {
-    const result = (await this.getUsuarios('especialista')) as Especialista[];
+  async getEspecialistas(filtros?: Filtro[]): Promise<Especialista[]> {
+    const result = (await this.getUsuarios('especialista', filtros)) as Especialista[];
     return result;
   }
 
@@ -250,7 +280,7 @@ export class AuthService {
     return await this.getUsuarios('paciente') as Paciente[];
   }
 
-  async getUno(mail: string) {
+  async getUno(mail: string): Promise<Paciente | Especialista | Administrador | null> {
     const docRef = doc(this.firestore, 'usuarios', mail);
     const docSnap = await getDoc(docRef);
 
@@ -301,5 +331,17 @@ export class AuthService {
     } finally {
       this.spinnerService.ocultar();
     }
+  }
+
+  async getImagenDePerfil(usuario: Usuario) {
+    const imagen = await getDownloadURL(ref(this.storage, `${this.imageURI}${usuario.mail}_0`));
+    usuario.imagen = imagen;
+
+    if (usuario.rol === 'paciente') {
+      const imagenB = await getDownloadURL(ref(this.storage, `${this.imageURI}${usuario.mail}_1`));
+      (usuario as Paciente).imagenB = imagenB;
+    }
+
+    return imagen;
   }
 }

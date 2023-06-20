@@ -1,0 +1,67 @@
+<div class="container p-5">
+  <div *ngIf="esAdmin && step >= 0" class="row border border-2 border-primary rounded-5 mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Paciente</h5>
+    <div *ngFor="let paciente of pacientes | async" class="profile text-center m-3 col">
+      <button class="btn btn-primary rounded-5 h-100" (click)="seleccionarPaciente(paciente)">
+        <img [src]="paciente.imagen" class="h-75 rounded-circle">
+        <p>{{ paciente.nombre }}</p>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="step >= 1" class="row border border-2 border-primary rounded-5 mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Especialista</h5>
+    <div *ngFor="let especialista of especialistas | async" class="profile text-center m-3 col">
+      <button class="btn btn-primary rounded-5 h-100" (click)="seleccionarEspecialista(especialista)">
+        <img [src]="especialista.imagen" class="h-75 rounded-circle">
+        <p>{{ especialista.nombre }}</p>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="step >= 2" class="row border border-2 border-primary rounded-5 mx-auto my-3">
+    <h5 class="text-center text-primary py-3">Especialidad</h5>
+    <div class="col text-center m-3">
+      <span *ngFor="let especialidad of especialista.especialidades" class="btn btn-secondary rounded-0 m-2"
+        (click)="seleccionarEspecialidad(especialidad)">{{ especialidad }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="step >= 3" class="col border border-2 border-primary rounded-5 mx-auto my-3">
+      <h5 class="text-center text-primary py-3">Fecha</h5>
+      <div class="col text-center m-3">
+        <span *ngFor="let fecha of fechas" class="btn btn-secondary rounded-0 m-2" (click)="seleccionarFecha(fecha)">{{ fecha | date: 'dd-MM-yyyy' }}</span>
+      </div>
+    </div>
+    <div *ngIf="step >= 4" class="col border border-2 border-primary rounded-5 mx-auto my-3">
+      <h5 class="text-center text-primary py-3">Hora</h5>
+      <div class="col text-center m-3">
+        <span *ngFor="let hora of horas" class="btn btn-secondary rounded-5 m-2 lowercase" (click)="seleccionarHora(hora)">{{ hora | date: 'hh:mma' }}</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="step >= 5" class="row">
+    <h2 class="text-center text-primary py-3">Confirmar turno</h2>
+    <div class="card mx-auto my-4">
+      <ul class="list-group list-group-light list-group-small">
+        <li class="list-group-item px-3">
+          <strong>Especialidad: </strong>
+          {{ especialidad }}
+        </li>
+        <li class="list-group-item px-3">
+          <strong>Especialista: </strong>
+          {{ especialista.nombre }} {{ especialista.apellido }}
+        </li>
+        <li class="list-group-item px-3">
+          <strong>Fecha: </strong>
+          {{ fecha | date: 'dd-MM-yyyy' }}
+        </li>
+        <li class="list-group-item px-3">
+          <strong>Hora: </strong>
+          {{ hora | date: 'hh:mma' | lowercase }}
+        </li>
+      </ul>
+      <div class="card-footer bg-light px-3 text-center">
+        <button class="btn btn-success" (click)="crearTurno()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
