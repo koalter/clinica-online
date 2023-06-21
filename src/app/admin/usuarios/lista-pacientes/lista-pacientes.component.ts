@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Paciente } from '../../../shared/domains/usuario.model';
 import { AuthService } from '../../../shared/services/auth.service';
-import { utils, writeFile } from 'xlsx';
+import { ArchivoService } from '../../../shared/services/archivo.service';
 
 @Component({
   selector: 'lista-pacientes',
@@ -11,7 +11,8 @@ import { utils, writeFile } from 'xlsx';
 export class ListaPacientesComponent {
   usuarios!: Paciente[];
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+    private archivoService: ArchivoService) {}
   
   ngOnInit(): void {
     this.authService.getPacientes()
@@ -21,9 +22,6 @@ export class ListaPacientesComponent {
   }
 
   exportar(): void {
-    const worksheet = utils.json_to_sheet(this.usuarios);
-    const workbook = utils.book_new();
-    utils.book_append_sheet(workbook, worksheet);
-    writeFile(workbook, 'pacientes.xlsx', { compression: true });
+    this.archivoService.exportarXLS('pacientes', this.usuarios);
   }
 }
