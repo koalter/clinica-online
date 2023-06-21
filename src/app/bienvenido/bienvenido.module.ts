@@ -7,14 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component'; 
 import { FormsModule } from '@angular/forms';
-import { LinkButtonComponent } from './dashboard/link-button/link-button.component';
 
 @NgModule({
   declarations: [
     BienvenidoComponent,
     DashboardComponent,
-    PerfilComponent,
-    LinkButtonComponent
+    PerfilComponent
   ],
   imports: [
     CommonModule,

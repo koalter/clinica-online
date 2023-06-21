@@ -11,13 +11,15 @@ import { FormPacienteComponent } from './components/form-paciente/form-paciente.
 import { FormEspecialistaComponent } from './components/form-especialista/form-especialista.component';
 import { ButtonVolverComponent } from './components/button-volver/button-volver.component';
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
+import { LinkButtonComponent } from './components/link-button/link-button.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FormPacienteComponent,
     FormEspecialistaComponent,
-    ButtonVolverComponent
+    ButtonVolverComponent,
+    LinkButtonComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSet
     HeaderComponent,
     FormPacienteComponent,
     FormEspecialistaComponent,
-    ButtonVolverComponent
+    ButtonVolverComponent,
+    LinkButtonComponent
   ],
   providers: [
     {

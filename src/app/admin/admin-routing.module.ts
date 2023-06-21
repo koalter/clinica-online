@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { RegistroAdminComponent } from './usuarios/registro-admin/registro-admin.component';
 import { AdminGuard } from '../shared/guards/admin.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   { 
@@ -10,8 +10,7 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
-      { path: 'alta', component: RegistroAdminComponent },
-      { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
+      { path: '', component: DashboardComponent }
     ],
     canActivate: [AdminGuard]
   }
