@@ -11,11 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashboardComponent
+        component: DashboardComponent,
+        data: { animation: 'dashboard' }
       },
       {
         path: 'perfil',
-        component: PerfilComponent
+        component: PerfilComponent,
+        data: { animation: 'perfil' }
       },
       {
         path: 'admin',
@@ -23,7 +25,8 @@ const routes: Routes = [
       },
       {
         path: 'turnos',
-        loadChildren: () => import('../turnos/turnos.module').then(m => m.TurnosModule)
+        loadChildren: () => import('../turnos/turnos.module').then(m => m.TurnosModule),
+        data: { animation: 'turnos' }
       }
     ]
   }

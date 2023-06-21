@@ -1,4 +1,6 @@
 <app-header></app-header>
-<router-outlet *ngIf="usuario?.emailVerified && !especialistaNoHabilitado"></router-outlet>
-<p *ngIf="!usuario?.emailVerified">Usuario no verificado. Por favor active la cuenta desde su casilla de correo electrónico.</p>
-<p *ngIf="especialistaNoHabilitado">Su cuenta aún no ha sido aprobada. Consulte con el administrador para que sea habilitada.</p>
+<div class="container-fluid" [@routeAnimations]="getRouteAnimationData()">
+    <router-outlet *ngIf="usuario?.emailVerified && !especialistaNoHabilitado"></router-outlet>
+    <p *ngIf="!usuario?.emailVerified">Usuario no verificado. Por favor active la cuenta desde su casilla de correo electrónico.</p>
+    <p *ngIf="especialistaNoHabilitado">Su cuenta aún no ha sido aprobada. Consulte con el administrador para que sea habilitada.</p>
+</div>
