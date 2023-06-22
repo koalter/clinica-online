@@ -7,12 +7,14 @@ import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component'; 
 import { FormsModule } from '@angular/forms';
+import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
 
 @NgModule({
   declarations: [
     BienvenidoComponent,
     DashboardComponent,
-    PerfilComponent
+    PerfilComponent,
+    HistoriaClinicaComponent
   ],
   imports: [
     CommonModule,
