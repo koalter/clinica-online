@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Turno } from './turno.model';
+import { EstadoTurno, Turno } from './turno.model';
 import { Firestore, Timestamp, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 
@@ -19,7 +19,8 @@ export class TurnosService {
         paciente: turno.paciente,
         especialista: turno.especialista,
         especialidad: turno.especialidad,
-        fecha: Timestamp.fromDate(turno.fecha)
+        fecha: Timestamp.fromDate(turno.fecha),
+        estado: EstadoTurno.Solicitado
       };
       await addDoc(collection(this.firestore, 'turnos'), data);
     } catch (err: any) {

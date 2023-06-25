@@ -111,7 +111,7 @@ export class AuthService {
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['imagenB'], data['obraSocial'], data['verificado']);
         case 'especialista':
           const resultado = new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['verificado'], data['habilitado']);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['habilitado'], data['verificado']);
           return resultado;
         case 'administrador':
           return new Administrador(

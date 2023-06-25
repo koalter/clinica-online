@@ -87,7 +87,6 @@ export class SolicitarTurnoComponent {
   }
 
   seleccionarFecha(fecha: Date): void {
-    console.log(fecha.toLocaleDateString('es-AR', { weekday: 'long' }))
     this.fecha = fecha;
     this.step = 4;
   }
@@ -99,13 +98,16 @@ export class SolicitarTurnoComponent {
 
   crearTurno(): void {
     const fecha = this.fecha;
-    fecha.setTime(this.hora.getTime());
-    const turno = new Turno(this.paciente.mail, this.especialista.mail, this.especialidad, this.fecha);
+
+    fecha.setHours(this.hora.getHours());
+    fecha.setMinutes(this.hora.getMinutes());
+    fecha.setSeconds(0);
     
+    const turno = new Turno(this.paciente.mail, this.especialista.mail, this.especialidad, this.fecha);
     this.turnoService.alta(turno)
     .then(() => {
       this.router.navigateByUrl('');
-    })
+    });
   }
 
 }
