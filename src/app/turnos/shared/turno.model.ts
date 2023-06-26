@@ -7,12 +7,12 @@ export class Turno {
     especialidad: string;
     fecha: Date;
     estado: EstadoTurno;
-    comentarios: string | string[];
+    comentarios: string[];
 
     pacienteDetalles?: Paciente;
     especialistaDetalles?: Especialista;
 
-    constructor(paciente: string, especialista: string, especialidad: string, fecha: Date, estado: EstadoTurno = EstadoTurno.Solicitado, comentarios: string | string[] = '') {
+    constructor(paciente: string, especialista: string, especialidad: string, fecha: Date, estado: EstadoTurno = EstadoTurno.Solicitado, comentarios: string[] = []) {
         this.paciente = paciente;
         this.especialista = especialista;
         this.especialidad = especialidad;

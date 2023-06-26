@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EstadoTurno, Turno } from './turno.model';
-import { Firestore, Timestamp, addDoc, collection, doc, getDocs, query, updateDoc } from '@angular/fire/firestore';
+import { Firestore, Timestamp, addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc } from '@angular/fire/firestore';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 
 @Injectable({
@@ -47,7 +47,7 @@ export class TurnosService {
           especialidad: data['especialidad'],
           fecha: (data['fecha'] as Timestamp).toDate(),
           estado: data['estado'],
-          comentarios: data['comentarios']
+          comentarios: data['comentarios'] || []
         };
         result.push(item);
       });
@@ -61,19 +61,46 @@ export class TurnosService {
     }
   }
 
-  async cambiarEstado(id: string, nuevoEstado: EstadoTurno) {
+  async cambiarEstado(id: string, nuevoEstado: EstadoTurno, comentarios?: string) {
     this.spinner.mostrar();
 
     try {
       const docRef = doc(this.firestore, 'turnos', id);
       await updateDoc(docRef, {
-        estado: nuevoEstado
+        estado: nuevoEstado,
+        comentarios: arrayUnion(comentarios)
       });
     } catch (err: any) {
       this.logError(err.toString());
     } finally {
       this.spinner.ocultar();
     }
+  }
+
+  async traerPorId(id: string) {
+    this.spinner.mostrar();
+
+    try {
+      const docRef = doc(this.firestore, 'turnos', id);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        throw new Error(`¡El documento con id ${id} no existe!`);
+      }
+
+      const resultado = docSnap.data();
+      return new Turno(resultado['paciente'], resultado['especialista'], resultado['especialidad'], resultado['fecha'], resultado['estado'], resultado['comentarios']);
+    } catch (err: any) {
+      this.logError(err.toString());
+      return null;
+    } finally {
+      this.spinner.ocultar();
+    }
+  }
+
+  async traerComentarios(id: string) {
+    const resultado = await this.traerPorId(id);
+    return resultado?.comentarios;
   }
 
   logError(mensaje: string): Promise<any> {

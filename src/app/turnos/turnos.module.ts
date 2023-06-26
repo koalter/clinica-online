@@ -12,6 +12,7 @@ import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { AccionesEspecialistaComponent } from './turnos-especialista/acciones-especialista/acciones-especialista.component';
 import { AccionesPacienteComponent } from './turnos-paciente/acciones-paciente/acciones-paciente.component';
 import { AccionesAdministradorComponent } from './turnos-administrador/acciones-administrador/acciones-administrador.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AccionesAdministradorComponent } from './turnos-administrador/acciones-
     CommonModule,
     TurnosRoutingModule,
     ReactiveFormsModule,
-    MdbDropdownModule
+    MdbDropdownModule,
+    SweetAlert2Module
   ]
 })
 export class TurnosModule { }

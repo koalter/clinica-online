@@ -3,19 +3,28 @@
     <i class="fas fa-cog fa-2x"></i>
   </button>
   <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
-    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" (click)="cambiarEstado('Rechazado')">
+    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" 
+      [swal]="swalRechazar"
+      (confirm)="btn_rechazado_click($event)">
       <span class="dropdown-item text-danger">Rechazar turno</span>
     </li>
-    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" (click)="cambiarEstado('Aceptado')">
+    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" 
+      [swal]="swalAceptar"
+      (confirm)="btn_aceptado_click()">
       <span class="dropdown-item text-success">Aceptar turno</span>
     </li>
-    <li *ngIf="aceptado" (click)="cambiarEstado('Cancelado')">
+    <li *ngIf="aceptado" 
+      [swal]="swalCancelar"
+      (confirm)="btn_cancelado_click($event)">
       <span class="dropdown-item text-danger">Cancelar turno</span>
     </li>
-    <li *ngIf="aceptado" (click)="cambiarEstado('Realizado')">
+    <li *ngIf="aceptado" 
+      [swal]="swalFinalizar"
+      (confirm)="btn_realizado_click($event)">
       <span class="dropdown-item text-success">Finalizar turno</span>
     </li>
-    <li *ngIf="turno.comentarios" (click)="verComentarios()">
+    <li *ngIf="turno.comentarios && turno.comentarios.length" 
+      [swal]="swalComentarios">
       <span class="dropdown-item text-primary">Ver reseña</span>
     </li>
   </ul>
