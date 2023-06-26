@@ -3,19 +3,19 @@
     <i class="fas fa-cog fa-2x"></i>
   </button>
   <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
-    <li *ngIf="!aceptado || !realizado || !rechazado">
-      <span class="dropdown-item text-danger">Cancelar turno</span>
+    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" (click)="cambiarEstado('Rechazado')">
+      <span class="dropdown-item text-danger">Rechazar turno</span>
     </li>
-    <li *ngIf="!aceptado || !realizado || !cancelado">
-      <span class="dropdown-item text-warning">Rechazar turno</span>
-    </li>
-    <li *ngIf="!rechazado || !realizado || !cancelado">
+    <li *ngIf="!(aceptado || realizado || cancelado || rechazado)" (click)="cambiarEstado('Aceptado')">
       <span class="dropdown-item text-success">Aceptar turno</span>
     </li>
-    <li *ngIf="aceptado">
-      <span class="dropdown-item text-danger">Finalizar turno</span>
+    <li *ngIf="aceptado" (click)="cambiarEstado('Cancelado')">
+      <span class="dropdown-item text-danger">Cancelar turno</span>
     </li>
-    <li *ngIf="turno.comentarios">
+    <li *ngIf="aceptado" (click)="cambiarEstado('Realizado')">
+      <span class="dropdown-item text-success">Finalizar turno</span>
+    </li>
+    <li *ngIf="turno.comentarios" (click)="verComentarios()">
       <span class="dropdown-item text-primary">Ver reseña</span>
     </li>
   </ul>

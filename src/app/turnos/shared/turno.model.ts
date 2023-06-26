@@ -1,6 +1,7 @@
 import { Paciente, Especialista } from "../../shared/domains/usuario.model";
 
 export class Turno {
+    id?: string;
     paciente: string;
     especialista: string;
     especialidad: string;

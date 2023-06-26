@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EstadoTurno, Turno } from './turno.model';
-import { Firestore, Timestamp, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
+import { Firestore, Timestamp, addDoc, collection, doc, getDocs, query, updateDoc } from '@angular/fire/firestore';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 
 @Injectable({
@@ -41,6 +41,7 @@ export class TurnosService {
       snapshot.forEach(doc => {
         const data = doc.data();
         const item: Turno = {
+          id: doc.id,
           paciente: data['paciente'],
           especialista: data['especialista'],
           especialidad: data['especialidad'],
@@ -55,6 +56,21 @@ export class TurnosService {
     } catch (err: any) {
       this.logError(err.toString());
       throw err;
+    } finally {
+      this.spinner.ocultar();
+    }
+  }
+
+  async cambiarEstado(id: string, nuevoEstado: EstadoTurno) {
+    this.spinner.mostrar();
+
+    try {
+      const docRef = doc(this.firestore, 'turnos', id);
+      await updateDoc(docRef, {
+        estado: nuevoEstado
+      });
+    } catch (err: any) {
+      this.logError(err.toString());
     } finally {
       this.spinner.ocultar();
     }
