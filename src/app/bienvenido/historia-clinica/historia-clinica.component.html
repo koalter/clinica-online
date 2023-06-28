@@ -1,1 +1,73 @@
-<p>historia-clinica works!</p>
+<div class="container">
+    <div class="row">
+        <table class="table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let hc of historiaClinica | async; index as i" (click)="this.seleccionado = hc">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ hc.fecha | date: 'dd-MM-yyyy' }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <button (click)="descargar()">Descargar en PDF</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="row" *ngIf="this.seleccionado">
+        <table class="table-sm">
+            <tbody>
+                <tr *ngIf="this.seleccionado.especialistaDetalles">
+                    <th>Especialista</th>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img [src]="this.seleccionado.especialistaDetalles.imagen" style="width: 45px; height: 45px"
+                                class="rounded-circle" />
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ this.seleccionado.especialistaDetalles.nombre }} {{
+                                    this.seleccionado.especialistaDetalles.apellido }}</p>
+                                <p class="text-muted mb-0">{{ this.seleccionado.especialidad }}</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Altura</th>
+                    <td>{{ this.seleccionado.altura }} cms</td>
+                </tr>
+                <tr>
+                    <th>Peso</th>
+                    <td>{{ this.seleccionado.peso }} kgs</td>
+                </tr>
+                <tr>
+                    <th>Temperatura</th>
+                    <td>{{ this.seleccionado.temperatura }}°C</td>
+                </tr>
+                <tr>
+                    <th>Presión</th>
+                    <td>{{ this.seleccionado.presion }}</td>
+                </tr>
+                <tr *ngFor="let adicional of this.seleccionado.adicionales">
+                    <th>{{ this.seleccionado.get(adicional[0]) }}</th>
+                    <td>{{ this.seleccionado.get(adicional[1]) }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <button (click)="this.seleccionado = undefined">Cerrar</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

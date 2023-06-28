@@ -12,4 +12,9 @@ export class HistoriaClinicaComponent {
   @Input() paciente!: Paciente;
   private historiaClinicaService: HistoriaClinicaService = inject(HistoriaClinicaService);
   historiaClinica: Promise<HistoriaClinica[]> = this.historiaClinicaService.getPorPaciente(this.paciente);
+  seleccionado?: HistoriaClinica;
+
+  descargar() {
+    console.log('descargar()');
+  }
 }

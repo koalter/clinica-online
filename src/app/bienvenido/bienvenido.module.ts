@@ -6,21 +6,24 @@ import { BienvenidoComponent } from './bienvenido.component';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component'; 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
+import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-clinica/form-historia-clinica.component';
 
 @NgModule({
   declarations: [
     BienvenidoComponent,
     DashboardComponent,
     PerfilComponent,
-    HistoriaClinicaComponent
+    HistoriaClinicaComponent,
+    FormHistoriaClinicaComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BienvenidoRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class BienvenidoModule { }
