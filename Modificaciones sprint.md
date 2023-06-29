@@ -30,3 +30,16 @@ WYBRANSKI ROMANO, Cristian Andrés
 - Una vez seleccionado mostrará las ESPECIALIDADES, en botones rectangulares, con la imagen de la especialidad. En caso de no tener muestra imagen por default. También debe mostrar el nombre de la especialidad debajo del botón.
 - Una vez seleccionada la especialidad, aparecerán los días con turnos disponibles para ese PROFESIONAL. Estos botones deben ser cuadrados. Formato (09-09-2021).
 - Seleccionado el día mostrará los horarios disponibles, en botones rectangulares con bordes redondeados. Estos botones deben ser rectangulares. Formato 12:15am.
+
+Sprint 3
+
+Solicitar turno - imagenes de especialidades
+Generar pdfs / seccion pacientes
+
+Sprint 4
+
+Poder ver la historia clínica en "Mis turnos" Y poder filtrar por datos dinamicos
+"* Gráficos
+- Usar la librería Highchart
+- Cantidad de turnos por día en gráfico de torta"
+type="pie"
