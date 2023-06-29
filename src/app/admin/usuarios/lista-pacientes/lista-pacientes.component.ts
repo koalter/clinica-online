@@ -3,6 +3,7 @@ import { Paciente } from '../../../shared/domains/usuario.model';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ArchivoService } from '../../../shared/services/archivo.service';
 import { Router } from '@angular/router';
+import { TurnosService } from '../../../turnos/shared/turnos.service';
 
 @Component({
   selector: 'lista-pacientes',
@@ -14,6 +15,7 @@ export class ListaPacientesComponent {
 
   constructor(private authService: AuthService,
     private archivoService: ArchivoService,
+    private turnoService: TurnosService,
     private router: Router) {}
   
   ngOnInit(): void {
@@ -25,6 +27,13 @@ export class ListaPacientesComponent {
 
   exportar(): void {
     this.archivoService.exportarXLS('pacientes', this.usuarios);
+  }
+
+  exportarTurnos(paciente: Paciente) {
+    this.turnoService.traerPorPaciente(paciente.mail)
+    .then(res => {
+      this.archivoService.exportarXLS('turnos-paciente', res);
+    });
   }
 
   abrirHistoriaClinica(mail: string) {

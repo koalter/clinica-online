@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EstadoTurno, Turno } from './turno.model';
-import { Firestore, Timestamp, addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc } from '@angular/fire/firestore';
+import { Firestore, Timestamp, addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 
 @Injectable({
@@ -36,6 +36,37 @@ export class TurnosService {
     try {
       const result: Turno[] = [];
       const q = query(collection(this.firestore, 'turnos'));
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const item: Turno = {
+          id: doc.id,
+          paciente: data['paciente'],
+          especialista: data['especialista'],
+          especialidad: data['especialidad'],
+          fecha: (data['fecha'] as Timestamp).toDate(),
+          estado: data['estado'],
+          comentarios: data['comentarios'] || []
+        };
+        result.push(item);
+      });
+
+      return result;
+    } catch (err: any) {
+      this.logError(err.toString());
+      throw err;
+    } finally {
+      this.spinner.ocultar();
+    }
+  }
+
+  async traerPorPaciente(paciente: string) {
+    this.spinner.mostrar();
+
+    try {
+      const result: Turno[] = [];
+      const q = query(collection(this.firestore, 'turnos'), where('paciente', '==', paciente));
       const snapshot = await getDocs(q);
 
       snapshot.forEach(doc => {
