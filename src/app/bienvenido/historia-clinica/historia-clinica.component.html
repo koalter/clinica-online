@@ -1,6 +1,6 @@
-<div class="container">
-    <div class="row">
-        <table class="table-sm">
+<div class="container" *ngIf="historiaClinica">
+    <div class="row" *ngIf="historiaClinica.length > 0">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -9,65 +9,44 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let hc of historiaClinica | async; index as i" (click)="this.seleccionado = hc">
+                <tr *ngFor="let hc of historiaClinica; index as i">
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ hc.fecha | date: 'dd-MM-yyyy' }}</td>
+                    <td>
+                        <button class="btn btn-link btn-sm btn-rounded" (click)="seleccionar(hc)">
+                            <i class="far fa-eye fa-2x"></i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td>
-                        <button (click)="descargar()">Descargar en PDF</button>
+                        <button class="btn btn-primary" (click)="descargar()">
+                            <i class="fas fa-download"></i>
+                            Descargar en PDF
+                        </button>
                     </td>
                 </tr>
             </tfoot>
         </table>
     </div>
-    <div class="row" *ngIf="this.seleccionado">
-        <table class="table-sm">
-            <tbody>
-                <tr *ngIf="this.seleccionado.especialistaDetalles">
-                    <th>Especialista</th>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img [src]="this.seleccionado.especialistaDetalles.imagen" style="width: 45px; height: 45px"
-                                class="rounded-circle" />
-                            <div class="ms-3">
-                                <p class="fw-bold mb-1">{{ this.seleccionado.especialistaDetalles.nombre }} {{
-                                    this.seleccionado.especialistaDetalles.apellido }}</p>
-                                <p class="text-muted mb-0">{{ this.seleccionado.especialidad }}</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Altura</th>
-                    <td>{{ this.seleccionado.altura }} cms</td>
-                </tr>
-                <tr>
-                    <th>Peso</th>
-                    <td>{{ this.seleccionado.peso }} kgs</td>
-                </tr>
-                <tr>
-                    <th>Temperatura</th>
-                    <td>{{ this.seleccionado.temperatura }}°C</td>
-                </tr>
-                <tr>
-                    <th>Presión</th>
-                    <td>{{ this.seleccionado.presion }}</td>
-                </tr>
-                <tr *ngFor="let adicional of this.seleccionado.adicionales">
-                    <th>{{ this.seleccionado.get(adicional[0]) }}</th>
-                    <td>{{ this.seleccionado.get(adicional[1]) }}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>
-                        <button (click)="this.seleccionado = undefined">Cerrar</button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+    <swal #detalles title="Detalles de la atención"
+        confirmButtonText="Cerrar"
+        (confirm)="deseleccionar()"
+        (dismiss)="deseleccionar()">
+        <div *swalPortal="swalTargets.content">
+            <historia-clinica-detalles [detalles]="seleccionado">
+            </historia-clinica-detalles>
+        </div>
+    </swal>
+    <div class="row" *ngIf="historiaClinica.length <= 0">
+        <div class="col p-4">
+            <h5>El paciente aún no posee registros de su historia clínica.</h5>
+            <button class="btn btn-primary my-3" routerLink="..">
+                <i class="fas fa-angle-left"></i>
+                Volver
+            </button>
+        </div>
     </div>
 </div>

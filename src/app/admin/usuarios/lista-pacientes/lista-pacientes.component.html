@@ -4,6 +4,7 @@
       <th>Nombre</th>
       <th>Mail</th>
       <th>Obra Social</th>
+      <th>Historia Clínica</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,11 @@
       </td>
       <td>
         <p class="fw-normal mb-1">{{ usuario.obraSocial }}</p>
+      </td>
+      <td>
+        <button class="btn btn-link btn-sm btn-rounded" (click)="abrirHistoriaClinica(usuario.mail)">
+          <i class="fas fa-sign-in-alt fa-2x"></i>
+        </button>
       </td>
     </tr>
   </tbody>

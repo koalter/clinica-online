@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BienvenidoComponent } from './bienvenido.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
+import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-clinica/form-historia-clinica.component';
 
 const routes: Routes = [
   { 
@@ -18,6 +20,14 @@ const routes: Routes = [
         path: 'perfil',
         component: PerfilComponent,
         data: { animation: 'perfil' }
+      },
+      {
+        path: 'historia',
+        component: HistoriaClinicaComponent
+      },
+      {
+        path: 'historia/nueva',
+        component: FormHistoriaClinicaComponent
       },
       {
         path: 'admin',

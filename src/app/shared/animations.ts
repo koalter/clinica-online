@@ -11,12 +11,12 @@ export const fader =
           left: 0,
           width: '100%',
           opacity: 0,
-          transform: 'scale(0) translate(100%)'
+          transform: 'translateY(-50px)'
         })
       ]),
       query(':enter', [
         animate('600ms ease',
-          style({ opacity: 1, transform: 'scale(1) translateY(0)' })
+          style({ opacity: 1, transform: 'translateY(0)' })
         )
       ]),
     ])

@@ -66,10 +66,14 @@ export class TurnosService {
 
     try {
       const docRef = doc(this.firestore, 'turnos', id);
-      await updateDoc(docRef, {
+      const data = comentarios ? {
         estado: nuevoEstado,
         comentarios: arrayUnion(comentarios)
-      });
+      } :
+      {
+        estado: nuevoEstado
+      };
+      await updateDoc(docRef, data);
     } catch (err: any) {
       this.logError(err.toString());
     } finally {

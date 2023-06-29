@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Paciente } from '../../../shared/domains/usuario.model';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ArchivoService } from '../../../shared/services/archivo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lista-pacientes',
@@ -12,7 +13,8 @@ export class ListaPacientesComponent {
   usuarios!: Paciente[];
 
   constructor(private authService: AuthService,
-    private archivoService: ArchivoService) {}
+    private archivoService: ArchivoService,
+    private router: Router) {}
   
   ngOnInit(): void {
     this.authService.getPacientes()
@@ -23,5 +25,9 @@ export class ListaPacientesComponent {
 
   exportar(): void {
     this.archivoService.exportarXLS('pacientes', this.usuarios);
+  }
+
+  abrirHistoriaClinica(mail: string) {
+    this.router.navigate(['admin/usuarios/pacientes/historia', { paciente: mail }])
   }
 }

@@ -9,6 +9,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
 import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-clinica/form-historia-clinica.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-clinica-detalles/historia-clinica-detalles.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +18,16 @@ import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-c
     DashboardComponent,
     PerfilComponent,
     HistoriaClinicaComponent,
-    FormHistoriaClinicaComponent
+    FormHistoriaClinicaComponent,
+    HistoriaClinicaDetallesComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BienvenidoRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module
   ]
 })
 export class BienvenidoModule { }

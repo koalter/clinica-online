@@ -1,3 +1,4 @@
+import { KeyValue } from "@angular/common";
 import { Especialista, Paciente } from "../../../shared/domains/usuario.model";
 
 export class HistoriaClinica {
@@ -10,6 +11,27 @@ export class HistoriaClinica {
   presion: number = 0;
   fecha: Date = new Date();
   private _adicionales: Map<string, string> = new Map();
+
+  constructor(paciente: string, especialista: string, especialidad: string, altura: number, peso: number,
+    temperatura: number, presion: number, adicionales: KeyValue<string, string>[]) {
+    if (adicionales.length > 3) {
+      throw new Error('La cantidad máxima permitida de datos adicionales es tres (3)');
+    }
+    
+    this.paciente = paciente;
+    this.especialista = especialista;
+    this.especialidad = especialidad;
+    this.altura = altura;
+    this.peso = peso;
+    this.temperatura = temperatura;
+    this.presion = presion;
+    this.fecha = new Date();
+    this._adicionales = new Map();
+
+    for (let item of adicionales) {
+      this.set(item.key, item.value);
+    }
+  }
 
   get adicionales() {
     return this._adicionales.entries();

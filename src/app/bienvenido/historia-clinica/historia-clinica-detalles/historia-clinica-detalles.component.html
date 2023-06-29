@@ -1,0 +1,50 @@
+<table *ngIf="detalles" class="table table-sm">
+    <tbody>
+        <tr *ngIf="detalles.especialistaDetalles">
+            <th>Especialista</th>
+            <td>
+                <div class="d-flex align-items-center">
+                    <img [src]="detalles.especialistaDetalles.imagen"
+                        style="width: 45px; height: 45px" class="rounded-circle" />
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">{{ detalles.especialistaDetalles.nombre }} {{
+                            detalles.especialistaDetalles.apellido }}</p>
+                        <p class="text-muted mb-0">{{ detalles.especialidad }}</p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Altura</th>
+            <td>{{ detalles.altura }} cms</td>
+        </tr>
+        <tr>
+            <th>Peso</th>
+            <td>{{ detalles.peso }} kgs</td>
+        </tr>
+        <tr>
+            <th>Temperatura</th>
+            <td>{{ detalles.temperatura }}°C</td>
+        </tr>
+        <tr>
+            <th>Presión</th>
+            <td>{{ detalles.presion }}</td>
+        </tr>
+        <tr *ngFor="let adicional of detalles.adicionales">
+            <th>{{ adicional[0] | titlecase }}</th>
+            <td>{{ adicional[1] }}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2">Descargar todas las atenciones de este profesional</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="btn btn-dark" (click)="descargar()">
+                    <i class="fas fa-download"></i>
+                </button>
+            </td>
+        </tr>
+    </tfoot>
+</table>

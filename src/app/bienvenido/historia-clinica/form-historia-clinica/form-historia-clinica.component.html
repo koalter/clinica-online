@@ -1,37 +1,44 @@
-<form [formGroup]="formulario" (ngSubmit)="enviar()">
-    <div class="input-group mb-3">
-        <span class="input-group-text">Altura (cm)</span>
-        <input type="text" class="form-control" formControlName="altura" />
+<div class="container p-5">
+    <div class="row">
+        <h2 class="text-center mb-4">Nueva historia clínica</h2>
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">Peso (kg)</span>
-        <input type="text" class="form-control" formControlName="peso" />
+    <div class="row d-flex justify-content-center">
+        <form class="col-md-6 col-lg-4 col-xl-3" [formGroup]="formulario" (ngSubmit)="enviar()">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Altura (cm)</span>
+                <input type="text" class="form-control" formControlName="altura" />
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Peso (kg)</span>
+                <input type="text" class="form-control" formControlName="peso" />
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Temperatura (C°)</span>
+                <input type="text" class="form-control" formControlName="temperatura" />
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Presión</span>
+                <input type="text" class="form-control" formControlName="presion" />
+            </div>
+        
+            <label class="form-label">Otros datos</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Clave" formControlName="clave1" />
+                <span class="input-group-text">:</span>
+                <input type="text" class="form-control" placeholder="Valor" formControlName="valor1" />
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Clave" formControlName="clave2" />
+                <span class="input-group-text">:</span>
+                <input type="text" class="form-control" placeholder="Valor" formControlName="valor2" />
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Clave" formControlName="clave3" />
+                <span class="input-group-text">:</span>
+                <input type="text" class="form-control" placeholder="Valor" formControlName="valor3" />
+            </div>
+        
+            <button class="btn btn-success" type="submit" [disabled]="formulario.invalid">Cargar historia clínica</button>
+        </form>
     </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">Temperatura (C°)</span>
-        <input type="text" class="form-control" formControlName="temperatura" />
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">Presión</span>
-        <input type="text" class="form-control" formControlName="presion" />
-    </div>
-
-    <label class="form-label">Otros datos</label>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Clave" formControlName="clave1" />
-        <span class="input-group-text">:</span>
-        <input type="text" class="form-control" placeholder="Valor" formControlName="valor1" />
-    </div>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Clave" formControlName="clave2" />
-        <span class="input-group-text">:</span>
-        <input type="text" class="form-control" placeholder="Valor" formControlName="valor2" />
-    </div>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Clave" formControlName="clave3" />
-        <span class="input-group-text">:</span>
-        <input type="text" class="form-control" placeholder="Valor" formControlName="valor3" />
-    </div>
-
-    <button type="submit">Cargar historia clínica</button>
-</form>
+</div>

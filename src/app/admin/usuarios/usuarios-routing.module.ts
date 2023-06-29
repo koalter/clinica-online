@@ -4,6 +4,7 @@ import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.compo
 import { ListaEspecialistasComponent } from './lista-especialistas/lista-especialistas.component';
 import { UsuariosComponent } from './usuarios.component';
 import { RegistroAdminComponent } from './registro-admin/registro-admin.component';
+import { HistoriaClinicaComponent } from '../../bienvenido/historia-clinica/historia-clinica.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,9 @@ const routes: Routes = [
     children: [
       {
         path: 'pacientes', component: ListaPacientesComponent
+      },
+      {
+        path: 'pacientes/historia', component: HistoriaClinicaComponent
       },
       {
         path: 'especialistas', component: ListaEspecialistasComponent

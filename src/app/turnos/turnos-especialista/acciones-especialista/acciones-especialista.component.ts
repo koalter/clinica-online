@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { Turno, EstadoTurno } from '../../shared/turno.model';
 import { TurnosService } from '../../shared/turnos.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'acciones-especialista',
@@ -11,6 +12,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class AccionesEspecialistaComponent {
   @Input() turno!: Turno;
   private turnoService: TurnosService = inject(TurnosService);
+  private router: Router = inject(Router);
 
   get aceptado(): boolean {
     return this.turno.estado == EstadoTurno.Aceptado;
@@ -78,7 +80,7 @@ export class AccionesEspecialistaComponent {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       icon: 'info',
-      inputLabel: 'Deje comentarios finales y/o diagnóstico',
+      inputLabel: 'Deje comentarios finales y/o diagnóstico.\nActo seguido deberá completar la historia clínica del paciente',
       inputValidator: (valor: string) => {
         if (!valor) {
           return '¡Debe ingresar los comentarios finales!';
@@ -101,11 +103,10 @@ export class AccionesEspecialistaComponent {
   }
 
   private cambiarEstado(estado: EstadoTurno, comentarios?: string) {
-    const nuevoEstado: EstadoTurno = EstadoTurno[estado as keyof typeof EstadoTurno];
+    const nuevoEstado: EstadoTurno = estado;
     this.turnoService.cambiarEstado(this.turno.id!, nuevoEstado, comentarios)
     .then(() => {
       this.turno.estado = nuevoEstado;
-      debugger
       if (comentarios) {
         this.turno.comentarios.push(comentarios);
       }
@@ -125,6 +126,11 @@ export class AccionesEspecialistaComponent {
   }
 
   btn_realizado_click(comentario: string) {
-    this.cambiarEstado(EstadoTurno.Realizado, comentario);
+    this.router.navigate(['historia/nueva', { paciente: this.turno.paciente, especialidad: this.turno.especialidad }])
+    .then(res => {
+      if (res) {
+        this.cambiarEstado(EstadoTurno.Realizado, comentario);
+      }
+    });
   }
 }
