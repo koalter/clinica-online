@@ -11,6 +11,7 @@ import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.co
 import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-clinica/form-historia-clinica.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-clinica-detalles/historia-clinica-detalles.component';
+import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-cl
     PerfilComponent,
     HistoriaClinicaComponent,
     FormHistoriaClinicaComponent,
-    HistoriaClinicaDetallesComponent
+    HistoriaClinicaDetallesComponent,
+    ListaPacientesComponent
   ],
   imports: [
     CommonModule,
