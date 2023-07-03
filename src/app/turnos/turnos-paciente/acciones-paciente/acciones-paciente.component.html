@@ -3,11 +3,14 @@
     <i class="fas fa-cog fa-2x"></i>
   </button>
   <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
-    <li *ngIf="!realizado">
-      <span class="dropdown-item text-danger">Cancelar turno</span>
+    <li *ngIf="aceptado" 
+      [swal]="swalCancelar"
+      (confirm)="btn_cancelado_click($event)"
+    ><span class="dropdown-item text-danger">Cancelar turno</span>
     </li>
-    <li *ngIf="turno.comentarios">
-      <span class="dropdown-item text-primary">Ver reseña</span>
+    <li *ngIf="turno.comentarios && turno.comentarios.length" 
+      [swal]="swalComentarios"
+    ><span class="dropdown-item text-primary">Ver reseña</span>
     </li>
     <li *ngIf="realizado && turno.comentarios">
       <span class="dropdown-item text-success">Completar encuesta</span>

@@ -1,8 +1,18 @@
 <div class="row">
   <div class="col d-flex align-items-center" *ngFor="let usuario of usuarios">
-    <button mdbRipple type="button" class="btn btn-white btn-lg btn-floating" (click)="exportarTurnos(usuario)">
-      <img [src]="usuario.imagen" class="rounded-circle h-100" />
-    </button>
-    <span role="button" class="badge rounded-pill badge-info ms-2">{{ usuario.nombre }}  {{ usuario.apellido }}</span>
+    <div mdbDropdown class="dropdown">
+      <button mdbDropdownToggle mdbRipple type="button" class="btn btn-white btn-lg btn-floating dropdown-toggle hidden-arrow">
+        <img [src]="usuario.imagen" class="rounded-circle h-100" />
+      </button>
+      <ul mdbDropdownMenu class="dropdown-menu">
+        <li>
+          <span (click)="exportarTurnos(usuario)" role="button" class="dropdown-item text-primary">Exportar turnos a Excel</span>
+        </li>
+        <li>
+          <span role="button" class="dropdown-item text-success">Descargar historia clínica</span>
+        </li>
+      </ul>
+    </div>
+    <span role="button" class="badge rounded-pill badge-info ms-2">{{ usuario.nombre }} {{ usuario.apellido }}</span>
   </div>
 </div>

@@ -5,6 +5,8 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 import { ListaEspecialistasComponent } from './lista-especialistas/lista-especialistas.component';
 import { FormsModule } from '@angular/forms';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     UsuariosRoutingModule,
-    FormsModule
+    FormsModule,
+    MdbRippleModule,
+    MdbDropdownModule
   ]
 })
 export class UsuariosModule { }

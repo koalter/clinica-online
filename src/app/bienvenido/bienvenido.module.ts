@@ -12,6 +12,8 @@ import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-c
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-clinica-detalles/historia-clinica-detalles.component';
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.compo
     BienvenidoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MdbDropdownModule,
+    MdbRippleModule
   ]
 })
 export class BienvenidoModule { }
