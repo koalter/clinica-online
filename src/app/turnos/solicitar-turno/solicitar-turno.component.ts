@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EspecialidadService } from '../../shared/services/especialidad.service';
 import { Especialista, Paciente } from '../../shared/domains/usuario.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { Turno } from '../shared/turno.model';
 import { TurnosService } from '../shared/turnos.service';
 import { Router } from '@angular/router';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'solicitar-turno',
   templateUrl: './solicitar-turno.component.html',
   styleUrls: ['./solicitar-turno.component.scss']
 })
-export class SolicitarTurnoComponent {
+export class SolicitarTurnoComponent implements OnInit {
   pacientes!: Promise<Paciente[]>;
   especialidades!: Promise<string[]>;
   especialistas!: Promise<Especialista[]>;
@@ -23,7 +24,8 @@ export class SolicitarTurnoComponent {
   fecha!: Date;
   hora!: Date;
   step: number = 1;
-  esAdmin: boolean;
+  esAdmin!: boolean;
+  imagenesEspecialista: KeyValue<string, string>[] = [];
   
   get dias(): number {
     return 15;
@@ -36,7 +38,10 @@ export class SolicitarTurnoComponent {
   constructor(private especialidadService: EspecialidadService,
     private authService: AuthService,
     private turnoService: TurnosService,
-    private router: Router) {
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
     const usuarioDetalles = this.authService.getDetalles();
     if (this.esAdmin = (usuarioDetalles!.rol === 'administrador')) {
       this.step = 0;
@@ -83,7 +88,11 @@ export class SolicitarTurnoComponent {
 
   seleccionarEspecialista(especialista: Especialista): void {
     this.especialista = especialista;
-    this.step = 2;
+    this.especialidadService.traerImagenes(this.especialista.especialidades)
+      .then(e => {
+        this.imagenesEspecialista = e;
+        this.step = 2;
+      });
   }
 
   seleccionarFecha(fecha: Date): void {
@@ -94,6 +103,11 @@ export class SolicitarTurnoComponent {
   seleccionarHora(hora: Date): void {
     this.hora = hora;
     this.step = 5;
+  }
+
+  obtenerImagenEspecialidad(especialidad: string) {
+    const res = this.imagenesEspecialista.find(item => item.key === especialidad);
+    return res?.value;
   }
 
   crearTurno(): void {
