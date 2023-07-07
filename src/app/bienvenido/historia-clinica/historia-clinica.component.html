@@ -22,7 +22,7 @@
             <tfoot>
                 <tr>
                     <td>
-                        <button class="btn btn-primary" (click)="descargar()">
+                        <button class="btn btn-primary" (click)="descargar(historiaClinica)">
                             <i class="fas fa-download"></i>
                             Descargar en PDF
                         </button>
@@ -36,7 +36,7 @@
         (confirm)="deseleccionar()"
         (dismiss)="deseleccionar()">
         <div *swalPortal="swalTargets.content">
-            <historia-clinica-detalles [detalles]="seleccionado">
+            <historia-clinica-detalles [detalles]="seleccionado" (descargar)="descargar([$event])">
             </historia-clinica-detalles>
         </div>
     </swal>

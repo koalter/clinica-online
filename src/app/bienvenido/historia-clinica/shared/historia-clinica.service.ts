@@ -3,6 +3,9 @@ import { Firestore, Timestamp, addDoc, collection, doc, getDoc, getDocs, query, 
 import { Especialista, Paciente } from 'src/app/shared/domains/usuario.model';
 import { HistoriaClinica } from './historia-clinica.model';
 import { AuthService } from '../../../shared/services/auth.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +73,43 @@ export class HistoriaClinicaService {
     } catch (err: any) {
       await this.logError(err.toString());
       throw err;
+    }
+  }
+
+  async generarPDF(historias: HistoriaClinica[]): Promise<void> {
+    try {
+      const content: any[] = [
+        `Fecha de emisión: ${ new Date().toLocaleDateString('es-AR', { dateStyle: 'full' }) }`
+      ];
+  
+      for (let historia of historias) {
+        let tabla = {
+          margin: [0, 5, 0, 15],
+          table: { 
+            body: [
+              ["Fecha", historia.fecha.toLocaleDateString('es-AR', { dateStyle: 'full' })],
+              ["Paciente", historia.paciente],
+              ["Especialista", historia.especialista],
+              ["Especialidad", historia.especialidad],
+              ["Altura", historia.altura],
+              ["Peso", historia.peso],
+              ["Temperatura", historia.temperatura],
+              ["Presión", historia.presion]
+            ]
+          }
+        };
+        
+        for (let prop in historia.adicionales) {
+          tabla.table.body.push([prop, historia.get(prop)!]);
+        }
+  
+        content.push(tabla);
+      }
+      
+      const doc = { content: content };
+      pdfMake.createPdf(doc).open();  
+    } catch (err: any) {
+      await this.logError(err.toString());
     }
   }
 

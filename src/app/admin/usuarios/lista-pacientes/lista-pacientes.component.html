@@ -9,7 +9,7 @@
           <span (click)="exportarTurnos(usuario)" role="button" class="dropdown-item text-primary">Exportar turnos a Excel</span>
         </li>
         <li>
-          <span role="button" class="dropdown-item text-success">Descargar historia clínica</span>
+          <span role="button" class="dropdown-item text-success" (click)="abrirHistoriaClinica(usuario.mail)">Ver historia clínica</span>
         </li>
       </ul>
     </div>

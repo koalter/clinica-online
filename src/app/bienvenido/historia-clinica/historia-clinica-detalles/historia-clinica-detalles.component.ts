@@ -8,8 +8,9 @@ import { HistoriaClinica } from '../shared/historia-clinica.model';
 })
 export class HistoriaClinicaDetallesComponent {
   @Input() detalles?: HistoriaClinica;
+  @Output() descargar: EventEmitter<HistoriaClinica> = new EventEmitter<HistoriaClinica>();
 
-  descargar() {
-    console.log("descargar()");
+  descargar_click() {
+    this.descargar.emit(this.detalles);
   }
 }

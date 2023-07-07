@@ -5,6 +5,7 @@ import { HistoriaClinica } from './shared/historia-clinica.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { SwalComponent, SwalPortalTargets } from '@sweetalert2/ngx-sweetalert2';
+import { ArchivoService } from '../../shared/services/archivo.service';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -12,14 +13,18 @@ import { SwalComponent, SwalPortalTargets } from '@sweetalert2/ngx-sweetalert2';
   styleUrls: ['./historia-clinica.component.scss']
 })
 export class HistoriaClinicaComponent implements OnInit {
-  private historiaClinicaService: HistoriaClinicaService = inject(HistoriaClinicaService);
-  private authService: AuthService = inject(AuthService);
-  private route: ActivatedRoute = inject(ActivatedRoute);
   paciente!: Paciente;
   historiaClinica!: HistoriaClinica[];
   seleccionado?: HistoriaClinica;
   @ViewChild('detalles') readonly detalles!: SwalComponent;
-  readonly swalTargets: SwalPortalTargets = inject(SwalPortalTargets);
+
+  constructor(
+    private historiaClinicaService: HistoriaClinicaService,
+    private authService: AuthService,
+    private archivoService: ArchivoService,
+    private route: ActivatedRoute,
+    public readonly swalTargets: SwalPortalTargets
+  ) {}
 
   async ngOnInit() {
     this.paciente = await this.authService.getUno(this.route.snapshot.paramMap.get('paciente') || this.authService.getUsuario()!.email!) as Paciente;
@@ -35,7 +40,7 @@ export class HistoriaClinicaComponent implements OnInit {
     this.seleccionado = undefined;
   }
 
-  descargar() {
-    console.log('descargar()');
+  descargar(historias: HistoriaClinica[]) {
+    this.historiaClinicaService.generarPDF(historias);
   }
 }

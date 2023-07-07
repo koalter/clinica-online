@@ -3,6 +3,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { TurnosService } from '../../turnos/shared/turnos.service';
 import { Paciente } from '../../shared/domains/usuario.model';
 import { ArchivoService } from '../../shared/services/archivo.service';
+import { HistoriaClinicaService } from '../historia-clinica/shared/historia-clinica.service';
 
 @Component({
   selector: 'especialista-lista-pacientes',
@@ -15,7 +16,8 @@ export class ListaPacientesComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private turnoService: TurnosService,
-    private archivoService: ArchivoService
+    private archivoService: ArchivoService,
+    private historiaClinicaService: HistoriaClinicaService
   ) {}
 
   async ngOnInit() {
@@ -37,5 +39,12 @@ export class ListaPacientesComponent implements OnInit {
       const turnos = res.filter(t => t.especialista === this.authService.getDetalles()?.mail);
       this.archivoService.exportarXLS('turnos-paciente', turnos);
     });
+  }
+
+  descargarHistoriaClinica(paciente: Paciente) {
+    this.historiaClinicaService.getPorPaciente(paciente)
+      .then(h => {
+        this.historiaClinicaService.generarPDF(h);
+      });
   }
 }
