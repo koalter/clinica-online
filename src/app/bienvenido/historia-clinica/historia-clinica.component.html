@@ -1,0 +1,52 @@
+<div class="container" *ngIf="historiaClinica">
+    <div class="row" *ngIf="historiaClinica.length > 0">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let hc of historiaClinica; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ hc.fecha | date: 'dd-MM-yyyy' }}</td>
+                    <td>
+                        <button class="btn btn-link btn-sm btn-rounded" (click)="seleccionar(hc)">
+                            <i class="far fa-eye fa-2x"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary" (click)="descargar(historiaClinica)">
+                            <i class="fas fa-download"></i>
+                            Descargar en PDF
+                        </button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <swal #detalles title="Detalles de la atención"
+        confirmButtonText="Cerrar"
+        (confirm)="deseleccionar()"
+        (dismiss)="deseleccionar()">
+        <div *swalPortal="swalTargets.content">
+            <historia-clinica-detalles [detalles]="seleccionado" (descargar)="descargar([$event])">
+            </historia-clinica-detalles>
+        </div>
+    </swal>
+    <div class="row" *ngIf="historiaClinica.length <= 0">
+        <div class="col p-4">
+            <h5>El paciente aún no posee registros de su historia clínica.</h5>
+            <button class="btn btn-primary my-3" routerLink="..">
+                <i class="fas fa-angle-left"></i>
+                Volver
+            </button>
+        </div>
+    </div>
+</div>

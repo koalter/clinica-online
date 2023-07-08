@@ -1,3 +1,5 @@
+import { HistoriaClinica } from "../../bienvenido/historia-clinica/shared/historia-clinica.model";
+
 export abstract class Usuario {
     nombre: string;
     apellido: string;
@@ -6,9 +8,11 @@ export abstract class Usuario {
     mail: string;
     imagen: string;
     rol!: string;
-    verificado: boolean;
+    verificado?: boolean;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado: boolean = false) {
+    historiaClinica?: HistoriaClinica[];
+
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado?: boolean) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -23,7 +27,7 @@ export class Paciente extends Usuario {
     imagenB: string;
     obraSocial: string;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, imagenB: string, obraSocial: string, verificado: boolean = false) {
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, imagenB: string, obraSocial: string, verificado?: boolean) {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.imagenB = imagenB;
         this.obraSocial = obraSocial;
@@ -35,7 +39,7 @@ export class Especialista extends Usuario {
     especialidades: string[];
     habilitado: boolean;
 
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, especialidades: string[], verificado: boolean = false, habilitado: boolean = false) {
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, especialidades: string[], habilitado: boolean = false, verificado?: boolean) {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.especialidades = especialidades;
         this.habilitado = habilitado;
@@ -44,7 +48,7 @@ export class Especialista extends Usuario {
 }
 
 export class Administrador extends Usuario {
-    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado: boolean = false) {
+    constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado?: boolean) {
         super(nombre, apellido, edad, dni, mail, imagen, verificado);
         this.rol = 'administrador';
     }

@@ -6,21 +6,37 @@ import { BienvenidoComponent } from './bienvenido.component';
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilComponent } from './perfil/perfil.component'; 
-import { FormsModule } from '@angular/forms';
-import { LinkButtonComponent } from './dashboard/link-button/link-button.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HistoriaClinicaComponent } from './historia-clinica/historia-clinica.component';
+import { FormHistoriaClinicaComponent } from './historia-clinica/form-historia-clinica/form-historia-clinica.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-clinica-detalles/historia-clinica-detalles.component';
+import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 
 @NgModule({
   declarations: [
     BienvenidoComponent,
     DashboardComponent,
     PerfilComponent,
-    LinkButtonComponent
+    HistoriaClinicaComponent,
+    FormHistoriaClinicaComponent,
+    HistoriaClinicaDetallesComponent,
+    ListaPacientesComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     BienvenidoRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    MdbDropdownModule,
+    MdbRippleModule
+  ],
+  exports: [
+    HistoriaClinicaDetallesComponent
   ]
 })
 export class BienvenidoModule { }

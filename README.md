@@ -96,3 +96,31 @@ Al presionar sobre el botón Turnos, nos dirigiremos a la interfaz de solicitud 
 Allí mismo podremos seleccionar a nuestro especialista de confianza, alguna de sus especialidades, las fechas disponibles y horario del turno.
 
 ![Ejemplo de solicitud de turno](src/assets/readme/solicitar_turno.gif)
+
+## VI. Ver listado de turnos
+
+TBD
+
+# Admin
+
+Además de los casos de uso indicados anteriormente, mencionaremos las funcionalidades disponibles a los usuarios administradores.
+
+## Ver listado de pacientes y especialistas
+
+Al ingresar con un usuario administrador, nos encontraremos con la pantalla inicial de navegación. Desde aquí iremos a la sección Usuarios
+
+![Navegación administrador](src/assets/readme/dashboard_admin.jpg)
+
+Allí mismo podremos visualizar el listado de pacientes registrados y especialistas seleccionando las pestañas correspondientes.
+
+Además contamos con la opción de exportar cada una de estas listas a un archivo de Excel
+
+![Sección Usuarios](src/assets/readme/usuarios.jpg)
+
+Yendo al listado de especialistas tendremos disponible la opción para habilitar o deshabilitar a los especialistas de manera individual.
+
+![Listado de especialistas](src/assets/readme/listado_especialistas.jpg)
+
+Por último, desde esta sección podremos crear usuarios nuevos (incluyendo nuevos administradores) yendo al botón de "NUEVO USUARIO", y completando el formulario de manera similar al de la [sección II](#ii-registro-de-usuario)
+
+![Nuevo usuario](src/assets/readme/registro_admin.jpg)

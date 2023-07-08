@@ -11,7 +11,9 @@ import { FormAdminComponent } from './form-admin/form-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE, RECAPTCHA_SE
     AdminComponent,
     UsuariosComponent,
     RegistroAdminComponent,
-    FormAdminComponent
+    FormAdminComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_LANGUAGE, RECAPTCHA_SE
     MdbTabsModule,
     MdbFormsModule,
     MdbValidationModule,
+    MdbRippleModule,
     RecaptchaModule,
     RecaptchaFormsModule
   ],

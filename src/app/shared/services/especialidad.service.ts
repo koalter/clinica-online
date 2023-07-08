@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { Especialidad, EspecialistaMapper } from '../domains/especialidad.model';
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 import { Filtro } from '../domains/filtro.model';
+import { Storage, getDownloadURL, ref } from '@angular/fire/storage';
+import { KeyValue } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class EspecialidadService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
   private spinner: SpinnerService = inject(SpinnerService);
+  private storage: Storage = inject(Storage);
 
   private get path(): string { 
     return 'especialidades';
@@ -91,6 +94,22 @@ export class EspecialidadService {
     } finally {
       this.spinner.ocultar();
     }
+  }
+
+  async traerImagen(especialidad: string) : Promise<string> {
+    const imagen = await getDownloadURL(ref(this.storage, `especialidades/${especialidad.toLowerCase()}.jpg`));
+    return imagen;
+  }
+
+  async traerImagenes(especialidades: string[]): Promise<KeyValue<string, string>[]> {
+    const imagenes: KeyValue<string, string>[] = [];
+
+    for (let especialidad of especialidades) {
+      const valor = await this.traerImagen(especialidad);
+      imagenes.push({ key: especialidad, value: valor });
+    }
+
+    return imagenes;
   }
 
   logError(mensaje: string): Promise<any> {

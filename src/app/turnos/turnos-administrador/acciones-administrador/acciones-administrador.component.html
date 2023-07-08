@@ -3,8 +3,10 @@
     <i class="fas fa-cog fa-2x"></i>
   </button>
   <ul mdbDropdownMenu class="dropdown-menu dropdown-menu-end">
-    <li *ngIf="!aceptado || !realizado || !rechazado">
-      <span class="dropdown-item text-danger">Cancelar turno</span>
+    <li *ngIf="aceptado" 
+      [swal]="swalCancelar"
+      (confirm)="btn_cancelado_click($event)"
+    ><span class="dropdown-item text-danger">Cancelar turno</span>
     </li>
   </ul>
 </div>

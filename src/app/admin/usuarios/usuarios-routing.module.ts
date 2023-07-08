@@ -2,16 +2,31 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 import { ListaEspecialistasComponent } from './lista-especialistas/lista-especialistas.component';
+import { UsuariosComponent } from './usuarios.component';
+import { RegistroAdminComponent } from './registro-admin/registro-admin.component';
+import { HistoriaClinicaComponent } from '../../bienvenido/historia-clinica/historia-clinica.component';
 
 const routes: Routes = [
   {
-    path: 'pacientes', component: ListaPacientesComponent
-  },
-  {
-    path: 'especialistas', component: ListaEspecialistasComponent
-  },
-  {
-    path: '', redirectTo: 'pacientes', pathMatch: 'full'
+    path: '',
+    component: UsuariosComponent,
+    children: [
+      {
+        path: 'pacientes', component: ListaPacientesComponent
+      },
+      {
+        path: 'pacientes/historia', component: HistoriaClinicaComponent
+      },
+      {
+        path: 'especialistas', component: ListaEspecialistasComponent
+      },
+      {
+        path: 'alta', component: RegistroAdminComponent
+      },
+      {
+        path: '', redirectTo: 'pacientes', pathMatch: 'full'
+      }
+    ]
   }
 ];
 

@@ -66,14 +66,14 @@ export class AuthService {
         case 'paciente':
           const imagenB = await getDownloadURL(ref(this.storage, `${this.imageURI}${snapshot.id}_1`));
           return new Paciente(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, imagenB, data['obraSocial'], false);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, imagenB, data['obraSocial']);
           case 'especialista':
           const resultado = new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidades'], false, data['habilitado']);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, data['especialidades'], data['habilitado']);
             return resultado;
         case 'administrador':
           return new Administrador(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen, false);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, imagen);
         default:
           return null;
       }
@@ -87,14 +87,14 @@ export class AuthService {
       switch ((data['rol'] as string).toLowerCase()) {
         case 'paciente':
           return new Paciente(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", "", data['obraSocial'], false);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", "", data['obraSocial']);
           case 'especialista':
           const resultado = new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", data['especialidades'], false, data['habilitado']);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", data['especialidades'], data['habilitado']);
             return resultado;
         case 'administrador':
           return new Administrador(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "", false);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], snapshot.id, "");
         default:
           return null;
       }
@@ -111,7 +111,7 @@ export class AuthService {
             data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['imagenB'], data['obraSocial'], data['verificado']);
         case 'especialista':
           const resultado = new Especialista(
-            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['verificado'], data['habilitado']);
+            data['nombre'], data['apellido'], data['edad'], data['dni'], data['mail'], data['imagen'], data['especialidades'], data['habilitado'], data['verificado']);
           return resultado;
         case 'administrador':
           return new Administrador(
