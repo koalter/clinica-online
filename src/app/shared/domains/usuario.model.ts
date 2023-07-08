@@ -1,3 +1,5 @@
+import { HistoriaClinica } from "../../bienvenido/historia-clinica/shared/historia-clinica.model";
+
 export abstract class Usuario {
     nombre: string;
     apellido: string;
@@ -7,6 +9,8 @@ export abstract class Usuario {
     imagen: string;
     rol!: string;
     verificado?: boolean;
+
+    historiaClinica?: HistoriaClinica[];
 
     constructor(nombre: string, apellido: string, edad: number, dni: number, mail: string, imagen: string, verificado?: boolean) {
         this.nombre = nombre;

@@ -13,6 +13,7 @@ import { AccionesEspecialistaComponent } from './turnos-especialista/acciones-es
 import { AccionesPacienteComponent } from './turnos-paciente/acciones-paciente/acciones-paciente.component';
 import { AccionesAdministradorComponent } from './turnos-administrador/acciones-administrador/acciones-administrador.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { BienvenidoModule } from '../bienvenido/bienvenido.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     TurnosRoutingModule,
     ReactiveFormsModule,
     MdbDropdownModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    BienvenidoModule
   ]
 })
 export class TurnosModule { }

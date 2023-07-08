@@ -34,6 +34,9 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
     SweetAlert2Module,
     MdbDropdownModule,
     MdbRippleModule
+  ],
+  exports: [
+    HistoriaClinicaDetallesComponent
   ]
 })
 export class BienvenidoModule { }

@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { Paciente } from '../../shared/domains/usuario.model';
-import { HistoriaClinicaService } from './shared/historia-clinica.service';
-import { HistoriaClinica } from './shared/historia-clinica.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SwalComponent, SwalPortalTargets } from '@sweetalert2/ngx-sweetalert2';
-import { ArchivoService } from '../../shared/services/archivo.service';
+import { Paciente } from '../../shared/domains/usuario.model';
+import { HistoriaClinica } from './shared/historia-clinica.model';
+import { HistoriaClinicaService } from './shared/historia-clinica.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -21,7 +20,6 @@ export class HistoriaClinicaComponent implements OnInit {
   constructor(
     private historiaClinicaService: HistoriaClinicaService,
     private authService: AuthService,
-    private archivoService: ArchivoService,
     private route: ActivatedRoute,
     public readonly swalTargets: SwalPortalTargets
   ) {}

@@ -22,11 +22,16 @@
         <input mdbRadio type="radio" class="form-check-input" value="paciente" formControlName="criterio">
         Paciente
       </label>
+      <label class="form-check ms-3">
+        <input mdbRadio type="radio" class="form-check-input" value="historia" formControlName="criterio">
+        Historia clínica (altura, peso, temperatura, presion,...)
+      </label>
     </div>
     <div class="w-auto ms-3">
       <span *ngIf="filtroEspecialista.valor" (click)="limpiar(filtroEspecialista)" class="badge rounded-pill badge-dark" role="button">{{ filtroEspecialista.criterio }}: {{ filtroEspecialista.valor }} <i class="far fa-times-circle"></i></span>
       <span *ngIf="filtroEspecialidad.valor" (click)="limpiar(filtroEspecialidad)" class="badge rounded-pill badge-dark" role="button">{{ filtroEspecialidad.criterio }}: {{ filtroEspecialidad.valor }} <i class="far fa-times-circle"></i></span>
       <span *ngIf="filtroPaciente.valor" (click)="limpiar(filtroPaciente)" class="badge rounded-pill badge-dark" role="button">{{ filtroPaciente.criterio }}: {{ filtroPaciente.valor }} <i class="far fa-times-circle"></i></span>
+      <span *ngFor="let filtro of filtroHistoria" (click)="limpiarFiltroHistoria()" class="badge rounded-pill badge-dark" role="button">{{ filtro.criterio }}: {{ filtro.valor }} <i class="far fa-times-circle"></i></span>
     </div>
   </form>
 

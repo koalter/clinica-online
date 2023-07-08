@@ -51,6 +51,38 @@ export class HistoriaClinicaService {
     }
   }
 
+  async getPorId(guid: string, agregarDetalles: boolean = false) {
+    try {
+      const docRef = doc(this.firestore, 'historia', guid);
+      const snapshot = await getDoc(docRef);
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        const item: HistoriaClinica = new HistoriaClinica(
+          data['paciente'],
+          data['especialista'],
+          data['especialidad'],
+          data['altura'],
+          data['peso'],
+          data['temperatura'],
+          data['presion'],
+          data['adicionales']
+        );
+  
+        if (agregarDetalles) {
+          item.especialistaDetalles = await this.authService.getUno(item.especialista) as Especialista;
+          item.pacienteDetalles = await this.authService.getUno(item.paciente) as Paciente;
+        }
+        
+        return item;
+      }
+
+      return undefined;
+    } catch (err: any) {
+      await this.logError(err.toString());
+      throw err;
+    }
+  }
+
   async post(historiaClinica: HistoriaClinica) {
     try {
       const adicionales = [];

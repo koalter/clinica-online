@@ -50,7 +50,8 @@ export class TurnosService {
           especialidad: data['especialidad'],
           fecha: (data['fecha'] as Timestamp).toDate(),
           estado: data['estado'],
-          comentarios: data['comentarios'] || []
+          comentarios: data['comentarios'] || [],
+          historiaClinica: data['historiaClinica']
         };
         result.push(item);
       });
