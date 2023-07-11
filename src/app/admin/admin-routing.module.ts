@@ -10,10 +10,11 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
+      { path: 'informes', loadChildren: () => import('./informes/informes.module').then(m => m.InformesModule) },
       { path: '', component: DashboardComponent }
     ],
     canActivate: [AdminGuard]
-  }
+  },
 ];
 
 @NgModule({
