@@ -16,15 +16,15 @@
         </tr>
         <tr>
             <th>Altura</th>
-            <td>{{ detalles.altura }} cms</td>
+            <td>{{ detalles.altura | centimetros }}</td>
         </tr>
         <tr>
             <th>Peso</th>
-            <td>{{ detalles.peso }} kgs</td>
+            <td>{{ detalles.peso | kilos }}</td>
         </tr>
         <tr>
             <th>Temperatura</th>
-            <td>{{ detalles.temperatura }}°C</td>
+            <td>{{ detalles.temperatura | temperatura: 'celcius' }}</td>
         </tr>
         <tr>
             <th>Presión</th>

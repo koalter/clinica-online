@@ -1,0 +1,11 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="nav nav-pills flex-column col-md-2">
+      <a *ngFor="let ruta of rutas" class="nav-link" [routerLink]="ruta.path"
+        routerLinkActive="bg-primary text-light">{{ ruta.title }}</a>
+    </nav>
+    <div class="col-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

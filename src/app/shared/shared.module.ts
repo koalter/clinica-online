@@ -12,6 +12,12 @@ import { FormEspecialistaComponent } from './components/form-especialista/form-e
 import { ButtonVolverComponent } from './components/button-volver/button-volver.component';
 import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { LinkButtonComponent } from './components/link-button/link-button.component';
+import { CentimetrosPipe } from './pipes/centimetros.pipe';
+import { KilogramosPipe } from './pipes/kilogramos.pipe';
+import { TemperaturaPipe } from './pipes/temperatura.pipe';
+import { NumberValidatorDirective } from './directives/number-validator.directive';
+import { CharacterValidatorDirective } from './directives/character-validator.directive';
+import { InputDetectorDirective } from './directives/input-detector.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +25,13 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
     FormPacienteComponent,
     FormEspecialistaComponent,
     ButtonVolverComponent,
-    LinkButtonComponent
+    LinkButtonComponent,
+    CentimetrosPipe,
+    KilogramosPipe,
+    TemperaturaPipe,
+    NumberValidatorDirective,
+    CharacterValidatorDirective,
+    InputDetectorDirective
   ],
   imports: [
     CommonModule,
@@ -37,7 +49,13 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
     FormPacienteComponent,
     FormEspecialistaComponent,
     ButtonVolverComponent,
-    LinkButtonComponent
+    LinkButtonComponent,
+    CentimetrosPipe,
+    KilogramosPipe,
+    TemperaturaPipe,
+    NumberValidatorDirective,
+    CharacterValidatorDirective,
+    InputDetectorDirective
   ],
   providers: [
     {

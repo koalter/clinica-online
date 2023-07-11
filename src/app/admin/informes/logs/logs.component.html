@@ -1,0 +1,16 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Mail de usuario</th>
+        <th scope="col">Fecha de acceso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{log.usuario}}</td>
+        <td>{{log.fecha | date: 'dd-MM-yyyy hh:mm:ss'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
