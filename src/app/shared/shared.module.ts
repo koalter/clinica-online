@@ -15,6 +15,9 @@ import { LinkButtonComponent } from './components/link-button/link-button.compon
 import { CentimetrosPipe } from './pipes/centimetros.pipe';
 import { KilogramosPipe } from './pipes/kilogramos.pipe';
 import { TemperaturaPipe } from './pipes/temperatura.pipe';
+import { NumberValidatorDirective } from './directives/number-validator.directive';
+import { CharacterValidatorDirective } from './directives/character-validator.directive';
+import { InputDetectorDirective } from './directives/input-detector.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { TemperaturaPipe } from './pipes/temperatura.pipe';
     LinkButtonComponent,
     CentimetrosPipe,
     KilogramosPipe,
-    TemperaturaPipe
+    TemperaturaPipe,
+    NumberValidatorDirective,
+    CharacterValidatorDirective,
+    InputDetectorDirective
   ],
   imports: [
     CommonModule,
@@ -46,7 +52,10 @@ import { TemperaturaPipe } from './pipes/temperatura.pipe';
     LinkButtonComponent,
     CentimetrosPipe,
     KilogramosPipe,
-    TemperaturaPipe
+    TemperaturaPipe,
+    NumberValidatorDirective,
+    CharacterValidatorDirective,
+    InputDetectorDirective
   ],
   providers: [
     {

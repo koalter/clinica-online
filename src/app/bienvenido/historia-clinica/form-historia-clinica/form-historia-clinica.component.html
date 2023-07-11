@@ -6,36 +6,36 @@
         <form class="col-md-6 col-lg-4 col-xl-3" [formGroup]="formulario" (ngSubmit)="enviar()">
             <div class="input-group mb-3">
                 <span class="input-group-text">Altura (cm)</span>
-                <input type="text" class="form-control" formControlName="altura" />
+                <input detectarInput soloNumeros type="text" class="form-control" formControlName="altura" />
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Peso (kg)</span>
-                <input type="text" class="form-control" formControlName="peso" />
+                <input detectarInput soloNumeros type="text" class="form-control" formControlName="peso" />
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">Temperatura (C°)</span>
-                <input type="text" class="form-control" formControlName="temperatura" />
+                <span class="input-group-text">Temperatura (°C)</span>
+                <input detectarInput soloNumeros type="text" class="form-control" formControlName="temperatura" />
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">Presión</span>
-                <input type="text" class="form-control" formControlName="presion" />
+                <input detectarInput soloNumeros type="text" class="form-control" formControlName="presion" />
             </div>
         
             <label class="form-label">Otros datos</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Clave" formControlName="clave1" />
+                <input detectarInput soloLetras type="text" class="form-control" placeholder="Clave" formControlName="clave1" />
                 <span class="input-group-text">:</span>
-                <input type="text" class="form-control" placeholder="Valor" formControlName="valor1" />
+                <input detectarInput type="text" class="form-control" placeholder="Valor" formControlName="valor1" />
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Clave" formControlName="clave2" />
+                <input detectarInput soloLetras type="text" class="form-control" placeholder="Clave" formControlName="clave2" />
                 <span class="input-group-text">:</span>
-                <input type="text" class="form-control" placeholder="Valor" formControlName="valor2" />
+                <input detectarInput type="text" class="form-control" placeholder="Valor" formControlName="valor2" />
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Clave" formControlName="clave3" />
+                <input detectarInput soloLetras type="text" class="form-control" placeholder="Clave" formControlName="clave3" />
                 <span class="input-group-text">:</span>
-                <input type="text" class="form-control" placeholder="Valor" formControlName="valor3" />
+                <input detectarInput type="text" class="form-control" placeholder="Valor" formControlName="valor3" />
             </div>
         
             <button class="btn btn-success" type="submit" [disabled]="formulario.invalid">Cargar historia clínica</button>
