@@ -1,8 +1,10 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
+import { SweetAlertOptions } from 'sweetalert2';
+import { SwalComponent, SwalPortalTargets } from '@sweetalert2/ngx-sweetalert2';
+import { Router } from '@angular/router';
 import { Turno, EstadoTurno } from '../../shared/turno.model';
 import { TurnosService } from '../../shared/turnos.service';
-import { SweetAlertOptions } from 'sweetalert2';
-import { Router } from '@angular/router';
+import { HistoriaClinicaService } from '../../../bienvenido/historia-clinica/shared/historia-clinica.service';
 
 @Component({
   selector: 'acciones-especialista',
@@ -11,8 +13,12 @@ import { Router } from '@angular/router';
 })
 export class AccionesEspecialistaComponent {
   @Input() turno!: Turno;
-  private turnoService: TurnosService = inject(TurnosService);
-  private router: Router = inject(Router);
+  @ViewChild('historiaClinica') readonly historiaClinica!: SwalComponent;
+
+  constructor(private turnoService: TurnosService,
+    private historiaClinicaService: HistoriaClinicaService,
+    private router: Router,
+    public readonly swalTargets: SwalPortalTargets) {}
 
   get aceptado(): boolean {
     return this.turno.estado == EstadoTurno.Aceptado;
@@ -132,5 +138,13 @@ export class AccionesEspecialistaComponent {
         this.cambiarEstado(EstadoTurno.Realizado, comentario);
       }
     });
+  }
+
+  verHistoriaClinica() {
+    this.historiaClinica.fire();
+  }
+  
+  descargarHistoriaClinica() {
+    this.historiaClinicaService.generarPDF([this.turno.historiaClinicaDetalles!]);
   }
 }

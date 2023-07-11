@@ -27,5 +27,15 @@
       [swal]="swalComentarios">
       <span class="dropdown-item text-primary">Ver reseña</span>
     </li>
+    <li *ngIf="turno.historiaClinicaDetalles" (click)="verHistoriaClinica()"><span
+      class="dropdown-item text-warning">Ver historia clínica</span>
+  </li>
   </ul>
 </div>
+
+<swal #historiaClinica title="Detalles de la atención" confirmButtonText="Cerrar">
+  <div *swalPortal="swalTargets.content">
+    <historia-clinica-detalles [detalles]="turno.historiaClinicaDetalles" (descargar)="descargarHistoriaClinica()">
+    </historia-clinica-detalles>
+  </div>
+</swal>
