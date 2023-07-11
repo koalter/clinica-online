@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { TurnosService } from '../../../turnos/shared/turnos.service';
 import { EstadoTurno, Turno } from '../../../turnos/shared/turno.model';
+import html2canvas from 'html2canvas';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-graficos',
@@ -14,6 +18,7 @@ export class GraficosComponent implements OnInit {
   porDiaOptions!: Highcharts.Options;
   porSolicitadosOptions!: Highcharts.Options;
   porFinalizadosOptions!: Highcharts.Options;
+  @ViewChild('export') exportRef!: ElementRef;
 
   constructor(private turnoService: TurnosService) {}
 
@@ -22,6 +27,20 @@ export class GraficosComponent implements OnInit {
     .then(turnos => {
       this.armarInformes(turnos);
     });
+  }
+
+  exportar(): void {
+    html2canvas(this.exportRef.nativeElement).then((canvas: any) => {
+      const imgData = canvas.toDataURL('image/png');
+
+      pdfMake.createPdf({
+        pageOrientation: 'landscape',
+        content: [{
+          image: imgData,
+          width: 800
+        }]
+      }).open();
+    })
   }
 
   private armarInformes(turnos: Turno[]) {

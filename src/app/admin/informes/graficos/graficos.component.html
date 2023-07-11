@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div #export class="row">
         <div class="col-6">
             <highcharts-chart 
               [Highcharts]="Highcharts"
@@ -24,5 +24,10 @@
               [options]="porFinalizadosOptions"
             ></highcharts-chart>
         </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button (click)="exportar()" class="btn btn-dark"><i class="fas fa-download"></i> Exportar</button>
+      </div>
     </div>
 </div>
