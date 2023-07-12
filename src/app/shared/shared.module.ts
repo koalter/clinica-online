@@ -18,6 +18,7 @@ import { TemperaturaPipe } from './pipes/temperatura.pipe';
 import { NumberValidatorDirective } from './directives/number-validator.directive';
 import { CharacterValidatorDirective } from './directives/character-validator.directive';
 import { InputDetectorDirective } from './directives/input-detector.directive';
+import { CaptchaDirective } from './directives/captcha.directive';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InputDetectorDirective } from './directives/input-detector.directive';
     TemperaturaPipe,
     NumberValidatorDirective,
     CharacterValidatorDirective,
-    InputDetectorDirective
+    InputDetectorDirective,
+    CaptchaDirective
   ],
   imports: [
     CommonModule,
