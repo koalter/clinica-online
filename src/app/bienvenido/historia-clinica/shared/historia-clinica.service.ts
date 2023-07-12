@@ -5,6 +5,7 @@ import { HistoriaClinica } from './historia-clinica.model';
 import { AuthService } from '../../../shared/services/auth.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { LogService } from '../../../shared/services/log.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable({
@@ -15,7 +16,8 @@ export class HistoriaClinicaService {
   private coll = collection(this.firestore, 'historia');
 
   constructor(private firestore: Firestore,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private logger: LogService) { }
 
   async getPorPaciente(paciente: Paciente, agregarDetalles = false): Promise<HistoriaClinica[]> {
     try {
@@ -46,7 +48,7 @@ export class HistoriaClinicaService {
       return result;
 
     } catch (err: any) {
-      await this.logError(err.toString());
+      await this.logger.logError(err.toString());
       throw err;
     }
   }
@@ -78,7 +80,7 @@ export class HistoriaClinicaService {
 
       return undefined;
     } catch (err: any) {
-      await this.logError(err.toString());
+      await this.logger.logError(err.toString());
       throw err;
     }
   }
@@ -101,9 +103,10 @@ export class HistoriaClinicaService {
         fecha: Timestamp.fromDate(historiaClinica.fecha),
         adicionales: adicionales
       };
-      await addDoc(this.coll, data);
+      const docRef = await addDoc(this.coll, data);
+      return docRef.id;
     } catch (err: any) {
-      await this.logError(err.toString());
+      await this.logger.logError(err.toString());
       throw err;
     }
   }
@@ -130,9 +133,9 @@ export class HistoriaClinicaService {
             ]
           }
         };
-        
-        for (let prop in historia.adicionales) {
-          tabla.table.body.push([prop, historia.get(prop)!]);
+        debugger
+        for (let prop of historia.adicionales) {
+          tabla.table.body.push([prop[0], prop[1]]);
         }
   
         content.push(tabla);
@@ -141,11 +144,7 @@ export class HistoriaClinicaService {
       const doc = { content: content };
       pdfMake.createPdf(doc).open();  
     } catch (err: any) {
-      await this.logError(err.toString());
+      await this.logger.logError(err.toString());
     }
-  }
-
-  logError(mensaje: string): Promise<any> {
-    return addDoc(collection(this.firestore, 'logErrores'), { error: mensaje, fecha: Timestamp.now() });
   }
 }

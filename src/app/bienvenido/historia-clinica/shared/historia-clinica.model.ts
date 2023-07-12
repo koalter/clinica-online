@@ -12,10 +12,15 @@ export class HistoriaClinica {
   fecha: Date = new Date();
   private _adicionales: Map<string, string> = new Map();
 
+  private get limiteAdicionales() : number {
+    return 6;
+  }
+  
+
   constructor(paciente: string, especialista: string, especialidad: string, altura: number, peso: number,
     temperatura: number, presion: number, adicionales: KeyValue<string, string>[]) {
-    if (adicionales.length > 3) {
-      throw new Error('La cantidad máxima permitida de datos adicionales es tres (3)');
+    if (adicionales.length > this.limiteAdicionales) {
+      throw new Error('La cantidad máxima permitida de datos adicionales es seis (6)');
     }
     
     this.paciente = paciente;

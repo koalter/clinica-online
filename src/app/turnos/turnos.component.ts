@@ -55,7 +55,7 @@ export class TurnosComponent implements OnInit {
     for (let turno of this.turnos) {
       turno.pacienteDetalles = this.pacientes.find(p => p.mail === turno.paciente);
       turno.especialistaDetalles = this.especialistas.find(e => e.mail === turno.especialista);
-      debugger
+
       if (turno.historiaClinica)
         turno.historiaClinicaDetalles = await this.historiaClinicaService.getPorId(turno.historiaClinica);
     }
