@@ -6,17 +6,17 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./bienvenido/bienvenido.module').then(m => m.BienvenidoModule),
-    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectUnauthorizedTo('login') }
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectUnauthorizedTo('login'), animation: 'bienvenido' }
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/') }
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/'), animation: 'login' }
   },
   {
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then(m => m.RegistroModule),
-    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/') }
+    canActivate: [AuthGuard], data: { authGuardPipe: () => redirectLoggedInTo('/'), animation: 'registro' }
   },
   {
     path: '**',
