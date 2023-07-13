@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { Routes } from '@angular/router';
+import { ChildrenOutletContexts, Routes } from '@angular/router';
+import { slideInBck } from '../../shared/animations';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls: ['./usuarios.component.scss'],
+  animations: [
+    slideInBck
+  ]
 })
 export class UsuariosComponent {
   rutas: Routes = [
@@ -12,4 +16,10 @@ export class UsuariosComponent {
     { path: 'especialistas', title: 'Especialistas' },
     { path: 'alta', title: 'Nuevo usuario' }
   ];
+
+  constructor(private contexts: ChildrenOutletContexts) { }
+
+  manejarAnimaciones() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
+  }
 }
