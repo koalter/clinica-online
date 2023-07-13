@@ -1,23 +1,26 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnDestroy, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Administrador } from '../../shared/domains/usuario.model';
 import { PasswordValidator } from '../../shared/validators/password.validator';
-import { AuthService } from '../../shared/services/auth.service';
-import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { CaptchaService } from '../../shared/services/captcha.service';
 
 @Component({
   selector: 'form-admin',
   templateUrl: './form-admin.component.html',
   styleUrls: ['./form-admin.component.scss']
 })
-export class FormAdminComponent {
+export class FormAdminComponent implements OnInit, OnDestroy {
   @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
-  formulario: FormGroup;
-  rutaImagen: string;
+  formulario!: FormGroup;
+  rutaImagen!: string;
+  captcha$!: Subscription;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router) {
+    private captchaService: CaptchaService) {
+    }
+    
+  ngOnInit(): void {
     this.rutaImagen = '../../../../assets/default.jpg';
     
     this.formulario = this.fb.group({
@@ -33,6 +36,13 @@ export class FormAdminComponent {
     });
 
     this.password2.addValidators(PasswordValidator.match(this.password));
+    this.captcha$ = this.captchaService.get().subscribe(token => {
+      this.captcha.setValue(token);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.captcha$.unsubscribe();
   }
 
   get nombre(): AbstractControl {

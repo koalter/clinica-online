@@ -1,14 +1,35 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CaptchaService } from '../services/captcha.service';
+import { FeatureFlagService } from '../services/feature-flag.service';
 
 @Directive({
   selector: '[appCaptcha]'
 })
-export class CaptchaDirective {
+export class CaptchaDirective implements OnInit, OnDestroy {
 
-  constructor(private captchaService: CaptchaService) {}
+  private isActive: boolean = false;
+
+  constructor(private captchaService: CaptchaService,
+    private featureFlagService: FeatureFlagService,
+    private el: ElementRef
+  ) { }
+
+  async ngOnInit() {
+    this.el.nativeElement.style.display = 'none';
+    this.isActive = await this.featureFlagService.captchaHabilitado();
+    
+    if (this.isActive) {
+      this.el.nativeElement.style.display = 'initial';
+    }
+  }
+
+  ngOnDestroy() {
+    this.captchaService.set('');
+  }
 
   @HostListener('resolved', ['$event']) onResolved(event: any) {
-    this.captchaService.set(event);
+    if (this.isActive) {
+      this.captchaService.set(event);
+    }
   }
 }

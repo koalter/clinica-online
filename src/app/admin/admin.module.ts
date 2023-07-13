@@ -34,7 +34,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MdbValidationModule,
     MdbRippleModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    SharedModule
   ],
   providers: [
     {
