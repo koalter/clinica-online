@@ -5,13 +5,26 @@ import { AdminGuard } from '../shared/guards/admin.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: AdminComponent,
+    data: { animation: 'admin' },
     children: [
-      { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
-      { path: 'informes', loadChildren: () => import('./informes/informes.module').then(m => m.InformesModule) },
-      { path: '', component: DashboardComponent }
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule),
+        data: { animation: 'usuarios' }
+      },
+      { 
+        path: 'informes', 
+        loadChildren: () => import('./informes/informes.module').then(m => m.InformesModule),
+        data: { animation: 'informes' }
+      },
+      { 
+        path: '', 
+        component: DashboardComponent,
+        data: { animation: 'dashboard' } 
+      }
     ],
     canActivate: [AdminGuard]
   },

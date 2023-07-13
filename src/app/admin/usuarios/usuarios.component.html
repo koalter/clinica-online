@@ -4,7 +4,7 @@
       <a *ngFor="let ruta of rutas" class="nav-link" [routerLink]="ruta.path"
         routerLinkActive="bg-primary text-light">{{ ruta.title }}</a>
     </nav>
-    <div class="col">
+    <div [@routeAnimations]="manejarAnimaciones()" class="col">
       <router-outlet></router-outlet>
     </div>
   </div>

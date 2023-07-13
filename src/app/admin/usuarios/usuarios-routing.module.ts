@@ -12,16 +12,16 @@ const routes: Routes = [
     component: UsuariosComponent,
     children: [
       {
-        path: 'pacientes', component: ListaPacientesComponent
+        path: 'pacientes', component: ListaPacientesComponent, data: { animation: 'pacientes' }
       },
       {
-        path: 'pacientes/historia', component: HistoriaClinicaComponent
+        path: 'pacientes/historia', component: HistoriaClinicaComponent, data: { animation: 'pacientes-historia' }
       },
       {
-        path: 'especialistas', component: ListaEspecialistasComponent
+        path: 'especialistas', component: ListaEspecialistasComponent, data: { animation: 'especialistas' }
       },
       {
-        path: 'alta', component: RegistroAdminComponent
+        path: 'alta', component: RegistroAdminComponent, data: { animation: 'alta' }
       },
       {
         path: '', redirectTo: 'pacientes', pathMatch: 'full'

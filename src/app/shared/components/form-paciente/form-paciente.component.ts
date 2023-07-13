@@ -1,27 +1,30 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, FormBuilder } from '@angular/forms';
 import { PasswordValidator } from '../../validators/password.validator';
 import { Paciente } from '../../domains/usuario.model';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { CaptchaService } from '../../services/captcha.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'form-paciente',
   templateUrl: './form-paciente.component.html',
   styleUrls: ['./form-paciente.component.scss']
 })
-export class FormPacienteComponent {
+export class FormPacienteComponent implements OnInit, OnDestroy {
   @Output() submitir: EventEmitter<any> = new EventEmitter<any>();
-  formulario: FormGroup;
-  rutaImagenA: string;
-  rutaImagenB: string;
+  formulario!: FormGroup;
+  rutaImagenA!: string;
+  rutaImagenB!: string;
+  captcha$!: Subscription;
 
   constructor(private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router) {
+    private captchaService: CaptchaService
+  ) { }
+  
+  ngOnInit(): void {
     this.rutaImagenA = '../../../../assets/default.jpg'; 
     this.rutaImagenB = this.rutaImagenA;
-
+  
     this.formulario = this.fb.group({
       nombre: [null, Validators.required],
       apellido: [null, Validators.required],
@@ -35,8 +38,15 @@ export class FormPacienteComponent {
       imagen_b: [undefined, Validators.required],
       captcha: [null, Validators.required]
     });
-
+  
     this.password2.addValidators(PasswordValidator.match(this.password));
+    this.captcha$ = this.captchaService.get().subscribe(token => {
+      this.captcha.setValue(token);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.captcha$.unsubscribe();
   }
 
   get nombre(): AbstractControl {

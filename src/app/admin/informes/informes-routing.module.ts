@@ -8,14 +8,17 @@ const routes: Routes = [
   { 
     path: '', 
     component: InformesComponent,
+    data: { animation: 'informes' },
     children: [
       {
         path: 'graficos',
-        component: GraficosComponent
+        component: GraficosComponent,
+        data: { animation: 'graficos' }
       },
       {
         path: 'logs',
-        component: LogsComponent
+        component: LogsComponent,
+        data: { animation: 'logs' }
       }
     ]
   }

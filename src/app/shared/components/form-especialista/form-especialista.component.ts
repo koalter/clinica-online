@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { PasswordValidator } from '../../validators/password.validator';
 import { EspecialidadValidator } from '../../validators/especialidad.validator';
@@ -7,22 +7,27 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { EspecialidadService } from '../../services/especialidad.service';
 import { Especialidad } from '../../domains/especialidad.model';
+import { CaptchaService } from '../../services/captcha.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'form-especialista',
   templateUrl: './form-especialista.component.html',
   styleUrls: ['./form-especialista.component.scss']
 })
-export class FormEspecialistaComponent {
-  formulario: FormGroup;
-  rutaImagen: string;
-  especialidades: Promise<string[]>
-
+export class FormEspecialistaComponent implements OnInit, OnDestroy {
+  formulario!: FormGroup;
+  rutaImagen!: string;
+  especialidades!: Promise<string[]>
+  captcha$!: Subscription;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private especialidadService: EspecialidadService) {
+    private especialidadService: EspecialidadService,
+    private captchaService: CaptchaService) { }
+
+  ngOnInit(): void {
     this.rutaImagen = '../../../../assets/default.jpg';
     
     this.formulario = this.fb.group({
@@ -43,6 +48,13 @@ export class FormEspecialistaComponent {
     this.especialidad.addValidators(EspecialidadValidator.habilitarValidaciones(this.otraEspecialidad));
 
     this.especialidades = this.especialidadService.traerTodos();
+    this.captcha$ = this.captchaService.get().subscribe(token => {
+      this.captcha.setValue(token);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.captcha$.unsubscribe();
   }
 
   get nombre(): AbstractControl {
@@ -83,6 +95,10 @@ export class FormEspecialistaComponent {
 
   get imagen(): AbstractControl {
     return this.formulario.get('imagen')!;
+  }
+
+  get captcha(): AbstractControl {
+    return this.formulario.get('captcha')!;
   }
 
   onSubmit(): void {
@@ -127,5 +143,10 @@ export class FormEspecialistaComponent {
       && event.key !== 'Backspace' && event.key !== 'Delete' && !event.key.includes('Arrow')) {
       event.preventDefault();
     }
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(this.formulario.get('captcha')!.value);
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 }

@@ -4,6 +4,7 @@ import { Firestore, Timestamp, addDoc, and, arrayUnion, collection, doc, getDoc,
 import { SpinnerService } from '../../spinner/shared/spinner.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { Especialista, Paciente } from '../../shared/domains/usuario.model';
+import { LogService } from '../../shared/services/log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class TurnosService {
 
   constructor(private firestore: Firestore,
     private spinner: SpinnerService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private logger: LogService) { }
 
   async alta(turno: Turno) {
     this.spinner.mostrar()
@@ -27,7 +29,7 @@ export class TurnosService {
       };
       await addDoc(collection(this.firestore, 'turnos'), data);
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
     } finally {
       this.spinner.ocultar();
     }
@@ -58,7 +60,7 @@ export class TurnosService {
 
       return result;
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
       throw err;
     } finally {
       this.spinner.ocultar();
@@ -89,7 +91,7 @@ export class TurnosService {
 
       return result;
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
       throw err;
     } finally {
       this.spinner.ocultar();
@@ -126,7 +128,7 @@ export class TurnosService {
 
       return result;
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
       throw err;
     } finally {
       this.spinner.ocultar();
@@ -147,7 +149,7 @@ export class TurnosService {
       };
       await updateDoc(docRef, data);
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
     } finally {
       this.spinner.ocultar();
     }
@@ -167,7 +169,7 @@ export class TurnosService {
       const resultado = docSnap.data();
       return new Turno(resultado['paciente'], resultado['especialista'], resultado['especialidad'], resultado['fecha'], resultado['estado'], resultado['comentarios']);
     } catch (err: any) {
-      this.logError(err.toString());
+      this.logger.logError(err.toString());
       return null;
     } finally {
       this.spinner.ocultar();
@@ -179,7 +181,14 @@ export class TurnosService {
     return resultado?.comentarios;
   }
 
-  logError(mensaje: string): Promise<any> {
-    return addDoc(collection(this.firestore, 'logErrores'), { error: mensaje, fecha: Timestamp.now() });
+  async enlazarHistoriaClinica(turnoId: string, historiaClinicaId: string) {
+    try {
+      const docRef = doc(this.firestore, 'turnos', turnoId);
+      await updateDoc(docRef, {
+        historiaClinica: historiaClinicaId
+      });
+    } catch (err: any) {
+      this.logger.logError(err.toString());
+    }
   }
 }

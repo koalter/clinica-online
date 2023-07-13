@@ -14,6 +14,8 @@ import { HistoriaClinicaDetallesComponent } from './historia-clinica/historia-cl
 import { ListaPacientesComponent } from './lista-pacientes/lista-pacientes.component';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbRangeModule } from 'mdb-angular-ui-kit/range';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
     ReactiveFormsModule,
     SweetAlert2Module,
     MdbDropdownModule,
-    MdbRippleModule
+    MdbRippleModule,
+    MdbRangeModule,
+    MdbCheckboxModule
   ],
   exports: [
     HistoriaClinicaDetallesComponent

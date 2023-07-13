@@ -132,7 +132,7 @@ export class AccionesEspecialistaComponent {
   }
 
   btn_realizado_click(comentario: string) {
-    this.router.navigate(['historia/nueva', { paciente: this.turno.paciente, especialidad: this.turno.especialidad }])
+    this.router.navigate(['historia/nueva', { paciente: this.turno.paciente, especialidad: this.turno.especialidad, turno: this.turno.id! }])
     .then(res => {
       if (res) {
         this.cambiarEstado(EstadoTurno.Realizado, comentario);
